@@ -13,13 +13,14 @@
                 </div>
             </div>
 
-            <!-- Mobile Search Icon -->
-            <div class="md:hidden w-14 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
-                <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
-            </div>
-    
-            <div class="w-20 cursor-pointer">
-                <img src="../public/images/User.png" alt="">
+            
+            <div class="flex justify-center items-center">
+                <div class="md:hidden w-14 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
+                    <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
+                </div>
+                <div class="w-20 cursor-pointer">
+                    <img src="../public/images/User.png" alt="">
+                </div>
             </div>
         </div>
 
