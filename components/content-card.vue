@@ -1,5 +1,5 @@
 <template>
-    <div class="w-60 cursor-pointer relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
+    <div class="w-60 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card (hover:-translate-y-2)-->
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out">
             <img :src="data.cover_image_url" alt="" class="rounded-xl">
@@ -14,7 +14,9 @@
          <!-- <div v-if="showInfo" class="absolute w-64 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-4 top-0 left-full ml-4"></div> -->
         <div v-if="showInfo" class="absolute w-56 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 left-1/2 transform -translate-x-1/2 top-2 pointer-events-none">
             <!-- Genres -->
-            <span class="font-semibold pb-4">Planning to read</span>
+             <div class="text-center p-2">
+                 <span class="font-bold">Planning to read</span>
+             </div>
             <div class="flex justify-center space-x-2 mb-2">
                 <span v-for="genre in data.genres" :key="genre" class="bg-black text-white text-xs font-semibold px-2 py-1 rounded">
                     {{ genre }}
@@ -32,10 +34,10 @@
         </div>
 
         <div v-if="showInfo" class="absolute w-full z-10 p-2 left-1/2 transform -translate-x-1/2 bottom-14 flex justify-center items-center gap-2">
-            <div class="p-3 bg-white border-2 border-black rounded-lg">
-                <span class="font-semibold text-sm pb-4">More info</span>
+            <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
+                <span class="font-bold text-base pb-4">More info</span>
             </div>
-            <div class="p-3 bg-white border-2 border-black rounded-lg">
+            <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
                 <img src="../public/images/plus.png" alt="" class="w-6">
             </div>
             
