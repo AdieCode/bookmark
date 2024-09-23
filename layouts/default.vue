@@ -25,21 +25,22 @@
         </div>
 
         <div class="flex flex-row items-center justify-around mt-1 mx-2">
-            <div class="flex flex-row flex-wrap gap-4">
-                <div class="p-2 border-4 border-black rounded-xl m-auto cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
+            <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[620px] mx-auto"> <!-- Adjusted max width and gap -->
+                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
                     Discover
                 </div>
-                <div class="p-2 border-4 border-black rounded-xl m-auto cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
+                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
                     Planning to read
                 </div>
-                <div class="p-2 border-4 border-black rounded-xl m-auto cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
+                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
                     Busy Reading
                 </div>
-                <div class="p-2 border-4 border-black rounded-xl m-auto cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
+                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100">
                     Completed
                 </div>
             </div>
         </div>
+
         <div class="fixed bottom-10 right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:bottom-11 duration-100 z-10">
             <img src="../public/images/plus.png" alt="" class="w-8 h-8">
         </div>
