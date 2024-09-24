@@ -13,9 +13,6 @@ export const useAuthStore = defineStore('auth', {
 		session = useCookie('session');
 		token =  session.value.token || null;
 	} catch {
-		useCookie('session', { 
-			expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
-		}).value = { token:"notoken" };
 		token =  null;
 		console.log('something went wrong when fetching cookie');
 	}
@@ -70,14 +67,8 @@ export const useAuthStore = defineStore('auth', {
 		async googleLogin(token) {
 			try {
 				
-				// if (process.client) {
-				// 	useCookie('session').value = { token }; // Store the token in a cookie
-				// }
-
 				if (process.client) {
-					useCookie('session', { 
-						expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
-					}).value = { token }; // Store the token in a cookie
+					useCookie('session').value = { token }; // Store the token in a cookie
 				}
 
 				this.token = token;
