@@ -15,7 +15,7 @@
 
             
             <div class="flex justify-center items-center">
-                <div class="md:hidden w-14 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
+                <div class="md:hidden w-14 h-12 border-2 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
                     <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
                 </div>
                 <div class="w-20 cursor-pointer">
@@ -41,8 +41,11 @@
             </div>
         </div>
 
-        <div class="fixed bottom-10 right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:bottom-11 duration-100 z-10">
+        <div class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:bottom-11 duration-100 z-50">
             <img src="../public/images/plus.png" alt="" class="w-8 h-8">
+            <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:bottom-11 duration-100 z-50" @click="scrollToTop">
+                <img src="../public/images/icons8-up-arrow-100.png" alt="">
+            </div>
         </div>
 
     </div>
@@ -52,7 +55,12 @@
 </template>
 
 <script setup>
-
+function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This makes the scroll smooth
+        });
+    }
 </script>
 
 <style lang="css" scoped>

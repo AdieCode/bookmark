@@ -1,6 +1,6 @@
 <template>
-    <div class="left wrap" :style="{ maxWidth: width + 'px' }">
-        <div v-for="(item, index) in items" :key="index" class="tag">
+    <div class="flex flex-wrap gap-1 " :style="{ maxWidth: width + 'px' }">
+        <div v-for="(item, index) in items" :key="index" class="p-1 px-2 bg-black text-white text-xs rounded font-semibold">
             {{item}}
         </div>
     </div>
