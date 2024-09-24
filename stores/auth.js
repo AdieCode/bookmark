@@ -70,8 +70,14 @@ export const useAuthStore = defineStore('auth', {
 		async googleLogin(token) {
 			try {
 				
+				// if (process.client) {
+				// 	useCookie('session').value = { token }; // Store the token in a cookie
+				// }
+
 				if (process.client) {
-					useCookie('session').value = { token }; // Store the token in a cookie
+					useCookie('session', { 
+						expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
+					}).value = { token }; // Store the token in a cookie
 				}
 
 				this.token = token;
