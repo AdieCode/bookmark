@@ -1,5 +1,5 @@
 <template>
-    <div class="w-60 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo" @click="toggleInfo">
+    <div class="w-60 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card -->
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out">
             <img :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover">

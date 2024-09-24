@@ -64,6 +64,22 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
+		async googleLogin(token) {
+			try {
+				
+				if (process.client) {
+					useCookie('session').value = { token }; // Store the token in a cookie
+				}
+
+				this.token = token;
+				this.isAuthenticated = true;
+				return true;
+			} catch (error) {
+				this.error = error.message;
+				return false;
+			}
+		},
+
 		async logout() {
 			// Clear token and user data
 			
@@ -79,20 +95,19 @@ export const useAuthStore = defineStore('auth', {
 				
 				const response = await axios.get(baseURL + '/isAuth', {
 				headers: {
-					Authorization: `Bearer ${this.token}`,
+					authorization: `Bearer ${this.token}`,
 					},
 				});
 				// If authentication is successful, update user data
-				this.user = response.data;
 				this.isAuthenticated = true;
-				console.log('fine')
+				console.log('auth token passed')
 				return true
 			} catch (error) {
 				// If authentication fails, clear token and user data
 				this.token = null;
 				this.user = null;
 				this.isAuthenticated = false;
-				console.log('not fine')
+				console.log('auth token did not pass')
 				return false
 			}
 		},
