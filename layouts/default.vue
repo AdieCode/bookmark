@@ -6,12 +6,16 @@
             </div>
 
             <!-- Desktop/Tablet Search Bar -->
-            <div v-if="!isLoginPage && !isOauthPage" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer flex items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100">
+            <div v-if="!isLoginPage && !isOauthPage" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100" @click="toggleSearch">
                 <span class="ml-3">Search for anime/manga here</span>
                 <div class="h-full w-14 border-l-4 border-black ml-auto flex justify-center items-center">
                     <img src="../public/images/search.png" alt="" class="w-7 h-7">
                 </div>
             </div>
+
+            
+            <search/>
+            
 
             
             <div class="flex justify-center items-center">
@@ -44,9 +48,9 @@
             </div>
         </div>
 
-        <div v-if="!isLoginPage && !isOauthPage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center z-50">
+        <div v-if="!isLoginPage && !isOauthPage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center z-30">
             <img src="../public/images/plus.png" alt="" class="w-8 h-8">
-            <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100 z-50 " @click="scrollToTop">
+            <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100 z-30 " @click="scrollToTop">
                 <img src="../public/images/icons8-up-arrow-100.png" alt="">
             </div>
         </div>
@@ -61,6 +65,7 @@
 import { ref } from 'vue';
 const router = useRouter();
 const route = useRoute();
+const useToggles = useTogglesStore()
 
 const isLoginPage = computed(() => route.path === '/auth/login' || route.path === '/auth/sign-up');
 const isOauthPage = computed(() => 
@@ -85,6 +90,11 @@ function toLogin() {
 function toPrevious() {
     // router.push("/");
     router.back();
+}
+
+function toggleSearch() {
+    console.log("clicked")
+    useToggles.toggleSearchShow();
 }
 
 </script>

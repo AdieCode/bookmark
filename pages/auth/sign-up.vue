@@ -1,5 +1,5 @@
 <template>
-    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center items-center flex-wrap gap-8 z-40 sm:w-full">
+    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center items-center flex-wrap gap-8 z-30 sm:w-full">
       <div class="lex flex-col justify-center items-center">
         <h1 class="text-center text-6xl font-bold p-2">Sign up</h1>
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-40 sm:w-full">
+    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
       <!-- Loop through contentData and pass each item to ContentCard as a prop -->
       <ContentCard
         v-for="(item, index) in contentData"
