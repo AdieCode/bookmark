@@ -13,6 +13,9 @@ export const useAuthStore = defineStore('auth', {
 		session = useCookie('session');
 		token =  session.value.token || null;
 	} catch {
+		useCookie('session', { 
+			expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
+		}).value = { token:"notoken" };
 		token =  null;
 		console.log('something went wrong when fetching cookie');
 	}
