@@ -1,23 +1,34 @@
 <template>
-    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-      <!-- Loop through contentData and pass each item to ContentCard as a prop -->
-      <ContentCard
-        v-for="(item, index) in contentData"
-        :key="index"
-        :data="item"
-      />
+    <div class="flex flex-col gap-2 justify-center items-center">
+        <div class="p-2 w-72 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="redirectToLogin">
+            Login
+        </div>
+		<div class="p-2 w-72 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="redirectToMianPage">
+            Homepage
+        </div>
     </div>
   </template>
   
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
-const content = useContent();
-await content.getContentData();
 
-const contentData = ref(content.data);
+const router = useRouter()
+const authStore = useAuthStore();
+const passwordType = ref('password');
+const email = ref('');
+const password = ref('');
+
+const googleOAuthUrl = "https://accounts.google.com/o/oauth2/auth?client_id=1092384774274-2s5jb68iobabko0rk1rumcbnbt5laf26.apps.googleusercontent.com&redirect_uri=http://localhost:3001/auth/google/callback&response_type=code&scope=email%20profile";
+const githubOAuthUrl = "https://github.com/login?client_id=Ov23liwFfm4hn8BaO6bS&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3DOv23liwFfm4hn8BaO6bS%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fauth%252Fgithub%252Fcallback";
+
+function redirectToLogin() {
+    router.push("/auth/login");
+}
+
+function redirectToMianPage() {
+    router.push("/mainpage");
+}
 
 </script>
 

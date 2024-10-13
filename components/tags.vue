@@ -1,22 +1,30 @@
 <template>
-    <div class="flex flex-wrap gap-1 " :style="{ maxWidth: width + 'px' }">
-        <div v-for="(item, index) in items" :key="index" class="p-1 px-2 bg-black text-white text-xs rounded font-semibold">
-            {{item}}
+    <div 
+        class="flex flex-wrap gap-1" 
+        :style="{ maxWidth: width + 'px', maxHeight: maxHeight ? maxHeight + 'px' : 'auto', overflow: maxHeight ? 'hidden' : 'visible' }"
+    >
+        <div 
+            v-for="(item, index) in items" 
+            :key="index" 
+            class="p-1 px-2 bg-black text-white text-xs rounded font-semibold"
+        >
+            {{ item }}
         </div>
     </div>
 </template>
 
 <script setup>
-import {  defineProps } from 'vue';
-    
-    const props = defineProps({
-        width: { type: String, default: '100' },
-        items: { type: Array, default: ['no items'] }
-    });
+import { defineProps } from 'vue';
+
+const props = defineProps({
+    width: { type: String, default: '100' },
+    items: { type: Array, default: ['no items'] },
+    maxHeight: { type: [String, Number], default: null }  // New prop for max height
+});
 </script>
 
 <style scoped>
-.tag{
+.tag {
     padding: 8px;
     margin: 5px;
     border-radius: 5px;

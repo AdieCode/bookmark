@@ -1,8 +1,9 @@
 <template>
-    <div class="w-60 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
+    <div class="w-52 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card -->
-        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out">
-            <img :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover">
+        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out" :class="{'h-80' : !data.cover_image_url}">
+            <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
+            <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover">
             
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
@@ -16,21 +17,21 @@
         </div>
 
         <!-- Title -->
-        <div class="flex flex-col mx-3 w-56 mt-2">
-            <span v-if="data.title.english && data.title.romaji && data.title.english.toLowerCase() === data.title.romaji.toLowerCase()" class="text-stone-600 font-extrabold text-base">{{ data.title.english }}</span>
+        <div class="flex flex-col mx-3 w-48 mt-1">
+            <span v-if="data.title.english && data.title.romaji && data.title.english.toLowerCase() === data.title.romaji.toLowerCase()" class="text-stone-600 font-extrabold md-title">{{ data.title.english }}</span>
             <div v-else-if="data.title.english" class="flex flex-col">
-                <span class="text-stone-600 font-extrabold text-base line-clamp-1">{{ data.title.english }}</span>
-                <span class="text-stone-600 font-semibold text-sm line-clamp-1">{{ data.title.romaji }}</span>
+                <span class="text-stone-600 font-extrabold md-title line-clamp-1">{{ data.title.english }}</span>
+                <span class="text-stone-600 font-semibold small-title line-clamp-1">{{ data.title.romaji }}</span>
             </div>
-            <span v-else-if="data.title.romaji" class="text-black font-extrabold text-base line-clamp-2">{{ data.title.romaji }}</span>
-            <span v-else class="text-black font-extrabold text-base">No title found</span>
+            <span v-else-if="data.title.romaji" class="text-stone-600 font-extrabold md-title line-clamp-2">{{ data.title.romaji }}</span>
+            <span v-else class="text-stone-600 font-extrabold md-title">No title found</span>
         </div>
 
         <!-- Pop-up info, visible on hover or click -->
-        <div v-if="showInfo" class="absolute w-72 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 transform -top-2 -left-6 pointer-events-none bounce-down md:pointer-events-auto">
-            <div class="absolute top-0 right-0 p-1 pl-2 rounded-bl bg-black text-white">
-                <span v-if="!data.isAdult" class="font-extrabold text-sm">PG 13</span>
-                <span v-if="data.isAdult" class="font-extrabold text-sm">18+</span>
+        <div v-if="showInfo" class="absolute w-64 max-h-64 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 transform -top-2 -left-6 pointer-events-none bounce-down md:pointer-events-auto">
+            <div class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
+                <span v-if="!data.isAdult" class="font-extrabold small-title">PG 13</span>
+                <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
             
             <div class="mt-4 p-2">
@@ -38,18 +39,18 @@
             </div>
 
             <!-- Genres -->
-            <tags :items="data.genres" width="300"/>
+            <tags :items="data.genres" width="300" :max-height="52"/>
 
             <!-- Description -->
             <div class="text-black text-sm mt-2 mx-2">
-                <p class="truncate-3-lines">{{ truncatedDescription }}</p>
+                <p class="line-clamp-3">{{ truncatedDescription }}</p>
             </div>
 
             <!-- Scores and status -->
             <div class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
                 <span><span class="font-extralight">Score </span>{{ data.average_score }}</span>
-                <span><span class="font-extralight">Chp </span>{{ data.chapters }}</span>
-                <span v-if="data.volumes"><span class="font-extralight">Vol </span>{{ data.volumes }}</span>
+                <span><span class="font-extralight">Chp's </span>{{ data.chapters }}</span>
+                <span v-if="data.volumes"><span class="font-extralight">Vol's </span>{{ data.volumes }}</span>
             </div>
         </div>
     </div>
@@ -100,5 +101,12 @@ const truncatedDescription = computed(() => {
 
 .object-cover {
   object-fit: cover;
+}
+
+.md-title{
+    font-size: 16px;
+}
+.small-title{
+    font-size: 13px;
 }
 </style>
