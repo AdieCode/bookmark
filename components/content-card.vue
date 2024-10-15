@@ -8,7 +8,7 @@
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
-                    <span class="font-bold text-base pb-4">More info</span>
+                    <span class="font-bold text-base pb-4" @click="moreInfo">More info</span>
                 </div>
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
                     <img src="../public/images/plus.png" alt="" class="w-6">
@@ -58,6 +58,9 @@
 
 <script setup>
 import { ref } from 'vue';
+const toggle = useTogglesStore();
+const router = useRouter();
+
 let showInfo = ref(false);
 const props = defineProps({
     data: Object,
@@ -77,6 +80,11 @@ const truncatedDescription = computed(() => {
   }
   return ''; // Return empty string if no description
 });
+
+function moreInfo() {
+    toggle.mapNewContentData(props.data);
+    router.push('/info?id=' + props.data.anilist_content_id);
+}
 </script>
 
 <style scoped>

@@ -21,7 +21,7 @@
 <script setup>
 const toggle = useTogglesStore();
 const content = useContentStore();
-await content.getContentData();
+// await content.getContentData();
 
 const waitingword = 'fetching_content...';
 </script>

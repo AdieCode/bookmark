@@ -10,6 +10,25 @@ export const useTogglesStore = defineStore('toggles', {
         planningToRead: false,
         reading: false,
         completed: false
+      },
+      selected_content: {
+        anilist_content_id: null,
+        title: {
+            romaji: "",
+            english: "",
+            native: ""
+        },
+        genres: [
+        ],
+        description: "",
+        cover_image_url: "",
+        release_date: "",
+        type: "",
+        average_score: 0,
+        volumes: 0,
+        chapters: 0,
+        isAdult: false,
+        consumed_status: "untracked"
       }
     };
   },
@@ -41,6 +60,14 @@ export const useTogglesStore = defineStore('toggles', {
       this.content.planningToRead = false;
       this.content.reading = false;
       this.content.completed = true;
+    },
+    mapNewContentData(data) {
+      for (const key in data) {
+        if (data.hasOwnProperty(key) && this.selected_content.hasOwnProperty(key)) {
+          this.selected_content[key] = data[key];
+        }
+      }
+      console.log(this.selected_content)
     }
   },
 });

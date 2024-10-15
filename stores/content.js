@@ -8,7 +8,8 @@ export const useContentStore = defineStore('content', {
   state: () => {
     return {
       data: [],
-      contentFetched: false
+      contentFetched: false,
+      selected_content: {}
     };
   },
 
@@ -27,6 +28,26 @@ export const useContentStore = defineStore('content', {
         });
         this.contentFetched = true;
         this.data = response.data.data.media;
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log(error);
+        }
+      }
+    },
+    async getContentDataById(id) {
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        const response = await axios.post("http://localhost:3001/content/get_manga_content_by_id",{
+            id: id
+          });
+
+        this.selected_content = response.data.data.media[0];
       } catch (error) {
         if (error.name === 'CanceledError') {
           console.log("Previous request canceled");

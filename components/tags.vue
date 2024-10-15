@@ -1,6 +1,6 @@
 <template>
     <div 
-        class="flex flex-wrap gap-1" 
+        class="flex flex-wrap gap-1 " 
         :style="{ maxWidth: width + 'px', maxHeight: maxHeight ? maxHeight + 'px' : 'auto', overflow: maxHeight ? 'hidden' : 'visible' }"
     >
         <div 
