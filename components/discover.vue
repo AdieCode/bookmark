@@ -6,8 +6,15 @@
         :key="index"
         :data="item"
       />
+      <!-- The target div you want to observe -->
+      <div ref="observedDiv" class="min-h-46">
+      </div>
     </div>
-  </template>
+
+    <div class="pb-40">
+      <GettingContent/>
+    </div>
+</template>
   
 
 <script setup>
@@ -15,9 +22,49 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import axios from 'axios';
 const content = useContentStore();
-await content.getContentData();
+if (content.data.length <= 0){
+  await content.getContentData();
+}
 
-const contentData = ref(content.data);
+const contentData = computed(() => content.data);
+// const contentData = ref(content.data);
+
+const observedDiv = ref(null); // Reference to the div to observe
+
+const handleIntersection = (entries) => {
+  entries.forEach((entry) => {
+    if (entry.isIntersecting) {
+      // The div is in the viewport
+      console.log('Div is in the viewport');
+      yourFunction(); // Call your desired function here
+    }
+  });
+};
+
+const yourFunction = () => {
+  // The function to be executed when the div enters the viewport
+  console.log('Function executed!');
+  content.nextContent();
+};
+defineOptions({
+  beforeRouteEnter(to, from, next) {
+    next(() => {
+      window.scrollTo(0, 0); // Scrolls to the top of the page when entering the route
+    });
+  }
+});
+onMounted(() => {
+  window.scrollTo(0,0);
+
+  const observer = new IntersectionObserver(handleIntersection, {
+    root: null, // Sets the viewport as the root
+    threshold: 0.1, // The percentage of the div that needs to be visible (0.1 = 10%)
+  });
+
+  if (observedDiv.value) {
+    observer.observe(observedDiv.value);
+  }
+});
 
 </script>
 

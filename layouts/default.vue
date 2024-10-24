@@ -2,8 +2,9 @@
     <div class="flex flex-col">
         <title>Content Manging & Exploring</title>
         <div class="flex flex-row place-content-center justify-between mt-4 mb-4">
-            <div class="w-40 cursor-pointer" @click="toMain">
-                <img src="../public/images/Logo-bookmark.png" alt="">
+            <div class="w-40 cursor-pointer flex justify-center" @click="toMain">
+                <!-- <img src="../public/images/Logo-bookmark.png" alt=""> -->
+                <Icon/>
             </div>
 
             <!-- Desktop/Tablet Search Bar -->
@@ -54,6 +55,22 @@
         </div>
 
     </div>
+
+    <!-- <div class="background h-full top bg-white filter blur-xl">
+      <div
+        v-for="(bubble, index) in bubbles"
+        :key="index"
+        class="bubble"
+        :style="{
+          width: bubble.size + 'px',
+          height: bubble.size + 'px',
+          left: bubble.positionX + '%',
+          animationDuration: bubble.speed + 's',
+          animationDelay: bubble.delay + 's'
+        }"
+      ></div>
+    </div> -->
+
     <div>
         <slot/>
     </div>
@@ -92,6 +109,7 @@ function toLogin() {
 function toPrevious() {
     // router.push("/");
     router.back();
+    scrollToTop();
 }
 
 function toggleSearch() {
@@ -101,6 +119,13 @@ function toggleSearch() {
 function toggleDiscover() {
     useToggles.toggleContentDiscover();
 }
+
+const bubbles = ref(Array.from({ length: 50 }, () => ({
+  size: Math.random() * 50 + 20, // Random size between 20px and 70px
+  speed: Math.random() * 15 + 5, // Random speed between 5s and 20s
+  delay: Math.random() * 10, // Random delay between 0s and 10s
+  positionX: Math.random() * 100 // Random horizontal position between 0% and 100%
+})));
 
 </script>
 
@@ -120,6 +145,36 @@ function toggleDiscover() {
 
 .bounce-down {
     animation: bounceDown 0.2s ease-out forwards;
+}
+
+
+.background {
+    position: fixed;
+    z-index: -20;
+    width: 100%;
+    /* height: full; */
+    overflow: hidden;
+}
+
+.bubble {
+    position: absolute;
+    bottom: -100px; /* Start position off screen */
+    background: rgb(113, 113, 113);
+    border-radius: 50%;
+    animation: moveBubbles 20s linear infinite;
+    opacity: 0.8;
+}
+
+@keyframes moveBubbles {
+    0% {
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        transform: translateY(-500px) scale(1.2); /* Moves bubble upwards */
+    }
+    100% {
+        transform: translateY(-1000px) scale(1);
+    }
 }
 
 </style>
