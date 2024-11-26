@@ -7,11 +7,11 @@
             
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
-                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
-                    <span class="font-bold text-base pb-4" @click="moreInfo">More info</span>
+                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer" @click="moreInfo">
+                    <span class="font-bold text-base pb-4">More info</span>
                 </div>
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
-                    <img src="../public/images/plus.png" alt="" class="w-6">
+                    <img src="../public/bookmark_icons/bookmark.png" alt="" class="w-6">
                 </div>
             </div>
         </div>
@@ -29,8 +29,8 @@
 
         <!-- Pop-up info, visible on hover or click -->
         <div v-if="showInfo" class="absolute w-64 max-h-64 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 transform -top-2 -left-6 pointer-events-none bounce-down md:pointer-events-auto">
-            <div class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
-                <span v-if="!data.isAdult" class="font-extrabold small-title">PG 13</span>
+            <div v-if="data.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
+                <!-- <span v-if="!data.isAdult" class="font-extrabold small-title">PG 13</span> -->
                 <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
             
@@ -59,6 +59,7 @@
 <script setup>
 import { ref } from 'vue';
 const toggle = useTogglesStore();
+const content = useContentStore();
 const router = useRouter();
 
 let showInfo = ref(false);
@@ -81,8 +82,8 @@ const truncatedDescription = computed(() => {
   return ''; // Return empty string if no description
 });
 
-function moreInfo() {
-    toggle.mapNewContentData(props.data);
+async function moreInfo() {
+    await content.mapNewContentData(props.data);
     router.push('/info?id=' + props.data.anilist_content_id);
 }
 </script>

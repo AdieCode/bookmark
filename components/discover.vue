@@ -19,8 +19,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import { useRouter } from 'vue-router';
-import axios from 'axios';
 const content = useContentStore();
 if (content.data.length <= 0){
   await content.getContentData();
@@ -43,7 +41,6 @@ const handleIntersection = (entries) => {
 
 const yourFunction = () => {
   // The function to be executed when the div enters the viewport
-  console.log('Function executed!');
   content.nextContent();
 };
 defineOptions({

@@ -10,7 +10,8 @@ export const useContentStore = defineStore('content', {
       data: [],
       currentPage: 1,
       contentFetched: false,
-      selected_content: {}
+      selected_content: {},
+      searched_content: []
     };
   },
 
@@ -49,7 +50,6 @@ export const useContentStore = defineStore('content', {
 
       try {
         this.contentFetched = false;
-        console.log('this is the page num : ', this.currentPage);
         const response = await axios.get("http://localhost:3001/content/get_manga_content", {
           params: { page: this.currentPage },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
@@ -85,10 +85,43 @@ export const useContentStore = defineStore('content', {
         }
       }
     },
+
     async nextContent() {
       this.currentPage = this.currentPage + 1;
       const newContent = await this.getNextPageData();
       this.data = this.data.concat(newContent);
+    },
+
+    async getContentByText(text) {
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        const response = await axios.post("http://localhost:3001/content/get_manga_content_specific",{
+            search: text
+          });
+
+        this.searched_content = response.data.data.media;
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log(error);
+        }
+      }
+    },
+
+    mapNewContentData(data) {
+      console.log(data)   
+      // for (const key in data) {
+      //   if (data.hasOwnProperty(key) && this.selected_content.hasOwnProperty(key)) {
+      //     this.selected_content[key] = data[key];
+      //   }
+      // }
+      this.selected_content = data
+      console.log(this.selected_content)
     }
   },
 });
