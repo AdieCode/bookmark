@@ -7,6 +7,7 @@
             v-for="(item, index) in items" 
             :key="index" 
             class="p-1 px-2 bg-black text-white text-xs rounded font-semibold"
+            :class="{'!text-sm': bigger}"
         >
             {{ item }}
         </div>
@@ -19,7 +20,8 @@ import { defineProps } from 'vue';
 const props = defineProps({
     width: { type: String, default: '100' },
     items: { type: Array, default: ['no items'] },
-    maxHeight: { type: [String, Number], default: null }  // New prop for max height
+    maxHeight: { type: [String, Number], default: null }, // New prop for max height
+    bigger: { type: Boolean, default: false },
 });
 </script>
 

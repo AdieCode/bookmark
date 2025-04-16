@@ -29,7 +29,7 @@
                 </div>
             </div>
         </div>
-
+        <type-content-switcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
         <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-1 mx-2">
             <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[620px] mx-auto"> <!-- Adjusted max width and gap -->
                 <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentDiscover" :class="{'bg-black text-white bounce-down': useToggles.content.discover}">
@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center z-30">
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center z-30">
             <img src="../public/images/plus.png" alt="" class="w-8 h-8">
             <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100 z-30 " @click="scrollToTop">
                 <img src="../public/images/icons8-up-arrow-100.png" alt="">
@@ -78,6 +78,7 @@
 
 <script setup>
 import { ref } from 'vue';
+import TypeContentSwitcher from "~/components/type-content-switcher.vue";
 const router = useRouter();
 const route = useRoute();
 const useToggles = useTogglesStore()

@@ -40,17 +40,24 @@
                 <!-- extra info -->
                 <div class="ml-3 my-6 font-medium">
                     <!-- tags -->
-                    <tags :items="contentData.genres" width="300" :max-height="52"/>
+                    <tags :items="contentData.genres" :bigger="true" :width="300" />
 
                     <!-- score and status -->
                     <div class="mb-4 flex gap-8">
-                        <div class="mt-2">
+                        <div v-if="contentData.average_score" class="mt-2">
                             <div class="mt-2 mb-1">Score <span class="font-black pl-1">{{contentData.average_score}}</span></div>
                             <Score :score="contentData.average_score"/>
                         </div>
+                        <div v-if="!contentData.average_score" class="mt-2">
+                            <div class="mt-2 mb-1">No score</div>
+                        </div>
                         <div class="mt-4">
-                            <div>Airing status</div>
+                            <div>Release status</div>
                             <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.status)}}</div>
+                        </div>
+                        <div class="mt-4">
+                            <div>Content type</div>
+                            <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.type)}}</div>
                         </div>
                     </div>
                     <span class="text-xl">
@@ -80,21 +87,82 @@
             
         </div>
 
+        
         <!-- recommendations -->
+        <div v-if="contentData.relations" class="mt-40 ">
+            <div class="text-center text-4xl font-extrabold">Relations</div>
+            <div class="w-3/4 mx-auto flex">
+                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+                    <ContentCard
+                    v-for="(item, index) in contentData.relations"
+                        :key="index"
+                        :data="item"
+                    />
+                </div>
+             </div>
+         </div>
+         <div v-if="!(contentData.relations.length > 0)" class="text-center text-2xl font-normal">No relations found</div>
+                     
+        <!-- characters -->
+        <div class="mt-40 ">
+            <div class="text-center text-4xl font-extrabold">Characters</div>
+            <div class="w-3/4 mx-auto flex">
+                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+                    <CharacterCard
+                        v-for="(item, index) in contentData.characters"
+                        :key="index"
+                        :data="item"
+                    />
+                </div>
+            </div>
+        </div>
+        <div v-if="!contentData.characters" class="text-center text-4xl font-extrabold">No relations fount</div>
+
+        <!-- recommendations -->
+         <div class="mt-40 ">
+            <div class="text-center text-4xl font-extrabold">Recommendations</div>
+             <div class="w-3/4 mx-auto flex">
+                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+                    <ContentCard
+                        v-for="(item, index) in contentData.recommendations"
+                        :key="index"
+                        :data="item"
+                        />
+                </div>
+            </div>
+        </div>
+            
+
+
+        <!-- implementations that I want -->
+        <!-- characters
+        <div class="my-40 ">
+            <div class="text-center text-3xl font-semibold">Characters</div>
+             <div class="w-3/4 mx-auto">
+                <div class=" mt-10 px-4 flex flex-row justify-start flex-wrap gap-8 z-20 sm:w-full">
+                    <CharacterCard
+                        v-for="(item, index) in contentData.characters"
+                        :key="index"
+                        :data="item"
+                    />
+                </div>
+             </div>
+         </div>
+
+        <!-- recommendations 
          <div class="my-40 ">
             <div class="text-center text-3xl font-semibold">Recommendations</div>
-             <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-                <ContentCard
-                    v-for="(item, index) in contentData.recommendations"
-                    :key="index"
-                    :data="item"
-                />
-                <!-- Loop through contentData and pass each item to ContentCard as a prop -->
-                <!-- The target div you want to observe -->
-                    <div ref="observedDiv" class="min-h-46">
-                    </div>
+             <div class="w-3/4 mx-auto flex">
+                <div class="mt-10 px-4 flex flex-row justify-start flex-wrap gap-8 z-20 sm:w-full">
+                    <ContentCard
+                        v-for="(item, index) in contentData.recommendations"
+                        :key="index"
+                        :data="item"
+                    />
                 </div>
-         </div>
+             </div>
+         </div> -->
+
     </div>
 </template>
 
@@ -112,7 +180,7 @@ function cleanDescription(input) {
     let result = input.replace(/<i>[\s\S]*?<\/i>/g, '');
     result = result.replace(/<I\s*\/?>/g, '');
     result = result.replace(/<\/b\s*\/?>/g, '');
-    result = result.replace(/<b\s*\/?>/g, '');
+    result = result.replace(/<b\s*\/?>/g, '');   
     result = result.replace(/<br\s*\/?>/g, '');
     result = result.replace(/<Br\s*\/?>/g, '');
     result = result.replace(/<bR\s*\/?>/g, '');
@@ -128,12 +196,19 @@ function capitalizeStatus(status) {
     return status.charAt(0).toUpperCase() + status.slice(1).toLowerCase();
 }
 
+function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth' // This makes the scroll smooth
+        });
+}
+
 watch(
     () => route.query.id, // Watch the `id` query parameter
     async (newId, oldId) => {
         if (newId !== oldId) {
-            console.log("Query changed:", newId);
             await content.getContentDataById(newId);
+            scrollToTop()
         }
     }
 );

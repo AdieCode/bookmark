@@ -43,8 +43,7 @@ function toggleSearch() {
 }
 
 watch(searchText, async (newValue) => {
-    if (newValue.length > 3) {
-        console.log('search hello');
+    if (newValue.trim().length > 4) {
         await content.getContentByText(newValue); // Pass search text to API function
     }
 });

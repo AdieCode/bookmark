@@ -83,7 +83,7 @@ const truncatedDescription = computed(() => {
 });
 
 async function moreInfo() {
-    await content.mapNewContentData(props.data);
+    // await content.mapNewContentData(props.data);
     router.push('/info?id=' + props.data.anilist_content_id);
 }
 </script>

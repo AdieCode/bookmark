@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 export const useTogglesStore = defineStore('toggles', {
   state: () => {
     return {
+      contentType: 'Anime',
       searchShow: false,
       content: {
         discover: true,
@@ -34,6 +35,14 @@ export const useTogglesStore = defineStore('toggles', {
   },
 
   actions: {
+    toggleContentType() {
+      if (this.contentType === 'Anime') {
+        this.contentType = "Manga";
+      } else {
+        this.contentType = "Anime";
+      }
+      console.log(this.contentType);
+    },
     toggleSearchShow() {
       this.searchShow = !this.searchShow;
     },

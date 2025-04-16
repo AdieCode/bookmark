@@ -1,15 +1,29 @@
 <template>
-    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-      <!-- Loop through contentData and pass each item to ContentCard as a prop -->
+    <!-- <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+
       <ContentCard
         v-for="(item, index) in contentData"
         :key="index"
         :data="item"
       />
-      <!-- The target div you want to observe -->
+
       <div ref="observedDiv" class="min-h-46">
       </div>
-    </div>
+    </div> -->
+    <!-- The target div you want to observe -->
+             <div class="w-10/12 mx-auto">
+                <div class="w-full mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+                    <ContentCard
+                        v-for="(item, index) in contentData"
+                        :key="index"
+                        :data="item"
+                    />
+
+
+                    <div ref="observedDiv" class="min-h-46">
+                    </div>
+                </div>
+             </div>
 
     <div class="pb-40">
       <GettingContent/>
@@ -41,7 +55,9 @@ const handleIntersection = (entries) => {
 
 const yourFunction = () => {
   // The function to be executed when the div enters the viewport
-  content.nextContent();
+  if (content.data.length > 0){
+      content.nextContent();
+  }
 };
 defineOptions({
   beforeRouteEnter(to, from, next) {

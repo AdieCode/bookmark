@@ -1,8 +1,11 @@
 // store/auth.js
 import { defineStore } from 'pinia';
 import axios from 'axios';
+import { useRouter } from 'vue-router';
+import {useTogglesStore} from "~/stores/toggles.js";
 
-let abortController = null; // Declare outside of the Pinia state
+
+let abortController = null;
 
 export const useContentStore = defineStore('content', {
   state: () => {
@@ -16,7 +19,7 @@ export const useContentStore = defineStore('content', {
   },
 
   actions: {
-    async getContentData(page=1) {
+    async getMangaContent(page=1) {
       if (abortController) {
         abortController.abort(); // Cancel the previous request
       }
@@ -29,8 +32,57 @@ export const useContentStore = defineStore('content', {
           params: { page: page },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
         });
-        
+
         this.contentFetched = true;
+        return response;
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log(error);
+        }
+      }
+    },
+
+    async getAnimeContent(page=1) {
+      if (abortController) {
+        abortController.abort(); // Cancel the previous request
+      }
+
+      abortController = new AbortController(); // Create a new controller for this request
+
+      try {
+        this.contentFetched = false;
+        const response = await axios.get("http://localhost:3001/content/get_anime_content", {
+          params: { page: page },  // Send 'page' as query parameter
+          signal: abortController.signal // Pass the signal to axios
+        });
+
+        this.contentFetched = true;
+        return response;
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log(error);
+        }
+      }
+    },
+
+    async getContentData(page=1) {
+      const toggle = useTogglesStore();
+
+      this.currentPage = page;
+      try {
+        let response;
+        if (toggle.contentType === "Manga") {
+          response = await this.getMangaContent(this.currentPage);
+        }
+
+        if (toggle.contentType === "Anime") {
+          response = await this.getAnimeContent(this.currentPage);
+        }
+
         this.data = response.data.data.media;
       } catch (error) {
         if (error.name === 'CanceledError') {
@@ -45,16 +97,19 @@ export const useContentStore = defineStore('content', {
       if (abortController) {
         abortController.abort(); // Cancel the previous request
       }
-
+      const toggle = useTogglesStore();
       abortController = new AbortController(); // Create a new controller for this request
 
       try {
-        this.contentFetched = false;
-        const response = await axios.get("http://localhost:3001/content/get_manga_content", {
-          params: { page: this.currentPage },  // Send 'page' as query parameter
-          signal: abortController.signal // Pass the signal to axios
-        });
-        this.contentFetched = true;
+        let response;
+        if (toggle.contentType === "Manga") {
+          response = await this.getMangaContent(this.currentPage);
+        }
+
+        if (toggle.contentType === "Anime") {
+          response = await this.getAnimeContent(this.currentPage);
+        }
+
         return response.data.data.media;
       } catch (error) {
         if (error.name === 'CanceledError') {
@@ -81,7 +136,8 @@ export const useContentStore = defineStore('content', {
         if (error.name === 'CanceledError') {
           console.log("Previous request canceled");
         } else {
-          console.log(error);
+          console.error('API Error:', error);
+          // router.push('/error');
         }
       }
     },
