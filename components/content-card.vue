@@ -18,12 +18,29 @@
 
         <!-- Title -->
         <div class="flex flex-col mx-3 w-48 mt-1">
-            <span v-if="data.title.english && data.title.romaji && data.title.english.toLowerCase() === data.title.romaji.toLowerCase()" class="text-stone-600 font-extrabold md-title">{{ data.title.english }}</span>
+            <span v-if="data.title.english && data.title.romaji && data.title.english.toLowerCase() === data.title.romaji.toLowerCase()" 
+                class="text-stone-600 font-extrabold md-title"
+                :title="data.title.english">
+                {{ data.title.english }}
+            </span>
+
             <div v-else-if="data.title.english" class="flex flex-col">
-                <span class="text-stone-600 font-extrabold md-title line-clamp-1">{{ data.title.english }}</span>
-                <span class="text-stone-600 font-semibold small-title line-clamp-1">{{ data.title.romaji }}</span>
+                <span class="text-stone-600 font-extrabold md-title line-clamp-1" 
+                    :title="data.title.english">
+                    {{ data.title.english }}
+                </span>
+                <span class="text-stone-600 font-semibold small-title line-clamp-1" 
+                    :title="data.title.romaji">
+                    {{ data.title.romaji }}
+                </span>
             </div>
-            <span v-else-if="data.title.romaji" class="text-stone-600 font-extrabold md-title line-clamp-2">{{ data.title.romaji }}</span>
+
+            <span v-else-if="data.title.romaji" 
+                class="text-stone-600 font-extrabold md-title line-clamp-2" 
+                :title="data.title.romaji">
+                {{ data.title.romaji }}
+            </span>
+            
             <span v-else class="text-stone-600 font-extrabold md-title">No title found</span>
         </div>
 
