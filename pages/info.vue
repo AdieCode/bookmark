@@ -40,7 +40,7 @@
                 <!-- extra info -->
                 <div class="ml-3 my-6 font-medium">
                     <!-- tags -->
-                    <tags :items="contentData.genres" :bigger="true" :width="300" />
+                    <tags :items="contentData.genres" :bigger="true" width="300" />
 
                     <!-- score and status -->
                     <div class="mb-4 flex gap-8">
@@ -50,6 +50,7 @@
                         </div>
                         <div v-if="!contentData.average_score" class="mt-2">
                             <div class="mt-2 mb-1">No score</div>
+                            <Score :score="0"/>
                         </div>
                         <div class="mt-4">
                             <div>Release status</div>
@@ -87,10 +88,28 @@
             
         </div>
 
-        
-        <!-- recommendations -->
-        <div v-if="contentData.relations" class="mt-40 ">
-            <div class="text-center text-4xl font-extrabold">Relations</div>
+        <!-- view toggler  -->
+        <div class="w-full flex justify-center gap-14 mt-36">
+            <div class="text-center text-5xl font-extrabold transition-all duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 }" 
+                @click="() => toggleSelector(0)">
+                Relations
+            </div>
+            <div class="text-center text-5xl font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 1 }" 
+                @click="() => toggleSelector(1)">
+                Characters
+            </div>
+            <div class="text-center text-5xl font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 2 }" 
+                @click="() => toggleSelector(2)">
+                Recommendations
+            </div>
+        </div>
+
+        <!-- relations -->
+        <div v-if="contentData.relations.length > 0 && currentSelector === 0" class="mt-10">
+            <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
                     <ContentCard
@@ -101,11 +120,11 @@
                 </div>
              </div>
          </div>
-         <div v-if="!(contentData.relations.length > 0)" class="text-center text-2xl font-normal">No relations found</div>
+         <div v-else-if="!(contentData.relations.length > 0) && currentSelector === 0" class="text-center text-2xl font-normal my-16">No relations found</div>
                      
         <!-- characters -->
-        <div class="mt-40 ">
-            <div class="text-center text-4xl font-extrabold">Characters</div>
+        <div v-if="contentData.characters && currentSelector === 1" class="mt-10">
+            <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
                     <CharacterCard
@@ -116,11 +135,11 @@
                 </div>
             </div>
         </div>
-        <div v-if="!contentData.characters" class="text-center text-4xl font-extrabold">No relations fount</div>
+        <div v-else-if="!contentData.characters && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
 
         <!-- recommendations -->
-         <div class="mt-40 ">
-            <div class="text-center text-4xl font-extrabold">Recommendations</div>
+         <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
+            <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
                     <ContentCard
@@ -131,13 +150,11 @@
                 </div>
             </div>
         </div>
-            
+        <div v-else-if="!contentData.characters && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
 
 
-        <!-- implementations that I want -->
-        <!-- characters
-        <div class="my-40 ">
-            <div class="text-center text-3xl font-semibold">Characters</div>
+        <!-- concept of what I actually want this to look like -->
+        <!-- <div class="my-40 ">
              <div class="w-3/4 mx-auto">
                 <div class=" mt-10 px-4 flex flex-row justify-start flex-wrap gap-8 z-20 sm:w-full">
                     <CharacterCard
@@ -147,28 +164,18 @@
                     />
                 </div>
              </div>
-         </div>
-
-        <!-- recommendations 
-         <div class="my-40 ">
-            <div class="text-center text-3xl font-semibold">Recommendations</div>
-             <div class="w-3/4 mx-auto flex">
-                <div class="mt-10 px-4 flex flex-row justify-start flex-wrap gap-8 z-20 sm:w-full">
-                    <ContentCard
-                        v-for="(item, index) in contentData.recommendations"
-                        :key="index"
-                        :data="item"
-                    />
-                </div>
-             </div>
          </div> -->
+
 
     </div>
 </template>
 
 <script setup>
+import { ref } from 'vue';
 const content = useContentStore();
 const route = useRoute();
+
+const currentSelector = ref(0);
 
 if (!(content.selected_content.length > 3) ){
     await content.getContentDataById(route.query.id); 
@@ -201,6 +208,11 @@ function scrollToTop() {
             top: 0,
             behavior: 'smooth' // This makes the scroll smooth
         });
+}
+
+function toggleSelector (index) {
+    console.log(index);
+    currentSelector.value = index;
 }
 
 watch(

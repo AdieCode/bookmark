@@ -66,8 +66,14 @@
             <!-- Scores and status -->
             <div class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
                 <span><span class="font-extralight">Score </span>{{ data.average_score }}</span>
-                <span><span class="font-extralight">Chp's </span>{{ data.chapters }}</span>
-                <span v-if="data.volumes"><span class="font-extralight">Vol's </span>{{ data.volumes }}</span>
+
+                <!-- Anime  -->
+                <span v-if="data.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ data.episodes }}</span>
+
+                <!-- Manga  -->
+                <span v-if="data.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ data.chapters }}</span>
+                <span v-if="data.type === 'MANGA' && data.volumes"><span class="font-extralight">Vol's </span>{{ data.volumes }}</span>
+
             </div>
         </div>
     </div>

@@ -78,7 +78,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import TypeContentSwitcher from "~/components/type-content-switcher.vue";
 const router = useRouter();
 const route = useRoute();
 const useToggles = useTogglesStore()
@@ -88,6 +87,7 @@ const isLoginPage = computed(() => route.path === '/auth/login' || route.path ==
 const isOauthPage = computed(() => 
     (route.path === '/google/callback' || route.path === '/github/callback') // && !!route.query.token
 );
+
 const isInfoPage = computed(() => 
     (route.path === '/info') // && !!route.query.token
 );
