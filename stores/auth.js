@@ -2,8 +2,6 @@
 import { defineStore } from 'pinia';
 import axios from 'axios';
 
-const baseURL = 'http://localhost:3001';
-
 export const useAuthStore = defineStore('auth', {
   state: () => {
 	let session;
@@ -22,13 +20,14 @@ export const useAuthStore = defineStore('auth', {
       user: null,
       token: token,
       error: null,
+	  baseURL: useRuntimeConfig().public.baseUrl || 'http://localhost:3001',
     };
   },
 
   actions: {
 		async login(email, password) {
 		try {
-			const response = await axios.post(baseURL + '/auth/login', { email, password });
+			const response = await axios.post(this.baseURL + '/auth/login', { email, password });
 			const { message, token } = response.data;
 			if (process.client) {
 				useCookie('session', { 
@@ -48,7 +47,7 @@ export const useAuthStore = defineStore('auth', {
 
 		async signUp(username, email, password) {
 			try {
-				const response = await axios.post(baseURL + '/auth/sign-up', { username, email, password });
+				const response = await axios.post(this.baseURL + '/auth/sign-up', { username, email, password });
 				const { message, token } = response.data;
 				if (process.client) {
 					useCookie('session').value = { token }; // Store the token in a cookie
@@ -93,7 +92,7 @@ export const useAuthStore = defineStore('auth', {
 		async checkAuth() {
 			try {
 				
-				const response = await axios.get(baseURL + '/isAuth', {
+				const response = await axios.get(this.baseURL + '/isAuth', {
 				headers: {
 					authorization: `Bearer ${this.token}`,
 					},

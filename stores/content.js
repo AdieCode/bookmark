@@ -14,7 +14,8 @@ export const useContentStore = defineStore('content', {
       currentPage: 1,
       contentFetched: false,
       selected_content: {},
-      searched_content: []
+      searched_content: [],
+      baseURL: useRuntimeConfig().public.baseUrl || 'http://localhost:3001',
     };
   },
 
@@ -28,7 +29,7 @@ export const useContentStore = defineStore('content', {
 
       try {
         this.contentFetched = false;
-        const response = await axios.get("http://localhost:3001/content/get_manga_content", {
+        const response = await axios.get(`${this.baseURL}/content/get_manga_content`, {
           params: { page: page },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
         });
@@ -53,7 +54,7 @@ export const useContentStore = defineStore('content', {
 
       try {
         this.contentFetched = false;
-        const response = await axios.get("http://localhost:3001/content/get_anime_content", {
+        const response = await axios.get(`${this.baseURL}/content/get_anime_content`, {
           params: { page: page },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
         });
@@ -127,7 +128,7 @@ export const useContentStore = defineStore('content', {
 
       abortController = new AbortController(); 
       try {
-        const response = await axios.post("http://localhost:3001/content/get_manga_content_by_id",{
+        const response = await axios.post(`${this.baseURL}/content/get_manga_content_by_id`,{
             id: id
           });
 
@@ -155,7 +156,7 @@ export const useContentStore = defineStore('content', {
 
       abortController = new AbortController(); 
       try {
-        const response = await axios.post("http://localhost:3001/content/get_manga_content_specific",{
+        const response = await axios.post(`${this.baseURL}/content/get_manga_content_specific`,{
             search: text
           });
 
