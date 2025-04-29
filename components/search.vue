@@ -28,7 +28,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, watch, computed, onMounted } from "vue";
 const useToggles = useTogglesStore();
 const content = useContentStore();
 
@@ -36,19 +36,27 @@ const contentData = computed(() => content.searched_content);
 const searchText = ref("");
 const searchInput = ref(null);
 
-function toggleSearch() {
-    searchText.value = '';
-    content.searched_content = [];
-    useToggles.toggleSearchShow();
-}
+// --- Debounce Setup ---
+let debounceTimeout = null;
 
-watch(searchText, async (newValue) => {
-    if (newValue.trim().length > 4) {
-        await content.getContentByText(newValue); // Pass search text to API function
-    }
+watch(searchText, (newValue) => {
+  if (debounceTimeout) clearTimeout(debounceTimeout);
+
+  if (newValue.trim().length > 3) {
+    debounceTimeout = setTimeout(() => {
+      content.getContentByText(newValue);
+    }, 500);
+  } else {
+    content.searched_content = []; // optional: clear results if below 3 chars
+  }
 });
 
-// Automatically focus the input when useToggles.searchShow becomes true
+function toggleSearch() {
+  searchText.value = '';
+  content.searched_content = [];
+  useToggles.toggleSearchShow();
+}
+
 watch(
   () => useToggles.searchShow,
   (newValue) => {
@@ -58,13 +66,11 @@ watch(
   }
 );
 
-// Handle cases where the search bar is already visible when the page loads
 onMounted(() => {
   if (useToggles.searchShow && searchInput.value) {
     searchInput.value.focus();
   }
 });
-
 </script>
 
 <style scoped>
