@@ -1,6 +1,6 @@
 <template>
     <!-- tag search  -->
-    <div v-if="useExtraData.tags.length > 0" class="relative flex w-full items-start bg-white border-4 border-black rounded-xl -z-10 p-5">
+    <div v-if="useExtraData.tags.length > 0" class="bounce-up relative flex w-full items-start bg-white border-4 border-black rounded-xl -z-10 p-5">
       <!-- Tags area -->
       <div class="flex flex-wrap gap-1  flex-1">
         <div
@@ -51,5 +51,23 @@ const clearTags = () => {
 </script>
 
 <style lang="css" scoped>
+@keyframes bounceDown {
+    0% {
+    transform: translateY(0);
+    }
+    20% {
+    transform: translateY(10px);
+    }
+    60% {
+    transform: translateY(-4px);
+    }
+    100% {
+    transform: translateY(0);
+    }
+}
 
+
+.bounce-up {
+    animation: bounceDown 0.4s ease-out;
+}
 </style>
