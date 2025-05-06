@@ -15,7 +15,7 @@ await authStore.googleLogin(token)
 
 if (authStore.checkAuth()){
     // router.back();
-    router.push("/");
+    router.push("/mainpage");
 } else {
     router.push("/auth/sign-up");
 }

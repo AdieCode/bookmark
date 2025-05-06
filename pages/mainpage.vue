@@ -1,7 +1,5 @@
 <template>
   <div>
-    <GettingContent/>
-
     <!-- <div class="background h-full top bg-white filter blur-xl">
       <div
         v-for="(bubble, index) in bubbles"

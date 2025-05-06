@@ -7,7 +7,8 @@
             v-for="(item, index) in items" 
             :key="index" 
             class="p-1 px-2 bg-black text-white text-xs rounded font-semibold"
-            :class="{'!text-sm': bigger}"
+            :class="{'!text-sm': bigger, 'cursor-pointer': allowClick}"
+            @click="addTag(item)"
         >
             {{ item }}
         </div>
@@ -16,13 +17,21 @@
 
 <script setup>
 import { defineProps } from 'vue';
+const useExtraData = useExtraDataStore()
 
 const props = defineProps({
     width: { type: String, default: '100' },
     items: { type: Array, default: ['no items'] },
     maxHeight: { type: [String, Number], default: null }, // New prop for max height
     bigger: { type: Boolean, default: false },
+    allowClick: { type: Boolean, default: false },
 });
+
+function addTag(item) {
+    if (props.allowClick){
+        useExtraData.addTag(item);
+    }
+}
 </script>
 
 <style scoped>

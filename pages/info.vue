@@ -14,7 +14,7 @@
 
             <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0">
                 <!-- Title -->
-                <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span>
+                <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
                 <div class="flex flex-col mx-3 mt-1 ">
                     <span v-if="contentData.title.english && contentData.title.romaji && contentData.title.english.toLowerCase() === contentData.title.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
                         {{ contentData.title.english }} 
@@ -40,7 +40,7 @@
                 <!-- extra info -->
                 <div class="ml-3 my-6 font-medium">
                     <!-- tags -->
-                    <tags :items="contentData.genres" :bigger="true" width="300" />
+                    <tags :items="contentData.genres" :bigger="true" width="300" :allowClick="true" />
 
                     <!-- score and status -->
                     <div class="mb-4 flex gap-8">
@@ -135,7 +135,7 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="!contentData.characters && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
+        <div v-else-if="(contentData.characters === 'no characters found') && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
 
         <!-- recommendations -->
          <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
@@ -151,6 +151,10 @@
             </div>
         </div>
         <div v-else-if="!contentData.characters && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
+
+        <div class="h-32">
+
+        </div>
 
 
         <!-- concept of what I actually want this to look like -->

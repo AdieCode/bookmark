@@ -1,5 +1,8 @@
 <template>
     <div class="flex flex-col">
+
+        <!-- if user click's on a clickable tag  -->
+
         <title>Content Manging & Exploring</title>
         <div class="flex flex-row place-content-center justify-between mt-4 mb-4">
             <div class="w-40 cursor-pointer flex justify-center" @click="toMain">
@@ -29,7 +32,7 @@
                 </div>
             </div>
         </div>
-        <type-content-switcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
+        <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
         <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-1 mx-2">
             <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[620px] mx-auto"> <!-- Adjusted max width and gap -->
                 <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentDiscover" :class="{'bg-black text-white bounce-down': useToggles.content.discover}">
@@ -47,10 +50,17 @@
             </div>
         </div>
 
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center z-30">
-            <img src="../public/images/plus.png" alt="" class="w-8 h-8">
-            <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100 z-30 " @click="scrollToTop">
-                <img src="../public/images/icons8-up-arrow-100.png" alt="">
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-11/12 h-16 flex justify-between items-end z-30">
+            <tagSearch/>
+             <div></div>
+            <div class="w-16 h-16 relative ml-4">
+                <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" @click="scrollToTop">
+                    <img src="../public/images/icons8-up-arrow-100.png" alt="">
+                </div>
+
+                <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100">
+                    <img src="../public/images/plus.png" alt="" class="h-8 w-8">
+                </div>
             </div>
         </div>
 
@@ -100,7 +110,7 @@ function scrollToTop() {
 }
 
 function toMain() {
-    router.push("/");
+    router.push("/mainpage");
 }
 
 function toLogin() {

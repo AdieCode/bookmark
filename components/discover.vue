@@ -1,33 +1,38 @@
 <template>
-    <!-- <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
 
+  <!-- still have to look into this one -->
+
+  <!-- <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+
+    <ContentCard
+      v-for="(item, index) in contentData"
+      :key="index"
+      :data="item"
+    />
+
+    <div ref="observedDiv" class="min-h-46">
+    </div>
+  </div> -->
+
+
+  <div class="w-10/12 mx-auto">
+    <div class="w-full mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
       <ContentCard
-        v-for="(item, index) in contentData"
-        :key="index"
-        :data="item"
+      v-for="(item, index) in contentData"
+      :key="index"
+      :data="item"
       />
-
+      
+      
       <div ref="observedDiv" class="min-h-46">
       </div>
-    </div> -->
-    <!-- The target div you want to observe -->
-             <div class="w-10/12 mx-auto">
-                <div class="w-full mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-                    <ContentCard
-                        v-for="(item, index) in contentData"
-                        :key="index"
-                        :data="item"
-                    />
-
-
-                    <div ref="observedDiv" class="min-h-46">
-                    </div>
-                </div>
-             </div>
-
-    <div class="pb-40">
-      <GettingContent/>
     </div>
+  </div>
+  
+  <!-- The target div you want to observe for new content -->
+  <div class="pb-40">
+    <GettingContent/>
+  </div>
 </template>
   
 

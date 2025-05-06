@@ -28,26 +28,24 @@
             </div>
 
             <!-- Genres -->
-            <tags :items="data.genres" width="300" :max-height="52" class="mt-2"/>
+            <tags :items="data.genres" width="300" :max-height="60" class="mt-2"/>
 
             <!-- Manga Scores -->
-             <div class="flex justify-start">
+             <!-- <div class="flex justify-start">
 
                  <DividerLine text="scores" class="mt-6 mb-2"/>
              </div>
             <div class="flex flex-row items-center gap-6">
                 <div class="flex items-center">
-                    <!-- <img src="https://img.icons8.com/puffy/32/user.png" alt="user score" class="w-5 h-5"> -->
                     <span class="pl-1 text-black text-base font-normal">PL</span>
                     <span class="pl-1 text-black text-base font-extrabold">8.4</span>
                 </div>
 
                 <div class="flex items-center">
-                    <!-- <img src="https://img.icons8.com/parakeet-line/48/group.png" alt="users score" class="w-7"> -->
                     <span class="pl-1 text-black text-base font-normal">MAL</span>
                     <span class="pl-1 text-black text-base font-extrabold">9.1</span>
                 </div>
-            </div>
+            </div> -->
 
             
 

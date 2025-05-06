@@ -12,5 +12,8 @@ export default defineNuxtConfig({
       baseUrl: process.env.API_URL,
     }
   },
+  // components: [
+  //   { path: '~/components/search', pathPrefix: false },
+  // ],
   modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt']
 })
