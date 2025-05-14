@@ -113,7 +113,7 @@
         </div>
 
         <!-- relations -->
-        <div v-if="contentData.relations.length > 0 && currentSelector === 0" class="mt-10">
+        <div v-if="Array.isArray(contentData.relations) && contentData.relations.length > 0 && currentSelector === 0" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
@@ -128,7 +128,7 @@
          <div v-else-if="!(contentData.relations.length > 0) && currentSelector === 0" class="text-center text-2xl font-normal my-16">No relations found</div>
                      
         <!-- characters -->
-        <div v-if="contentData.characters && currentSelector === 1" class="mt-10">
+        <div v-if="Array.isArray(contentData.characters) && contentData.characters.length > 0 && currentSelector === 1" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
@@ -200,6 +200,8 @@ if (!(content.selected_content.length > 3) ){
 const contentData = computed(() => content.selected_content);
 
 function cleanDescription(input) {
+    if (!input) return 'No description found.';
+
     let result = input.replace(/<i>[\s\S]*?<\/i>/g, '');
     result = result.replace(/<I\s*\/?>/g, '');
     result = result.replace(/<\/b\s*\/?>/g, '');

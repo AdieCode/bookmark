@@ -59,7 +59,7 @@
 
         <filters v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage"/>
 
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-4 right-5 md:bottom-10 md:right-10 w-10/12 h-16 flex justify-between items-end z-10">
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-4 right-5 md:bottom-10 md:right-10 w-10/12 h-16 flex justify-between items-end z-30">
             <tagSearch/>
              <div></div>
             <div class="w-16 h-16 relative ml-4">
