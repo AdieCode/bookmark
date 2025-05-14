@@ -146,7 +146,7 @@
          <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
-                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
+                 <div class="mt-10 px-4 flex flex-row justify-center items-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <ContentCard
                     v-if="!useToggles.isMobile"
                         v-for="(item, index) in contentData.recommendations"
