@@ -3,27 +3,25 @@ import { defineStore } from 'pinia';
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
-	let session;
-	let token;
-
-	try {
-		session = useCookie('session');
-		token =  session.value.token || null;
-	} catch {
-		token =  null;
-		console.log('something went wrong when fetching cookie');
-	}
-
     return {
       isAuthenticated: false,
       user: null,
-      token: token,
+      token: null,
       error: null,
-	  baseURL: useRuntimeConfig().public.baseUrl || 'http://localhost:3001',
+	  baseURL: 'http://localhost:3001',
     };
   },
 
   actions: {
+	  	init() {
+			if (process.client) {
+			const session = useCookie('session');
+			this.token = session.value?.token || null;
+			}
+
+			const config = useRuntimeConfig();
+			this.baseURL = config.public.baseUrl || 'http://localhost:3001';
+		},
 		async login(email, password) {
 			try {
 				const { $api } = useNuxtApp();

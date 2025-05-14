@@ -116,7 +116,7 @@ const truncatedDescription = computed(() => {
   if (props.data?.description) {
 
     props.data.description = cleanDescription(props.data.description)
-    return props.data.description.length > 100
+    return props.data.description?.length > 100
       ? props.data.description.slice(0, 100) + "..."
       : props.data.description;
   }

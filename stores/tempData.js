@@ -106,7 +106,7 @@ export const useExtraDataStore = defineStore('extraData', {
             .filter(item => item.selected)
             .map(item => item.option)
 
-        if (selectedOptions.length > 0) {
+        if (selectedOptions?.length > 0) {
             selected[category] = selectedOptions
         }
         }

@@ -4,7 +4,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
     // // const isAuthenticated = true;
     
     // // Allow 404 page to show
-    // if (!to.matched.length)
+    // if (!to.matched?.length)
     //     return;
 
     // // if user is not logged in, redirect to '/' when not navigating to a public page.

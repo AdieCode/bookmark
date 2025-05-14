@@ -57,7 +57,7 @@
 import { ref } from 'vue';
 const content = useContentStore();
 const useToggles = useTogglesStore()
-if (content.data.length <= 0){
+if (content.data?.length <= 0){
   await content.getContentData();
 }
 
@@ -78,7 +78,7 @@ const handleIntersection = (entries) => {
 
 const yourFunction = () => {
   // The function to be executed when the div enters the viewport
-  if (content.data.length > 0){
+  if (content.data?.length > 0){
       content.nextContent();
   }
 };

@@ -8,6 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   const api = axios.create({
     baseURL: useRuntimeConfig().public.baseUrl
   });
+  auth.init()
 
   // Automatically attach token to every request
   api.interceptors.request.use((config) => {

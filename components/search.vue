@@ -17,14 +17,14 @@
                 </div>
             </div>
 
-            <div v-if="contentData.length > 0" class="mt-10 w-full flex flex-col gap-3 p-2 px-8 rounded-lg" @click.stop>
+            <div v-if="contentData?.length > 0" class="mt-10 w-full flex flex-col gap-3 p-2 px-8 rounded-lg" @click.stop>
                 <SearchCard
                     v-for="(item, index) in contentData"
                     :key="index"
                     :data="item"
                 />
             </div>
-            <div v-else-if="searchText.length > 4 && contentData.length === 0" class="text-lg font-bold text-center mt-10">
+            <div v-else-if="searchText?.length > 4 && contentData?.length === 0" class="text-lg font-bold text-center mt-10">
                No results found
             </div>
             <!-- <div v-else class="text-lg font-bold text-center mt-10">
@@ -49,7 +49,7 @@ let debounceTimeout = null;
 watch(searchText, (newValue) => {
   if (debounceTimeout) clearTimeout(debounceTimeout);
 
-  if (newValue.trim().length > 3) {
+  if (newValue.trim()?.length > 3) {
     debounceTimeout = setTimeout(() => {
       content.getContentByText(newValue);
     }, 700);

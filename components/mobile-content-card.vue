@@ -7,7 +7,7 @@
         </div>
 
         <!-- Title -->
-        <div class="flex flex-col mx-2 w-28 mt-1">
+        <div class="flex flex-col mx-2 w-24 mt-1">
             <span v-if="data.title?.english" 
                 class="text-stone-600 font-extrabold text-xs line-clamp-2"
                 :title="data.title?.english">
@@ -62,7 +62,7 @@ const truncatedDescription = computed(() => {
   if (props.data?.description) {
 
     props.data.description = cleanDescription(props.data.description)
-    return props.data.description.length > 100
+    return props.data.description?.length > 100
       ? props.data.description.slice(0, 100) + "..."
       : props.data.description;
   }

@@ -1,6 +1,6 @@
 <template>
     <!-- tag search  -->
-    <div v-if="useExtraData.tags.length > 0" class="bounce-up relative flex w-full items-start bg-white border-4 border-black rounded-xl z-30 p-5">
+    <div v-if="useExtraData.tags?.length > 0" class="bounce-up relative flex w-full items-start bg-white border-4 border-black rounded-xl z-30 p-5">
       <!-- Tags area -->
       <div class="flex flex-wrap gap-1  flex-1">
         <div
