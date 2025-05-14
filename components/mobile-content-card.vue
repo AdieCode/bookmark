@@ -8,16 +8,16 @@
 
         <!-- Title -->
         <div class="flex flex-col mx-2 w-28 mt-1">
-            <span v-if="data.title.english" 
+            <span v-if="data.title?.english" 
                 class="text-stone-600 font-extrabold text-xs line-clamp-2"
-                :title="data.title.english">
-                {{ data.title.english }}
+                :title="data.title?.english">
+                {{ data.title?.english }}
             </span>
 
-            <div v-else-if="data.title.romaji" class="flex flex-col">
+            <div v-else-if="data.title?.romaji" class="flex flex-col">
                 <span class="text-stone-600 font-extrabold text-xs line-clamp-2" 
-                    :title="data.title.romaji">
-                    {{ data.title.romaji }}
+                    :title="data.title?.romaji">
+                    {{ data.title?.romaji }}
                 </span>
             </div>
             

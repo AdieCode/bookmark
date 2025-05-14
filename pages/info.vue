@@ -16,21 +16,21 @@
                 <!-- Title -->
                 <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
                 <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles.isMobile}">
-                    <span v-if="contentData.title.english && contentData.title.romaji && contentData.title.english.toLowerCase() === contentData.title.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
-                        {{ contentData.title.english }} 
+                    <span v-if="contentData.title?.english && contentData.title?.romaji && contentData.title?.english.toLowerCase() === contentData.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
+                        {{ contentData.title?.english }} 
                         
                     </span>    
 
-                    <div v-else-if="contentData.title.english" class="flex flex-col">
+                    <div v-else-if="contentData.title?.english" class="flex flex-col">
                         <span class="text-black font-black text-xl">
-                            {{ contentData.title.english }} 
+                            {{ contentData.title?.english }} 
                             
                         </span>
-                        <span class="text-stone-800 font-black">{{ contentData.title.romaji }}</span>
+                        <span class="text-stone-800 font-black">{{ contentData.title?.romaji }}</span>
                     </div>
 
-                    <span v-else-if="contentData.title.romaji" class="text-black font-extrabold text-xl">
-                        {{ contentData.title.romaji }} 
+                    <span v-else-if="contentData.title?.romaji" class="text-black font-extrabold text-xl">
+                        {{ contentData.title?.romaji }} 
                         
                     </span>
                     <span v-else class="text-black font-extrabold text-xl">No title found</span>

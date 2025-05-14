@@ -19,8 +19,8 @@
 
             <!-- Title -->
             <div class="text-black font-bold text-md mb-2 line-clamp-1 w-72">
-                <div v-if="data.title.english" :title="data.title.english" >{{ data.title.english }}</div>
-                <div v-else-if="data.title.romaji" :title="data.title.romaji">{{ data.title.romaji }}</div>
+                <div v-if="data.title?.english" :title="data.title?.english" >{{ data.title?.english }}</div>
+                <div v-else-if="data.title?.romaji" :title="data.title?.romaji">{{ data.title?.romaji }}</div>
                 <div v-else>No title found</div>
             </div>
 
