@@ -1,6 +1,5 @@
 // store/auth.js
 import { defineStore } from 'pinia';
-import axios from 'axios';
 import { useRouter } from 'vue-router';
 import {useTogglesStore} from "~/stores/toggles.js";
 
@@ -12,6 +11,7 @@ export const useContentStore = defineStore('content', {
     return {
       data: [],
       currentPage: 1,
+      totalContent: 0,
       contentFetched: false,
       selected_content: {},
       searched_content: [],
@@ -21,6 +21,7 @@ export const useContentStore = defineStore('content', {
 
   actions: {
     async getMangaContent(page=1) {
+      const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); // Cancel the previous request
       }
@@ -29,11 +30,13 @@ export const useContentStore = defineStore('content', {
 
       try {
         this.contentFetched = false;
-        const response = await axios.get(`${this.baseURL}/content/get_manga_content`, {
+        const response = await $api.get(`${this.baseURL}/content/get_manga_content`, {
           params: { page: page },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
         });
 
+        console.log(response);
+        this.totalContent = response?.data?.data?.page?.total;
         this.contentFetched = true;
         return response;
       } catch (error) {
@@ -46,6 +49,7 @@ export const useContentStore = defineStore('content', {
     },
 
     async getAnimeContent(page=1) {
+      const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); // Cancel the previous request
       }
@@ -54,11 +58,12 @@ export const useContentStore = defineStore('content', {
 
       try {
         this.contentFetched = false;
-        const response = await axios.get(`${this.baseURL}/content/get_anime_content`, {
+        const response = await $api.get(`${this.baseURL}/content/get_anime_content`, {
           params: { page: page },  // Send 'page' as query parameter
           signal: abortController.signal // Pass the signal to axios
         });
 
+        this.totalContent = response?.data?.data?.page?.total;
         this.contentFetched = true;
         return response;
       } catch (error) {
@@ -122,13 +127,14 @@ export const useContentStore = defineStore('content', {
     },
 
     async getContentDataById(id) {
+      const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); 
       }
 
       abortController = new AbortController(); 
       try {
-        const response = await axios.post(`${this.baseURL}/content/get_manga_content_by_id`,{
+        const response = await $api.post(`${this.baseURL}/content/get_manga_content_by_id`,{
             id: id
           });
 
@@ -150,13 +156,15 @@ export const useContentStore = defineStore('content', {
     },
 
     async getContentByText(text) {
+      const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); 
       }
 
       abortController = new AbortController(); 
       try {
-        const response = await axios.post(`${this.baseURL}/content/get_manga_content_specific`,{
+        this.searched_content = [];
+        const response = await $api.post(`${this.baseURL}/content/get_manga_content_specific`,{
             search: text
           });
 

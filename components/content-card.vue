@@ -51,8 +51,8 @@
                 <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
             
-            <div class="mt-4 p-2">
-                <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - Planning to read</span>
+            <div class="mt-4 p-2">  
+                <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span>
             </div>
 
             <!-- Genres -->
@@ -81,7 +81,7 @@
 
 <script setup>
 import { ref } from 'vue';
-const toggle = useTogglesStore();
+const useToggles = useTogglesStore()
 const content = useContentStore();
 const router = useRouter();
 
@@ -94,10 +94,28 @@ function toggleInfo() {
     showInfo.value = !showInfo.value;
 }
 
+
+function cleanDescription(input) {
+    let result = input.replace(/<i>[\s\S]*?<\/i>/g, '');
+    result = result.replace(/<I\s*\/?>/g, '');
+    result = result.replace(/<\/b\s*\/?>/g, '');
+    result = result.replace(/<b\s*\/?>/g, '');   
+    result = result.replace(/<br\s*\/?>/g, '');
+    result = result.replace(/<Br\s*\/?>/g, '');
+    result = result.replace(/<bR\s*\/?>/g, '');
+    result = result.replace(/<BR\s*\/?>/g, '');
+    result = result.replace(/\(Source:.*?\)/g, '');
+    result = result.trim();
+
+    return result;
+}
+
 // Computed property to truncate the description if it's too long
 const truncatedDescription = computed(() => {
   // Check if the description exists before slicing it
   if (props.data?.description) {
+
+    props.data.description = cleanDescription(props.data.description)
     return props.data.description.length > 100
       ? props.data.description.slice(0, 100) + "..."
       : props.data.description;

@@ -15,14 +15,14 @@
             <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0">
                 <!-- Title -->
                 <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
-                <div class="flex flex-col mx-3 mt-1 ">
+                <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles.isMobile}">
                     <span v-if="contentData.title.english && contentData.title.romaji && contentData.title.english.toLowerCase() === contentData.title.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
                         {{ contentData.title.english }} 
                         
                     </span>    
 
                     <div v-else-if="contentData.title.english" class="flex flex-col">
-                        <span class="text-black font-black text-xl flex">
+                        <span class="text-black font-black text-xl">
                             {{ contentData.title.english }} 
                             
                         </span>
@@ -34,7 +34,6 @@
                         
                     </span>
                     <span v-else class="text-black font-extrabold text-xl">No title found</span>
-                    <span class="mt-1 mb-4 max-w-36 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black inline-block md:hidden ">Planning to read</span>
                 </div>
 
                 <!-- extra info -->
@@ -89,19 +88,25 @@
         </div>
 
         <!-- view toggler  -->
-        <div class="w-full flex justify-center gap-14 mt-36">
-            <div class="text-center text-5xl font-extrabold transition-all duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 }" 
+        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
+            <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 0 && useToggles.isMobile
+                }" 
                 @click="() => toggleSelector(0)">
                 Relations
             </div>
-            <div class="text-center text-5xl font-extrabold duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 1 }" 
+            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 1 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 1 && useToggles.isMobile
+                }" 
                 @click="() => toggleSelector(1)">
                 Characters
             </div>
-            <div class="text-center text-5xl font-extrabold duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 2 }" 
+            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 2 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 2 && useToggles.isMobile
+                }" 
                 @click="() => toggleSelector(2)">
                 Recommendations
             </div>
@@ -140,13 +145,20 @@
         <!-- recommendations -->
          <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
-             <div class="w-3/4 mx-auto flex">
-                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
+                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <ContentCard
+                    v-if="!useToggles.isMobile"
                         v-for="(item, index) in contentData.recommendations"
                         :key="index"
                         :data="item"
-                        />
+                    />
+                    <MobileContentCard
+                        v-else
+                        v-for="(item, index) in contentData.recommendations"
+                        :key="'mobile-' + index"
+                        :data="item"
+                    />
                 </div>
             </div>
         </div>
@@ -177,6 +189,7 @@
 <script setup>
 import { ref } from 'vue';
 const content = useContentStore();
+const useToggles = useTogglesStore();
 const route = useRoute();
 
 const currentSelector = ref(0);
@@ -185,7 +198,6 @@ if (!(content.selected_content.length > 3) ){
     await content.getContentDataById(route.query.id); 
 }
 const contentData = computed(() => content.selected_content);
-console.log(content.selected_content);
 
 function cleanDescription(input) {
     let result = input.replace(/<i>[\s\S]*?<\/i>/g, '');
@@ -234,6 +246,15 @@ watch(
 <style scoped>
 .paragraph-width{
     max-width: 750px;
+}
+
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 </style>

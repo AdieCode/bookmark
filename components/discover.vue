@@ -15,11 +15,28 @@
   </div> -->
 
 
-  <div class="w-10/12 mx-auto">
-    <div class="w-full mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+  <div class="w-10/12 mx-auto" :class="{'!w-full !mx-0': useToggles.isMobile}">
+
+    <!-- content found intdicator -->
+    <!-- <div class="w-full flex justify-end">
+      <div class="flex flex-col mr-32">
+        <div class="text-xl font-light">Content found</div> 
+        <div class="text-xl font-bold">{{ content.totalContent }}</div>
+      </div>
+    </div> -->
+
+    <div class="w-full mt-10 px-4 flex flex-row justify-center flex-wrap gap-8" :class="{'!gap-2 !p-1': useToggles.isMobile}">
       <ContentCard
+      v-if="!useToggles.isMobile"
       v-for="(item, index) in contentData"
       :key="index"
+      :data="item"
+      />
+
+      <MobileContentCard
+      v-else
+      v-for="(item, index) in contentData"
+      :key="'mobile-' + index"
       :data="item"
       />
       
@@ -39,11 +56,13 @@
 <script setup>
 import { ref } from 'vue';
 const content = useContentStore();
+const useToggles = useTogglesStore()
 if (content.data.length <= 0){
   await content.getContentData();
 }
 
 const contentData = computed(() => content.data);
+// console.log(contentData)
 // const contentData = ref(content.data);
 
 const observedDiv = ref(null); // Reference to the div to observe
@@ -52,7 +71,6 @@ const handleIntersection = (entries) => {
   entries.forEach((entry) => {
     if (entry.isIntersecting) {
       // The div is in the viewport
-      console.log('Div is in the viewport');
       yourFunction(); // Call your desired function here
     }
   });
@@ -64,6 +82,7 @@ const yourFunction = () => {
       content.nextContent();
   }
 };
+
 defineOptions({
   beforeRouteEnter(to, from, next) {
     next(() => {
@@ -71,6 +90,7 @@ defineOptions({
     });
   }
 });
+
 onMounted(() => {
   window.scrollTo(0,0);
 

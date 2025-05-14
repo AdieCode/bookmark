@@ -4,6 +4,7 @@ import { defineStore } from 'pinia';
 export const useTogglesStore = defineStore('toggles', {
   state: () => {
     return {
+      isMobile: false,
       contentType: 'Anime',
       searchShow: false,
       content: {
@@ -30,11 +31,37 @@ export const useTogglesStore = defineStore('toggles', {
         chapters: 0,
         isAdult: false,
         consumed_status: "untracked"
-      }
+      },
+      showFilters: false,
+      selectedFilter:[
+        {
+          type: 'genre',
+          selected: false
+        },
+        {
+          type: 'type',
+          selected: false
+        },
+        {
+          type: 'releaseStatus',
+          selected: false
+        },
+        {
+          type: 'country',
+          selected: false
+        },
+        {
+          type: 'year',
+          selected: false
+        }
+      ]
     };
   },
 
   actions: {
+    checkMobile() {
+      this.isMobile = window.innerWidth < 800;
+    },
     toggleContentType() {
       if (this.contentType === 'Anime') {
         this.contentType = "Manga";
@@ -77,6 +104,28 @@ export const useTogglesStore = defineStore('toggles', {
         }
       }
       console.log(this.selected_content)
+    },
+    toggleFilters() {
+      this.showFilters = !this.showFilters;
+      this.selectedFilter.forEach(f => f.selected = false);
+    },
+    getFilterStatus(type) {
+      const filter = this.selectedFilter.find(f => f.type === type);
+      return filter ? filter.selected : null;
+    },
+    toggleFilterStatus(type) {
+      const filter = this.selectedFilter.find(f => f.type === type);
+      if (filter) {
+        if (!filter.selected) {
+          this.selectedFilter.forEach(f => f.selected = false);
+          filter.selected = true;
+        } else {
+          filter.selected = false;
+        }
+      }
+    }, 
+    clearFilter(){
+      this.selectedFilter.forEach(f => f.selected = false);
     }
   },
 });

@@ -1,6 +1,5 @@
 // store/auth.js
 import { defineStore } from 'pinia';
-import axios from 'axios';
 
 export const useAuthStore = defineStore('auth', {
   state: () => {
@@ -26,14 +25,15 @@ export const useAuthStore = defineStore('auth', {
 
   actions: {
 		async login(email, password) {
-		try {
-			const response = await axios.post(this.baseURL + '/auth/login', { email, password });
-			const { message, token } = response.data;
-			if (process.client) {
-				useCookie('session', { 
-					expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
-				}).value = { token }; // Store the token in a cookie
-			}
+			try {
+				const { $api } = useNuxtApp();
+				const response = await $api.post(this.baseURL + '/auth/login', { email, password });
+				const { message, token } = response.data;
+				if (process.client) {
+					useCookie('session', { 
+						expires: new Date(Date.now() + 1000 * 60 * 60 * 24) // 24 hours from now
+					}).value = { token }; // Store the token in a cookie
+				}
 				// console.log(token)
 				this.token = token;
 				this.user = message;
@@ -47,7 +47,8 @@ export const useAuthStore = defineStore('auth', {
 
 		async signUp(username, email, password) {
 			try {
-				const response = await axios.post(this.baseURL + '/auth/sign-up', { username, email, password });
+				const { $api } = useNuxtApp();
+				const response = await $api.post(this.baseURL + '/auth/sign-up', { username, email, password });
 				const { message, token } = response.data;
 				if (process.client) {
 					useCookie('session').value = { token }; // Store the token in a cookie
@@ -91,8 +92,8 @@ export const useAuthStore = defineStore('auth', {
 
 		async checkAuth() {
 			try {
-				
-				const response = await axios.get(this.baseURL + '/isAuth', {
+				const { $api } = useNuxtApp();
+				const response = await $api.get(this.baseURL + '/isAuth', {
 				headers: {
 					authorization: `Bearer ${this.token}`,
 					},

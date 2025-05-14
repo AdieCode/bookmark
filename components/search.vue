@@ -1,10 +1,10 @@
 <template>
-    <div v-if="useToggles.searchShow" class="fixed top-0 left-0 z-40 w-full h-full flex justify-center bg-black bg-opacity-50 backdrop-blur-md" @click="toggleSearch">
+    <div v-if="useToggles.searchShow" class="fixed top-0 left-0 z-40 w-full h-full flex justify-center bg-black bg-opacity-50 backdrop-blur-md overflow-y-auto" @click="toggleSearch">
         <div class="z-50">
-            <div class="flex flex-row gap-3 items-center mt-10 bounce-down" @click.stop>  <!-- Add @click.stop to prevent event bubbling -->
-                <div class=" w-14 h-14 bg-white border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
+            <div class="flex flex-row gap-3 items-center mt-10 max-w-3xl px-6 bounce-down" @click.stop>  <!-- Add @click.stop to prevent event bubbling -->
+                <!-- <div class=" w-14 h-14 bg-white border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
                     <img src="https://img.icons8.com/pastel-glyph/64/filter.png" alt="Filter Icon" class="w-7 h-7 ">
-                </div>
+                </div> -->
                 <input ref="searchInput"
                         v-model="searchText" 
                         type="text" 
@@ -16,13 +16,20 @@
                     <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7 ">
                 </div>
             </div>
-            <div v-if="contentData" class="mt-10 w-full flex flex-col gap-3 justify-center p-8 rounded-lg" @click.stop>
+
+            <div v-if="contentData.length > 0" class="mt-10 w-full flex flex-col gap-3 p-2 px-8 rounded-lg" @click.stop>
                 <SearchCard
                     v-for="(item, index) in contentData"
                     :key="index"
                     :data="item"
                 />
             </div>
+            <div v-else-if="searchText.length > 4 && contentData.length === 0" class="text-lg font-bold text-center mt-10">
+               No results found
+            </div>
+            <!-- <div v-else class="text-lg font-bold text-center mt-10">
+               No results found
+            </div> -->
         </div>
     </div>
 </template>
@@ -45,7 +52,7 @@ watch(searchText, (newValue) => {
   if (newValue.trim().length > 3) {
     debounceTimeout = setTimeout(() => {
       content.getContentByText(newValue);
-    }, 500);
+    }, 700);
   } else {
     content.searched_content = []; // optional: clear results if below 3 chars
   }
@@ -88,7 +95,6 @@ onMounted(() => {
     transform: translateY(0);
     }
 }
-
 
 .bounce-down {
     animation: bounceDown 0.4s ease-out;

@@ -11,19 +11,26 @@
             </div>
 
             <!-- Desktop/Tablet Search Bar -->
-            <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100" @click="toggleSearch">
-                <span class="ml-3">Search for anime/manga here</span>
-                <div class="h-full w-14 border-l-4 border-black ml-auto flex justify-center items-center">
-                    <img src="../public/images/search.png" alt="" class="w-7 h-7">
+             <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="flex items-center gap-3">
+                <div v-if="isMainPage" class=" w-12 h-12  border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer" @click="useToggles.toggleFilters()">
+                    <img src="https://img.icons8.com/pastel-glyph/64/filter.png" alt="Filter Icon" class="w-7 h-7 ">
                 </div>
-            </div>
+
+                 <div v-if="!useToggles.isMobile" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100" @click="toggleSearch">
+                     <span class="ml-3">Search for anime/manga here</span>
+                     <div class="h-full w-14 border-l-4 border-black ml-auto flex justify-center items-center">
+                         <img src="../public/images/search.png" alt="" class="w-7 h-7">
+                     </div>
+                 </div>
+
+                <div v-else class=" md:hidden w-14 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer" @click="toggleSearch">
+                    <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
+                </div>
+             </div>
 
             <search/>
             
             <div class="flex justify-center items-center">
-                <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="md:hidden w-14 h-12 border-2 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer">
-                    <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
-                </div>
                 <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toLogin">
                     <img src="../public/images/User.png" alt="">
                 </div>
@@ -34,7 +41,7 @@
         </div>
         <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
         <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-1 mx-2">
-            <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[620px] mx-auto"> <!-- Adjusted max width and gap -->
+            <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[690px] mx-auto"> <!-- Adjusted max width and gap -->
                 <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentDiscover" :class="{'bg-black text-white bounce-down': useToggles.content.discover}">
                     Discover
                 </div>
@@ -50,7 +57,9 @@
             </div>
         </div>
 
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-3 right-3 md:bottom-10 md:right-10 w-11/12 h-16 flex justify-between items-end z-30">
+        <filters v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage"/>
+
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-4 right-5 md:bottom-10 md:right-10 w-10/12 h-16 flex justify-between items-end z-10">
             <tagSearch/>
              <div></div>
             <div class="w-16 h-16 relative ml-4">
@@ -88,11 +97,12 @@
 
 <script setup>
 import { ref } from 'vue';
+const useToggles = useTogglesStore()
 const router = useRouter();
 const route = useRoute();
-const useToggles = useTogglesStore()
 
 const isHompage = computed(() => route.path === '/');
+const isMainPage = computed(() => route.path === '/mainpage');
 const isLoginPage = computed(() => route.path === '/auth/login' || route.path === '/auth/sign-up');
 const isOauthPage = computed(() => 
     (route.path === '/google/callback' || route.path === '/github/callback') // && !!route.query.token
@@ -138,9 +148,28 @@ const bubbles = ref(Array.from({ length: 50 }, () => ({
   positionX: Math.random() * 100 // Random horizontal position between 0% and 100%
 })));
 
+onMounted(() => {
+  useToggles.checkMobile();
+  window.addEventListener('resize', useToggles.checkMobile);
+});
+
+// Cleanup on unmount
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', useToggles.checkMobile);
+});
+
 </script>
 
 <style lang="css" scoped>
+.scrollbar-hide {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
 @keyframes bounceDown {
     0% {
     transform: translateY(0);
