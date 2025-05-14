@@ -6,7 +6,7 @@
 		<div class="p-2 w-72 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="redirectToMianPage">
             Homepage
         </div>
-        <solid-button text="hello"/>
+        <!-- <solid-button text="hello"/> -->
     </div>
   </template>
   
