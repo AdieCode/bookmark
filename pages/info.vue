@@ -1,14 +1,15 @@
 <template>
     <div>
         <div class="w-full h-full fixed top-0 left-0 -z-10 bg-white bg-opacity-90 backdrop-blur-3xl">
-            <img :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover opacity-40 filter blur-2xl">
+            <img v-if="contentData.cover_image_url" :src="contentData.cover_image_url" alt="" class="move-around w-full h-full object-cover opacity-40 filter blur-2xl">
         </div>
 
         <div class="flex flex-col h-auto items-start justify-center md:flex-row mt-12 gap-4 relative">
 
 
             <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content">
-                <img :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover">
+                <img v-if="contentData?.cover_image_url" :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover">
+                <div v-else class="p-10 text-xl font-bold text-center">No image found</div>
             </div>
             <!-- </div> -->
 
@@ -117,11 +118,12 @@
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-                    <ContentCard
-                    v-for="(item, index) in contentData.relations"
-                        :key="index"
-                        :data="item"
-                    />
+                    <div v-for="(item, index) in contentData.relations" :key="index">
+                        <ContentCard
+                            v-if="item"
+                            :data="item"
+                        />
+                    </div>
                 </div>
              </div>
          </div>
@@ -132,11 +134,12 @@
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
-                    <CharacterCard
-                        v-for="(item, index) in contentData.characters"
-                        :key="index"
-                        :data="item"
-                    />
+                    <div v-for="(item, index) in contentData.characters" :key="index">
+                        <CharacterCard
+                            v-if="item"
+                            :data="item"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -146,19 +149,18 @@
          <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
-                 <div class="mt-10 px-4 flex flex-row justify-center items-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
-                    <ContentCard
-                    v-if="!useToggles.isMobile"
-                        v-for="(item, index) in contentData.recommendations"
-                        :key="index"
-                        :data="item"
-                    />
-                    <MobileContentCard
-                        v-else
-                        v-for="(item, index) in contentData.recommendations"
-                        :key="'mobile-' + index"
-                        :data="item"
-                    />
+                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
+                    <div v-for="(item, index) in contentData.recommendations" :key="index">
+                        <ContentCard
+                            v-if="!useToggles.isMobile && item"
+                            :data="item"
+                        />
+                        <MobileContentCard
+                            v-else-if="item"
+                            :data="item"
+                            :key="'mobile-' + index"
+                        />
+                    </div>
                 </div>
             </div>
         </div>
@@ -190,14 +192,15 @@
 import { ref } from 'vue';
 const content = useContentStore();
 const useToggles = useTogglesStore();
+const router = useRouter()
 const route = useRoute();
 
 const currentSelector = ref(0);
 
-if (!(content.selected_content?.length > 3) ){
+if (!(content?.selected_content.length > 0) ){
     await content.getContentDataById(route.query.id); 
 }
-const contentData = computed(() => content.selected_content);
+const contentData = computed(() => content?.selected_content);
 
 function cleanDescription(input) {
     if (!input) return 'No description found.';
@@ -214,6 +217,10 @@ function cleanDescription(input) {
     result = result.trim();
 
     return result;
+}
+
+function toPrevious() {
+  router.back()
 }
 
 function capitalizeStatus(status) {
@@ -243,9 +250,24 @@ watch(
     }
 );
 
+definePageMeta({
+  pageTransition: {
+    name: 'page'
+  }
+})
+
 </script>
 
 <style scoped>
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
 .paragraph-width{
     max-width: 750px;
 }
@@ -257,6 +279,37 @@ watch(
 
 .scrollbar-hide::-webkit-scrollbar {
   display: none; /* Chrome, Safari, Opera */
+}
+
+.move-around {
+    animation: moveAround 10s both infinite;
+}
+
+@keyframes moveAround {
+    0%{
+        transform: translateX(0px);
+        transform: translateY(0px);
+    }
+    10% {
+        transform: translateY(50px);
+        transform: translateX(20px);
+    }
+    25% {
+        transform: translateX(-50px);
+        transform: translateX(-20px); 
+    }
+    50% {
+        transform: translateY(-20px);
+        transform: translateX(40px); /* Moves bubble upwards */
+    }
+    75% {
+        transform: translateY(20px);
+        transform: translateX(-40px); /* Moves bubble upwards */
+    }
+    100% {
+        transform: translateX(0px);
+        transform: translateY(0px);
+    }
 }
 
 </style>

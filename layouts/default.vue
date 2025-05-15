@@ -140,7 +140,7 @@ function toLogin() {
 function toPrevious() {
     // router.push("/");
     router.back();
-    scrollToTop();
+    // scrollToTop();
 }
 
 function toggleSearch() {
