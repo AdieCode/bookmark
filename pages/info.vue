@@ -201,6 +201,7 @@ const router = useRouter()
 const route = useRoute();
 
 const currentSelector = ref(0);
+const searchShow = computed(() => useToggles.searchShow);
 
 if (!(content?.selected_content.length > 0) ){
     await content.getContentDataById(route.query.id); 
@@ -254,6 +255,16 @@ watch(
         }
     }
 );
+
+watch(searchShow, (visible) => {
+  if (visible) {
+    console.log('this ran')
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
 
 definePageMeta({
   pageTransition: {

@@ -62,6 +62,7 @@ if (content.data?.length <= 0){
 }
 
 const contentData = computed(() => content.data);
+const searchShow = computed(() => useToggles.searchShow);
 // console.log(contentData)
 // const contentData = ref(content.data);
 
@@ -103,6 +104,15 @@ onMounted(() => {
     observer.observe(observedDiv.value);
   }
 });
+
+watch(searchShow, (visible) => {
+  if (visible) {
+    console.log('this ran')
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
 
 </script>
 
