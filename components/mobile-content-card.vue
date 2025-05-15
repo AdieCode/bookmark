@@ -1,5 +1,5 @@
 <template>
-    <div class="w-28 relative" @click="moreInfo">
+    <div class="w-28 relative mb-2" @click="moreInfo">
         <!-- Manga cover card -->
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out" :class="{'h-32' : !data.cover_image_url}">
             <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">

@@ -116,12 +116,17 @@
         <!-- relations -->
         <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
-            <div class="w-3/4 mx-auto flex">
-                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+            <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
+                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <div v-for="(item, index) in contentData.relations" :key="index">
                         <ContentCard
-                            v-if="item"
+                            v-if="!useToggles.isMobile && item"
                             :data="item"
+                        />
+                        <MobileContentCard
+                            v-else-if="item"
+                            :data="item"
+                            :key="'mobile-' + index"
                         />
                     </div>
                 </div>
@@ -132,8 +137,8 @@
         <!-- characters -->
         <div v-if="Array.isArray(contentData.characters) && contentData.characters?.length > 0 && currentSelector === 1" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
-            <div class="w-3/4 mx-auto flex">
-                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full">
+            <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
+                <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <div v-for="(item, index) in contentData.characters" :key="index">
                         <CharacterCard
                             v-if="item"
