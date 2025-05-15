@@ -32,7 +32,7 @@
       <div
         v-if="contentData?.length > 0"
         class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto h-[560px] overflow-y-scroll"
-        :class="useToggles.isMobile ? 'w-[300px]' : 'w-[460px]'"
+        :class="useToggles.isMobile ? 'w-[310px] !h-[470px]' : 'w-[460px]'"
       >
         <SearchCard
           v-for="(item, index) in contentData"
