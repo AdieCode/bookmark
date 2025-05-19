@@ -15,7 +15,7 @@
             <div
             v-for="(option, index) in options"
             :key="index"
-            class="p-1 px-2 m-1 flex items-center gap-1 cursor-pointerf rounded-lg whitespace-nowrap"
+            class="p-1 px-2 m-1 flex items-center gap-1 cursor-pointer rounded-lg whitespace-nowrap "
             :class="{'bg-gray-300': option.selected,
                     'hover:bg-gray-400': !useToggles.isMobile
             }"

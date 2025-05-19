@@ -5,6 +5,11 @@ export const useTogglesStore = defineStore('toggles', {
   state: () => {
     return {
       isMobile: false,
+      notification: {
+        isVisible: false,
+        text: "",
+        type: 0
+      },
       contentType: 'Anime',
       searchShow: false,
       content: {
@@ -62,6 +67,7 @@ export const useTogglesStore = defineStore('toggles', {
     checkMobile() {
       this.isMobile = window.innerWidth < 880;
     },
+
     toggleContentType() {
       if (this.contentType === 'Anime') {
         this.contentType = "Manga";
@@ -70,33 +76,39 @@ export const useTogglesStore = defineStore('toggles', {
       }
       console.log(this.contentType);
     },
+
     toggleSearchShow() {
       this.searchShow = !this.searchShow;
     },
+
     toggleContentDiscover() {
       this.content.discover = true;
       this.content.planningToRead = false;
       this.content.reading = false;
       this.content.completed = false;
     },
+
     toggleContentPlanningToRead() {
       this.content.discover = false;
       this.content.planningToRead = true;
       this.content.reading = false;
       this.content.completed = false;
     },
+
     toggleContentReading() {
       this.content.discover = false;
       this.content.planningToRead = false;
       this.content.reading = true;
       this.content.completed = false;
     },
+
     toggleContentCompleted() {
       this.content.discover = false;
       this.content.planningToRead = false;
       this.content.reading = false;
       this.content.completed = true;
     },
+
     mapNewContentData(data) {
       for (const key in data) {
         if (data.hasOwnProperty(key) && this.selected_content.hasOwnProperty(key)) {
@@ -105,14 +117,17 @@ export const useTogglesStore = defineStore('toggles', {
       }
       console.log(this.selected_content)
     },
+
     toggleFilters() {
       this.showFilters = !this.showFilters;
       this.selectedFilter.forEach(f => f.selected = false);
     },
+
     getFilterStatus(type) {
       const filter = this.selectedFilter.find(f => f.type === type);
       return filter ? filter.selected : null;
     },
+
     toggleFilterStatus(type) {
       const filter = this.selectedFilter.find(f => f.type === type);
       if (filter) {
@@ -124,8 +139,19 @@ export const useTogglesStore = defineStore('toggles', {
         }
       }
     }, 
+
     clearFilter(){
       this.selectedFilter.forEach(f => f.selected = false);
+    },
+
+    setNotification(text, type = 0) {
+      this.notification.text = text;
+      this.notification.type = type;
+      this.notification.isVisible = true;
+    },
+
+    hideNotification() {
+      this.notification.isVisible = false;
     }
   },
 });

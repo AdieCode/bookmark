@@ -1,7 +1,7 @@
 // store/auth.js
 import { defineStore } from 'pinia';
 import { useRouter } from 'vue-router';
-import {useTogglesStore} from "~/stores/toggles.js";
+import { useTogglesStore } from "~/stores/toggles.js";
 
 
 let abortController = null;
@@ -127,6 +127,7 @@ export const useContentStore = defineStore('content', {
     },
 
     async getContentDataById(id) {
+      const toggle = useTogglesStore();
       const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); 
@@ -134,10 +135,12 @@ export const useContentStore = defineStore('content', {
 
       abortController = new AbortController(); 
       try {
+        toggle.setNotification('fetching content', 0);
         const response = await $api.post(`${this.baseURL}/content/get_manga_content_by_id`,{
             id: id
-          });
+        });
 
+        toggle.hideNotification();
         this.selected_content = response.data.data.media[0];
       } catch (error) {
         if (error.name === 'CanceledError') {

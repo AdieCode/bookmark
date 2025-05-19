@@ -83,6 +83,15 @@
             </div>
         </div>
 
+        <div v-if="useToggles.notification.isVisible" class="fixed bottom-4 left-5 md:bottom-10 md:left-10 p-4 bg-white border-4 border-black rounded-2xl flex justify-between items-center gap-3 z-30">
+            <img v-if="useToggles.notification.type === 0" width="30" height="30" src="../public/gif/icons8-waiting.gif" alt="info--v1"/>
+            <img v-if="useToggles.notification.type === 1" width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/info--v1.png" alt="info--v1"/>
+            <img v-if="useToggles.notification.type === 2" width="30" height="30" src="https://img.icons8.com/ios-filled/50/box-important--v1.png" alt="box-important--v1"/>
+            <div class="text-xl font-bold">
+                {{ useToggles.notification.text }}
+            </div>
+        </div>
+
     </div>
 
     <!-- <div class="background h-full top bg-white filter blur-xl">
@@ -117,6 +126,7 @@ const isLoginPage = computed(() => route.path === '/auth/login' || route.path ==
 const isOauthPage = computed(() => 
     (route.path === '/google/callback' || route.path === '/github/callback') // && !!route.query.token
 );
+
 
 const isInfoPage = computed(() => 
     (route.path === '/info') // && !!route.query.token
@@ -197,11 +207,22 @@ onBeforeUnmount(() => {
     }
 }
 
+@keyframes sway {
+    0% {
+    transform: translateY(0);
+    }
+    50% {
+    transform: translateY(7px);
+    }
+    100% {
+    transform: translateY(-4px);
+    }
+}
+
 
 .bounce-down {
     animation: bounceDown 0.2s ease-out forwards;
 }
-
 
 .background {
     position: fixed;

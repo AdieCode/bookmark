@@ -45,6 +45,7 @@
 
 <script setup>
 import { ref } from 'vue';
+const toggle = useTogglesStore();
 
 const config = useRuntimeConfig();
 const router = useRouter()
@@ -57,10 +58,12 @@ const googleOAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=1092
 const githubOAuthUrl = "https://github.com/login?client_id=Ov23liwFfm4hn8BaO6bS&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3DOv23liwFfm4hn8BaO6bS%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fauth%252Fgithub%252Fcallback";
 
 function redirectToGoogle() {
+    toggle.setNotification('Google login', 0);
     window.location.href = googleOAuthUrl;
 }
 
 function redirectToGithub() {
+    toggle.setNotification('Github login', 0);
     window.location.href = githubOAuthUrl;
 }
 
