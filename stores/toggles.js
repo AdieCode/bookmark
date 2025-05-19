@@ -60,7 +60,7 @@ export const useTogglesStore = defineStore('toggles', {
 
   actions: {
     checkMobile() {
-      this.isMobile = window.innerWidth < 800;
+      this.isMobile = window.innerWidth < 880;
     },
     toggleContentType() {
       if (this.contentType === 'Anime') {

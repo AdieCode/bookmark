@@ -9,7 +9,7 @@
 
       <!-- Search Bar Wrapper (fixed width or max-w) -->
       <div class="w-[400px] m-auto bounce-down"
-          :class="{'!w-[300px]': useToggles.isMobile}">
+          :class="{'!w-[290px]': useToggles.isMobile}">
         <div class="flex items-center w-full">
           <input
             ref="searchInput"
