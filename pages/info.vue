@@ -258,7 +258,6 @@ watch(
 
 watch(searchShow, (visible) => {
   if (visible) {
-    console.log('this ran')
     document.body.style.overflow = 'hidden'
   } else {
     document.body.style.overflow = ''

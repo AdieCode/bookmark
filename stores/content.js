@@ -167,9 +167,11 @@ export const useContentStore = defineStore('content', {
       abortController = new AbortController(); 
       try {
         this.searched_content = [];
-        const response = await $api.post(`${this.baseURL}/content/get_manga_content_specific`,{
-            search: text
-          });
+        const response = await $api.get(`${this.baseURL}/content/get_content_by_search`,{
+            params: {
+              search: text
+            }
+        });
 
         this.searched_content = response.data.data.media;
       } catch (error) {
