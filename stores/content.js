@@ -136,7 +136,7 @@ export const useContentStore = defineStore('content', {
       abortController = new AbortController(); 
       try {
         toggle.setNotification('fetching content', 0);
-        const response = await $api.post(`${this.baseURL}/content/get_manga_content_by_id`,{
+        const response = await $api.post(`${this.baseURL}/content/get_content_by_id`,{
             id: id
         });
 
