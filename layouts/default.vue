@@ -38,7 +38,7 @@
              </div>
 
              <div v-if="!useToggles.isMobile" class="flex justify-center items-center">
-                 <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toLogin">
+                 <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toUserPage">
                      <img src="../public/images/User.png" alt="">
                  </div>
                  <div v-if="isLoginPage || isInfoPage" class="p-2 mr-4 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="toPrevious">
