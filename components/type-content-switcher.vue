@@ -6,8 +6,8 @@
       <div
           class="font-medium text-lg transition-all duration-100"
           :class="{
-          '!font-black !text-2xl': toggle.contentType === 'Anime',
-          '!text-gray-500': toggle.contentType !== 'Anime'
+          '!font-black !text-2xl': useToggles.contentType === 'Anime',
+          '!text-gray-500': useToggles.contentType !== 'Anime'
         }"
       >
         Anime
@@ -17,8 +17,8 @@
       <div
           class="w-14 h-8 rounded-full border-4 border-black flex items-center transition-all duration-100"
           :class="{
-          'justify-start': toggle.contentType === 'Anime',
-          'justify-end': toggle.contentType === 'Manga'
+          'justify-start': useToggles.contentType === 'Anime',
+          'justify-end': useToggles.contentType === 'Manga'
         }"
       >
         <div
@@ -30,8 +30,8 @@
       <div
           class="font-medium text-lg transition-all duration-100"
           :class="{
-          '!font-black !text-2xl': toggle.contentType === 'Manga',
-          '!text-gray-500': toggle.contentType !== 'Manga'
+          '!font-black !text-2xl': useToggles.contentType === 'Manga',
+          '!text-gray-500': useToggles.contentType !== 'Manga'
         }"
       >
         Manga
@@ -42,11 +42,13 @@
 
 
 <script setup>
-const toggle = useTogglesStore();
+const useExtra = useExtraDataStore();
+const useToggles = useTogglesStore();
 const content = useContentStore();
 
 async function toggleContentType() {
-  toggle.toggleContentType();
+  useToggles.toggleContentType();
+  useExtra.loadFilters(useToggles.contentType);
   content.data = [];
   await content.getContentData(1);
 }

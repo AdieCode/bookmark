@@ -20,6 +20,9 @@ export const useContentStore = defineStore('content', {
   },
 
   actions: {
+    clearData(){
+      this.data = [];
+    },
     async getMangaContent(page=1) {
       const { $api } = useNuxtApp();
       if (abortController) {
@@ -35,7 +38,6 @@ export const useContentStore = defineStore('content', {
           signal: abortController.signal // Pass the signal to axios
         });
 
-        console.log(response);
         this.totalContent = response?.data?.data?.page?.total;
         this.contentFetched = true;
         return response;
@@ -99,21 +101,97 @@ export const useContentStore = defineStore('content', {
       }
     },
 
+    async getMangaContentByFilters(filters, page=1) {
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      this.contentFetched = false;
+      try {
+        const response = await $api.post(`${this.baseURL}/content/get_manga_content_by_filters`,{
+            filters: filters,
+            page: page
+        });
+        console.log('manga filter getting')
+
+        this.totalContent = response?.data?.data?.page?.total;
+        this.contentFetched = true;
+        return response;
+      } catch (error) {
+        this.contentFetched = true;
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.error('API Error:', error);
+          // router.push('/error');
+        }
+      }
+    },
+
+    async getAnimeContentByFilters(filters, page=1) {
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      this.contentFetched = false;
+      try {
+        const response = await $api.post(`${this.baseURL}/content/get_anime_content_by_filters`,{
+            filters: filters,
+            page: page
+        });
+
+        this.totalContent = response?.data?.data?.page?.total;
+        this.contentFetched = true;
+        return response;
+      } catch (error) {
+        this.contentFetched = true;
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.error('API Error:', error);
+          // router.push('/error');
+        }
+      }
+    },
+
     async getNextPageData() {
       if (abortController) {
         abortController.abort(); // Cancel the previous request
       }
+      const useExtra = useExtraDataStore();
       const toggle = useTogglesStore();
       abortController = new AbortController(); // Create a new controller for this request
+
+      const filters = useExtra.reqFilters;
+
+        const hasFilters =
+        filters &&
+        typeof filters === 'object' &&
+        Object.values(filters).some(
+          v => v !== undefined && v !== null && v !== '' && !(Array.isArray(v) && v.length === 0)
+        );
 
       try {
         let response;
         if (toggle.contentType === "Manga") {
-          response = await this.getMangaContent(this.currentPage);
+          if (hasFilters){
+            response = await this.getMangaContentByFilters(filters, this.currentPage);
+          } else {
+            response = await this.getMangaContent(this.currentPage);
+          }
         }
 
         if (toggle.contentType === "Anime") {
-          response = await this.getAnimeContent(this.currentPage);
+          if (hasFilters){
+            response = await this.getAnimeContentByFilters(filters, this.currentPage);
+          } else {
+
+            response = await this.getAnimeContent(this.currentPage);
+          }
         }
 
         return response.data.data.media;
@@ -143,6 +221,45 @@ export const useContentStore = defineStore('content', {
         toggle.hideNotification();
         this.selected_content = response.data.data.media[0];
       } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.error('API Error:', error);
+          // router.push('/error');
+        }
+      }
+    },
+
+    async getContentDataByFilters(filters) {
+      const toggle = useTogglesStore();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      this.currentPage = 1;
+      this.contentFetched = false;
+      this.data = [];
+      try {
+        let response;
+
+        if (toggle.contentType === "Manga") {
+          response = await this.getMangaContentByFilters(filters, this.currentPage);
+        }
+
+        if (toggle.contentType === "Anime") {
+          response = await this.getAnimeContentByFilters(filters, this.currentPage);
+        }
+        // const response = await $api.post(`${this.baseURL}/content/get_content_by_filters`,{
+        //     filters: filters,
+        //     page: this.currentPage
+        // });
+
+        this.totalContent = response?.data?.data?.page?.total;
+        this.contentFetched = true;
+        this.data = response.data.data.media;
+      } catch (error) {
+        this.contentFetched = true;
         if (error.name === 'CanceledError') {
           console.log("Previous request canceled");
         } else {

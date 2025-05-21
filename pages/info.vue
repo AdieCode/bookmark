@@ -148,7 +148,7 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="(contentData.characters === 'no characters found') && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
+        <div v-else-if="!contentData?.characters?.length > 0 && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
 
         <!-- recommendations -->
          <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
@@ -169,7 +169,7 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="!contentData.characters && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
+        <div v-else-if="contentData?.recommendations?.length > 0 && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
 
         <div class="h-32">
 

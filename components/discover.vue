@@ -48,7 +48,9 @@
   
   <!-- The target div you want to observe for new content -->
   <div class="pb-40">
-    <GettingContent/>
+    <client-only>
+      <GettingContent v-if="!content.contentFetched"/>
+    </client-only>
   </div>
 </template>
   
@@ -57,12 +59,10 @@
 import { ref } from 'vue';
 const content = useContentStore();
 const useToggles = useTogglesStore()
-if (content.data?.length <= 0){
-  await content.getContentData();
-}
 
 const contentData = computed(() => content.data);
 const searchShow = computed(() => useToggles.searchShow);
+const mounted = ref(false);
 // console.log(contentData)
 // const contentData = ref(content.data);
 
@@ -80,6 +80,7 @@ const handleIntersection = (entries) => {
 const yourFunction = () => {
   // The function to be executed when the div enters the viewport
   if (content.data?.length > 0){
+      console.log('fetching')
       content.nextContent();
   }
 };
@@ -92,8 +93,13 @@ defineOptions({
   }
 });
 
-onMounted(() => {
+onMounted(async () => {
   window.scrollTo(0,0);
+  mounted.value = true;
+
+  if (content.data?.length <= 0){
+    await content.getContentData();
+  }
 
   const observer = new IntersectionObserver(handleIntersection, {
     root: null, // Sets the viewport as the root
@@ -102,6 +108,14 @@ onMounted(() => {
 
   if (observedDiv.value) {
     observer.observe(observedDiv.value);
+  }
+});
+
+watch(() => content.contentType, async () => {
+  await nextTick(); // Wait for DOM update
+  if (observer && observedDiv.value) {
+    observer.disconnect(); // Remove old observer
+    observer.observe(observedDiv.value); // Observe new element
   }
 });
 

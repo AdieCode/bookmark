@@ -1,12 +1,13 @@
 <template>
     <div v-if="useToggles.showFilters" class="m-auto mt-8">
         <!-- filter options  -->
-        <div class="flex justify-center gap-2 flex-wrap" ref="filtersRef">
+        <div v-if="useToggles.contentType === 'Manga'" class="flex justify-center gap-2 flex-wrap" ref="filtersRef">
             <FilterOption 
             name="Genre" 
             :options="useExtraData.filters.genres" 
             :showDorpDown="useToggles.getFilterStatus('genre')"
             :toggleFunction="() => {useToggles.toggleFilterStatus('genre')}"
+            :single="false"
             category="genres"
             />
 
@@ -16,6 +17,7 @@
             :showDorpDown="useToggles.getFilterStatus('type')"
             :toggleFunction="() => {useToggles.toggleFilterStatus('type')}"
             category="type"
+            :single="true"
             />   
 
             <FilterOption 
@@ -24,14 +26,7 @@
             :showDorpDown="useToggles.getFilterStatus('releaseStatus')"
             :toggleFunction="() => {useToggles.toggleFilterStatus('releaseStatus')}"
             category="publishingStatus"
-            />  
-
-            <FilterOption 
-            name="Country" 
-            :options="useExtraData.filters.countryOfOrigin" 
-            :showDorpDown="useToggles.getFilterStatus('country')"
-            :toggleFunction="() => {useToggles.toggleFilterStatus('country')}"
-            category="countryOfOrigin"
+            :single="true"
             />  
 
             <FilterOption 
@@ -40,8 +35,72 @@
             :showDorpDown="useToggles.getFilterStatus('year')"
             :toggleFunction="() => {useToggles.toggleFilterStatus('year')}"
             category="year"
+            :single="true"
             />  
 
+            <FilterOption 
+            name="Sort" 
+            :options="useExtraData.filters.sort" 
+            :showDorpDown="useToggles.getFilterStatus('sort')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('sort')}"
+            category="sort"
+            :single="true"
+            />  
+
+            <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white" @click="searchFilters">
+              Filter 
+            </div>
+        </div>
+
+        <div v-if="useToggles.contentType === 'Anime'" class="flex justify-center gap-2 flex-wrap" ref="filtersRef">
+            <FilterOption 
+            name="Genre" 
+            :options="useExtraData.filters.genres" 
+            :showDorpDown="useToggles.getFilterStatus('genre')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('genre')}"
+            :single="false"
+            category="genres"
+            />
+
+            <FilterOption 
+            name="Type" 
+            :options="useExtraData.filters.type" 
+            :showDorpDown="useToggles.getFilterStatus('type')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('type')}"
+            category="type"
+            :single="true"
+            />   
+
+            <FilterOption 
+            name="Release status" 
+            :options="useExtraData.filters.status" 
+            :showDorpDown="useToggles.getFilterStatus('releaseStatus')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('releaseStatus')}"
+            category="status"
+            :single="true"
+            />  
+
+            <FilterOption 
+            name="Year" 
+            :options="useExtraData.filters.year" 
+            :showDorpDown="useToggles.getFilterStatus('year')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('year')}"
+            category="year"
+            :single="true"
+            />  
+
+            <FilterOption 
+            name="Sort" 
+            :options="useExtraData.filters.sort" 
+            :showDorpDown="useToggles.getFilterStatus('sort')"
+            :toggleFunction="() => {useToggles.toggleFilterStatus('sort')}"
+            category="sort"
+            :single="true"
+            />  
+
+            <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white" @click="searchFilters">
+              Filter 
+            </div>
         </div>
     </div>
 
@@ -49,6 +108,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
+const useContent = useContentStore();
 const useExtraData = useExtraDataStore()
 const useToggles = useTogglesStore()
 const filtersRef = ref(null);
@@ -57,7 +117,14 @@ const props = defineProps({
     width: { type: String, default: '100' },
 });
 
+async function searchFilters() {
+  useExtraData.getSelectedFilters();
+  useToggles.clearFilter() 
 
+  const reqFilters = useExtraData.reqFilters;
+  useContent.clearData();
+  await useContent.getContentDataByFilters(reqFilters);
+}
 
 const handleClickOutside = (event) => {
   if (filtersRef.value && !filtersRef.value.contains(event.target) && useToggles.showFilters) {

@@ -19,7 +19,7 @@
             :class="{'bg-gray-300': option.selected,
                     'hover:bg-gray-400': !useToggles.isMobile
             }"
-            @click="useExtraData.toggleFilter(category, option.option)"
+            @click="useExtraData.toggleFilter(category, option.option, single)"
             >
                 <div class="w-4 h-4 border-4 border-black rounded-md" :class="{'bg-black': option.selected}"></div>
                 <span class="mb-1 font-bold">{{ option.option }}</span>
@@ -40,7 +40,8 @@ const props = defineProps({
     options: { type: Array, default: [] },
     showDorpDown: { type: Boolean, default: true },
     toggleFunction: { type: Function, default: () => {} },
-    category: { type: String, default: '' }
+    category: { type: String, default: '' },
+    single: { type: Boolean, default: true }
 });
 
 function toggleDropDown() {

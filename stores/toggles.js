@@ -58,6 +58,10 @@ export const useTogglesStore = defineStore('toggles', {
         {
           type: 'year',
           selected: false
+        },
+        {
+          type: 'sort',
+          selected: false
         }
       ]
     };
@@ -74,7 +78,6 @@ export const useTogglesStore = defineStore('toggles', {
       } else {
         this.contentType = "Anime";
       }
-      console.log(this.contentType);
     },
 
     toggleSearchShow() {
