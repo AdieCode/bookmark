@@ -14,7 +14,7 @@
             <!-- </div> -->
 
             <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0"
-                   :class="{'w-11/12': useToggles?.isMobile}">
+                   :class="{'!w-11/12': useToggles?.isMobile}">
                 <!-- Title -->
                 <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
                 <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles?.isMobile}">
@@ -28,7 +28,11 @@
                             {{ contentData.title?.english }} 
                             
                         </span>
-                        <span class="text-stone-800 font-black">{{ contentData.title?.romaji }}</span>
+                        <span class="text-stone-800 font-black"
+                            :class="{'!font-semibold': useToggles?.isMobile}"
+                            >
+                            {{ contentData.title?.romaji }}
+                        </span>
                     </div>
 
                     <span v-else-if="contentData.title?.romaji" class="text-black font-extrabold text-xl">
