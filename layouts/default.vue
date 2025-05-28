@@ -87,6 +87,7 @@
             <img v-if="useToggles.notification.type === 0" width="30" height="30" src="../public/gif/icons8-waiting.gif" alt="info--v1"/>
             <img v-if="useToggles.notification.type === 1" width="30" height="30" src="https://img.icons8.com/ios-glyphs/30/info--v1.png" alt="info--v1"/>
             <img v-if="useToggles.notification.type === 2" width="30" height="30" src="https://img.icons8.com/ios-filled/50/box-important--v1.png" alt="box-important--v1"/>
+            <img v-if="useToggles.notification.type === 3"width="30" height="30" src="https://img.icons8.com/fluency-systems-regular/48/clipboard--v1.png" alt="clipboard--v1"/>
             <div class="text-xl font-bold">
                 {{ useToggles.notification.text }}
             </div>

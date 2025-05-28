@@ -43,9 +43,19 @@
                     <tags :items="contentData.genres" :bigger="true" width="300" :allowClick="true" />
 
                     <!-- score and status -->
-                    <div class="mb-4 flex gap-8">
+                    <div class="mb-4 flex gap-8"
+                         :class="{'!gap-5': useToggles.isMobile}">
                         <div v-if="contentData.average_score" class="mt-2">
-                            <div class="mt-2 mb-1">Score <span class="font-black pl-1">{{contentData.average_score}}</span></div>
+                            <div class="mt-2 mb-1"
+                                :class="{'text-sm font-light': useToggles.isMobile}"
+                                >
+                                    Score 
+                                    <span class="font-black pl-1"
+                                        :class="{'font-semibold': useToggles.isMobile}"
+                                        >
+                                        {{contentData.average_score}}
+                                    </span>
+                            </div>
                             <Score :score="contentData.average_score"/>
                         </div>
                         <div v-if="!contentData.average_score" class="mt-2">
@@ -53,25 +63,40 @@
                             <Score :score="0"/>
                         </div>
                         <div class="mt-4">
-                            <div>Release status</div>
+                            <div :class="{'text-sm font-light': useToggles.isMobile}">
+                                Release status
+                            </div>
                             <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.status)}}</div>
                         </div>
                         <div class="mt-4">
-                            <div>Content type</div>
+                            <div :class="{'text-sm font-light': useToggles.isMobile}">
+                                Content type
+                            </div>
                             <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.type)}}</div>
                         </div>
                     </div>
-                    <span class="text-xl">
+                    <span v-if="!useToggles.isMobile" class="text-xl">
                         Chp's 
                         <span class="font-black pl-1">{{ contentData.chapters }}</span>
                     </span>
 
-
-                    <span v-if="contentData.volumes" class="text-xl">
+                    <span v-if="contentData.volumes && !useToggles.isMobile" class="text-xl">
                         <span class="px-4">|</span>
                         Vol's
                         <span class="font-black pl-1">{{ contentData.volumes }}</span>
                     </span>
+
+                    <div v-if="useToggles.isMobile" class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
+                        <!-- Anime  -->
+                        <span v-if="contentData.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ contentData.episodes }}</span>
+
+                        <!-- Manga  -->
+                        <span v-if="contentData.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ contentData.chapters }}</span>
+                        <span v-if="contentData.type === 'MANGA' && contentData.volumes"><span class="font-extralight">Vol's </span>{{ contentData.volumes }}</span>
+
+                    </div>
+
+
                 </div>
                 <!-- description -->
                 <div class="text-black text-base font-semibold mt-2 mx-4 paragraph-width">
@@ -81,7 +106,10 @@
                 
             </div>
 
-            <div class="cursor-pointer sticky top-20" @click="toPrevious">
+            <div v-if="!useToggles.isMobile"
+                class="cursor-pointer sticky top-20" 
+                @click="toPrevious"
+                >
                 <img class="w-12 pr-2" src="../public/bookmark_icons/bookmark.png" alt="" srcset="">
                     <!-- Add {{ contentData.type.toLowerCase() }} to list -->
             </div>
@@ -89,7 +117,7 @@
         </div>
 
         <!-- view toggler  -->
-        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
+        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl !mt-0': !useToggles.isMobile}">
             <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
                 :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
                     '!text-xl': currentSelector !== 0 && useToggles.isMobile
@@ -114,7 +142,9 @@
         </div>
 
         <!-- relations -->
-        <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" class="mt-10">
+        <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" 
+            class="mt-10"
+            :class="{'!mt-4': useToggles.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -151,7 +181,7 @@
         <div v-else-if="!contentData?.characters?.length > 0 && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
 
         <!-- recommendations -->
-         <div v-if="contentData.recommendations && currentSelector === 2" class="mt-10">
+         <div v-if="contentData?.recommendations?.length > 0 && currentSelector === 2" class="mt-10">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -169,7 +199,7 @@
                 </div>
             </div>
         </div>
-        <div v-else-if="contentData?.recommendations?.length > 0 && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
+        <div v-else-if="!contentData?.recommendations?.length > 0 && currentSelector === 2" class="text-center text-2xl font-normal my-16">No recommendations found</div>
 
         <div class="h-32">
 

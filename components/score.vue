@@ -3,8 +3,9 @@
         <div 
             v-for="(item, index) in scoreItems" 
             :key="index"
-            :class="{'bg-black': item.fill, 'bg-slate-500 ': !item.fill}"
-            class="shadow rounded max-w-4 max-h-6 min-w-4 min-h-6 border- border-black"
+            class="shadow rounded max-w-4 max-h-6 min-w-4 min-h-6 border-black"
+            :class="{'bg-black': item.fill, 'bg-slate-500 ': !item.fill, '!max-w-3 !max-h-5 !min-w-3 !min-h-5': useToggles.isMobile}"
+            
         >
         </div>
     </div>
@@ -13,6 +14,7 @@
 
 <script setup>
 import { defineProps } from 'vue';
+const useToggles = useTogglesStore();
 
 const props = defineProps({
     score: { type: Number, default: 0 },

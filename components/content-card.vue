@@ -19,24 +19,28 @@
         <!-- Title -->
         <div class="flex flex-col mx-3 w-48 mt-1">
             <span v-if="data.title?.english && data.title?.romaji && data.title?.english.toLowerCase() === data.title?.romaji.toLowerCase()" 
-                class="text-stone-600 font-extrabold md-title"
+                class="text-stone-600 font-extrabold md-title cursor-pointer"
+                @click="copyText(data.title?.english)"
                 :title="data.title?.english">
                 {{ data.title?.english }}
             </span>
 
             <div v-else-if="data.title?.english" class="flex flex-col">
-                <span class="text-stone-600 font-extrabold md-title line-clamp-1" 
+                <span class="text-stone-600 font-extrabold md-title line-clamp-1 cursor-pointer" 
+                    @click="copyText(data.title?.english)"
                     :title="data.title?.english">
                     {{ data.title?.english }}
                 </span>
-                <span class="text-stone-600 font-semibold small-title line-clamp-1" 
+                <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer" 
+                    @click="copyText(data.title?.romaji)"  
                     :title="data.title?.romaji">
                     {{ data.title?.romaji }}
                 </span>
             </div>
 
             <span v-else-if="data.title?.romaji" 
-                class="text-stone-600 font-extrabold md-title line-clamp-2" 
+                class="text-stone-600 font-extrabold md-title line-clamp-2 cursor-pointer" 
+                @click="copyText(data.title?.romaji)"  
                 :title="data.title?.romaji">
                 {{ data.title?.romaji }}
             </span>
@@ -60,7 +64,8 @@
 
             <!-- Description -->
             <div class="text-black text-sm mt-2 mx-2">
-                <p class="line-clamp-3">{{ truncatedDescription }}</p>
+                <p v-if="truncatedDescription.length > 0" class="line-clamp-3">{{ truncatedDescription }}</p>
+                <p v-else>No description</p>
             </div>
 
             <!-- Scores and status -->
@@ -126,6 +131,20 @@ const truncatedDescription = computed(() => {
 async function moreInfo() {
     // await content.mapNewContentData(props.data);
     router.push('/info?id=' + props.data.anilist_content_id);
+}
+
+function copyText(text) {
+    useToggles.setNotification("title copied", 3)
+    navigator.clipboard.writeText(text)
+        .then(() => {
+        console.log('Text copied to clipboard')
+        })
+        .catch(err => {
+        console.error('Failed to copy text: ', err)
+        });
+    setTimeout(() => {
+          useToggles.hideNotification();
+    }, 1000);
 }
 </script>
 
