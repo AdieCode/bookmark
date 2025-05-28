@@ -13,10 +13,11 @@
             </div>
             <!-- </div> -->
 
-            <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0">
+            <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0"
+                   :class="{'w-11/12': useToggles?.isMobile}">
                 <!-- Title -->
                 <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
-                <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles.isMobile}">
+                <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles?.isMobile}">
                     <span v-if="contentData.title?.english && contentData.title?.romaji && contentData.title?.english.toLowerCase() === contentData.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
                         {{ contentData.title?.english }} 
                         
@@ -40,7 +41,7 @@
                 <!-- extra info -->
                 <div class="ml-3 my-6 font-medium">
                     <!-- tags -->
-                    <tags :items="contentData.genres" :bigger="true" width="300" :allowClick="true" />
+                    <tags :items="contentData?.genres" :bigger="true" width="300" :allowClick="true" />
 
                     <!-- score and status -->
                     <div class="mb-4 flex gap-8"
@@ -58,7 +59,7 @@
                             </div>
                             <Score :score="contentData.average_score"/>
                         </div>
-                        <div v-if="!contentData.average_score" class="mt-2">
+                        <div v-if="!contentData?.average_score" class="mt-2">
                             <div class="mt-2 mb-1">No score</div>
                             <Score :score="0"/>
                         </div>
@@ -91,8 +92,8 @@
                         <span v-if="contentData.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ contentData.episodes }}</span>
 
                         <!-- Manga  -->
-                        <span v-if="contentData.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ contentData.chapters }}</span>
-                        <span v-if="contentData.type === 'MANGA' && contentData.volumes"><span class="font-extralight">Vol's </span>{{ contentData.volumes }}</span>
+                        <span v-if="contentData?.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ contentData.chapters }}</span>
+                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes"><span class="font-extralight">Vol's </span>{{ contentData.volumes }}</span>
 
                     </div>
 
