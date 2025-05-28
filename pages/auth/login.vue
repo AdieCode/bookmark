@@ -4,13 +4,25 @@
         <h1 class="text-center text-6xl font-bold p-2">Login</h1>
         <!-- Email input -->
         <div>
-            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4">
+            <input v-model="email" 
+                type="email" 
+                placeholder="Email" 
+                name="email" 
+                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4"
+                :class="{'!w-72': useToggles?.isMobile}">
         </div>
 
         <!-- Password input -->
         <div class="relative">
-            <input v-model="password" :type="passwordType" placeholder="Password" name="password" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4">
-            <div class="absolute top-2 -right-10">
+            <input v-model="password" 
+                :type="passwordType" 
+                placeholder="Password" 
+                name="password" 
+                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4"
+                :class="{'!w-72': useToggles?.isMobile}">
+            <div class="absolute top-2 -right-10"
+                :class="{'backdrop-blur-3xl  rounded-lg  !top-1 !right-1 p-1': useToggles?.isMobile}"
+                >
                 <img v-if="passwordType === 'password'" src="https://img.icons8.com/ios-glyphs/30/visible--v1.png" alt="eye" @click="passwordToggle">
                 <img v-else src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="eye" @click="passwordToggle">
             </div>
@@ -19,22 +31,31 @@
         <divider-line text="" width="200"/>
 
         <div class="flex justify-center items-center my-5 gap-2">
-            <div class="p-2 w-2/3 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="login">
+            <div class="p-2 w-2/3 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" 
+                :class="{'!text-lg !w-7/12': useToggles?.isMobile}"
+                @click="login">
                 Login
             </div>
-            <div class="p-2 w-1/3 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="toSignup">
+            <div class="p-2 w-1/3 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+                :class="{'!text-lg !w-5/12': useToggles?.isMobile}"
+                 @click="toSignup">
                 Sign up
             </div>
         </div>
 
         <divider-line text="or login with" width="200"/>
         <div class="flex flex-row justify-center items-center my-5 gap-2">
-            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="redirectToGoogle">
+            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+                :class="{'!text-lg': useToggles?.isMobile}"
+                @click="redirectToGoogle"
+                >
                 <img src="../../public/images/icons8-google-100.png" alt="" class="w-10 pointer-events-none">
                 <span class="pointer-events-none">Google</span>
                 <!-- https://accounts.google.com/o/oauth2/auth?client_id=1092384774274-2s5jb68iobabko0rk1rumcbnbt5laf26.apps.googleusercontent.com&redirect_uri=http://localhost:3001/auth/google/callback&response_type=code&scope=email%20profile -->
             </div>
-            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" @click="redirectToGithub">
+            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+                :class="{'!text-lg': useToggles?.isMobile}"
+                @click="redirectToGithub">
                 <img src="../../public/images/icons8-github-90.png" alt="" class="w-10 pointer-events-none">
                 <span class="pointer-events-none">Github</span>
             </div>
@@ -45,7 +66,7 @@
 
 <script setup>
 import { ref } from 'vue';
-const toggle = useTogglesStore();
+const useToggles = useTogglesStore();
 
 const config = useRuntimeConfig();
 const router = useRouter()
@@ -58,12 +79,12 @@ const googleOAuthUrl = `https://accounts.google.com/o/oauth2/auth?client_id=1092
 const githubOAuthUrl = "https://github.com/login?client_id=Ov23liwFfm4hn8BaO6bS&return_to=%2Flogin%2Foauth%2Fauthorize%3Fclient_id%3DOv23liwFfm4hn8BaO6bS%26redirect_uri%3Dhttp%253A%252F%252Flocalhost%253A3001%252Fauth%252Fgithub%252Fcallback";
 
 function redirectToGoogle() {
-    toggle.setNotification('Google login', 0);
+    useToggles.setNotification('Google login', 0);
     window.location.href = googleOAuthUrl;
 }
 
 function redirectToGithub() {
-    toggle.setNotification('Github login', 0);
+    useToggles.setNotification('Github login', 0);
     window.location.href = githubOAuthUrl;
 }
 
