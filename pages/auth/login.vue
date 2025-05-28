@@ -1,7 +1,10 @@
 <template>
-    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center items-center flex-wrap gap-8 z-30 sm:w-full">
+    <div class="w-3/4 mt-10 px-4 mx-auto flex flex-row justify-center items-center flex-wrap gap-8 z-30 sm:w-full"
+        :class="{'!mt-2': useToggles?.isMobile}"
+        >
       <div class="lex flex-col justify-center items-center">
-        <h1 class="text-center text-6xl font-bold p-2">Login</h1>
+        <h1 v-if="!useToggles?.isMobile" class="text-center text-6xl font-bold p-2">Login</h1>
+        <h1 v-else class="text-center text-5xl font-bold p-2">Login</h1>
         <!-- Email input -->
         <div>
             <input v-model="email" 
@@ -21,7 +24,7 @@
                 class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4"
                 :class="{'!w-72': useToggles?.isMobile}">
             <div class="absolute top-2 -right-10"
-                :class="{'backdrop-blur-3xl  rounded-lg  !top-1 !right-1 p-1': useToggles?.isMobile}"
+                :class="{'backdrop-blur-3xl rounded-lg  !top-1 !right-1 p-1': useToggles?.isMobile}"
                 >
                 <img v-if="passwordType === 'password'" src="https://img.icons8.com/ios-glyphs/30/visible--v1.png" alt="eye" @click="passwordToggle">
                 <img v-else src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="eye" @click="passwordToggle">
