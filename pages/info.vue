@@ -122,7 +122,7 @@
         </div>
 
         <!-- view toggler  -->
-        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl !mt-0': !useToggles.isMobile}">
+        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
             <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
                 :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
                     '!text-xl': currentSelector !== 0 && useToggles.isMobile
