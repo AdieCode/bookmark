@@ -96,8 +96,8 @@
                         <span v-if="contentData.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ contentData.episodes }}</span>
 
                         <!-- Manga  -->
-                        <span v-if="contentData?.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ contentData.chapters }}</span>
-                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes"><span class="font-extralight">Vol's </span>{{ contentData.volumes }}</span>
+                        <span v-if="contentData?.type === 'MANGA'"><span class="font-extralight">Chapters </span>{{ contentData.chapters }}</span>
+                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes"><span class="font-extralight">Volumes </span>{{ contentData.volumes }}</span>
 
                     </div>
 
