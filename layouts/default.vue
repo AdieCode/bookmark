@@ -8,7 +8,7 @@
             <div class="w-40 cursor-pointer flex justify-center" @click="toMain">
                 <!-- <img src="../public/images/Logo-bookmark.png" alt=""> -->
                 <Icon/>
-            </div>
+            </div> 
 
             <!-- Desktop/Tablet Search Bar -->
              <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="flex items-center gap-3">
@@ -31,9 +31,12 @@
                     <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toUserPage">
                         <img src="../public/images/User.png" alt="">
                     </div>
-                    <div v-if="isLoginPage || isInfoPage" class="p-2 mr-4 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="toPrevious">
-                        Go Back
-                    </div>
+                    <border-button 
+                        v-if="isLoginPage || isInfoPage"
+                        text="Go back" 
+                        class="mr-4"
+                        :onClick="toPrevious" 
+                    />
                 </div>
              </div>
 
@@ -52,18 +55,30 @@
         <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
         <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-1 mx-2">
             <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[690px] mx-auto"> <!-- Adjusted max width and gap -->
-                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentDiscover" :class="{'bg-black text-white bounce-down': useToggles.content.discover}">
-                    Discover
-                </div>
-                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentPlanningToRead" :class="{'bg-black text-white bounce-down': useToggles.content.planningToRead}">
-                    Planning to read
-                </div>
-                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentReading" :class="{'bg-black text-white bounce-down': useToggles.content.reading}">
-                    Busy Reading
-                </div>
-                <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="useToggles.toggleContentCompleted" :class="{'bg-black text-white bounce-down': useToggles.content.completed}">
-                    Completed
-                </div>
+                <border-button 
+                    text="Discover" 
+                    :onClick="useToggles.toggleContentDiscover" 
+                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.discover}"
+                    class=""
+                />
+                <border-button 
+                    text="Planning to read" 
+                    :onClick="useToggles.toggleContentPlanningToRead" 
+                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.planningToRead}"
+                    class=""
+                />
+                <border-button 
+                    text="Busy Reading" 
+                    :onClick="useToggles.toggleContentReading" 
+                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.reading}"
+                    class=""
+                />
+                <border-button 
+                    text="Completed" 
+                    :onClick="useToggles.toggleContentCompleted" 
+                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.completed}"
+                    class=""
+                />
             </div>
         </div>
 

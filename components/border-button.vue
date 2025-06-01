@@ -1,17 +1,10 @@
 <template>
-<div class="button center" 
-    @click="triger"
-    :style="{
-        'min-width': width + 'px',
-        'max-width': width + 'px',
-        'min-height': height + 'px',
-        'max-height': height + 'px',
-        border: '1px solid ' + border,
-        background: bg,
-        'font-size': fontSize + 'px'
-    }">
-    {{ text }}   
-</div>
+    <button
+        :class="['inline-flex items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100', passebleClass]"
+        @click="onClick"
+    >
+        {{ text }}
+    </button>
 </template>
 
 <script setup>
@@ -19,13 +12,19 @@ import { ref } from 'vue';
   
 const props = defineProps({
     text: { type: String, default: 'Default Text' },
-    width: { type: String, default: '100' },
-    height: { type: String, default: '50' },
-    border: { type: String, default: 'var(--accent-color)' },
-    bg: { type: String, default: 'var(--bg-color)' },
-    fontSize: { type: String, default: '16' },
-    triger: Function 
+    class: { type: String, default: '' },
+    conditionalClass: { type: Object, default: {} },
+    onClick: Function 
 })
+
+// creates a conditional class that can take a normal passed and always have it as true
+// and then also inlcude the conditional class passesed and merge them basically into one
+// conditional class.
+const passebleClass = computed(() => {
+  return props.class
+    ? { [props.class]: true, ...props.conditionalClass }
+    : { ...props.conditionalClass };
+});
 
 </script>
 
