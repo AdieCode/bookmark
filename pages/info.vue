@@ -43,7 +43,8 @@
                 </div>
 
                 <!-- extra info -->
-                <div class="ml-3 my-6 font-medium">
+                <div class="ml-3 my-6 font-medium"
+                    :class="{'!mx-2': useToggles.isMobile}">
                     <!-- tags -->
                     <tags :items="contentData?.genres" :bigger="true" width="300" :allowClick="true" />
 
@@ -105,8 +106,9 @@
                 </div>
                 <!-- description -->
                 <div class="text-black text-base font-semibold mt-2 mx-4 paragraph-width">
-                    <p class="">{{ cleanDescription(contentData.description) }}</p>
-                    <!-- <p v-html="contentData.description"></p> -->
+                    <!-- <p class="">{{ cleanDescription(contentData.description) }}</p> -->
+
+                    <Description  v-if="contentData?.description" :text="contentData?.description"/>
                 </div>
                 
             </div>
@@ -366,6 +368,11 @@ function cleanDescription(input) {
     return result;
 }
 
+const cleanedDes = computed(() => {
+    console.log('des == ', content?.selected_content?.description)
+    return cleanDescription(content?.selected_content?.description)
+});
+
 function toPrevious() {
   router.back()
 }
@@ -391,6 +398,7 @@ function handleSlideChange(swiper) {
   console.log(swiper.realIndex)
   toggleSelector(swiper.realIndex)
 }
+
 
 watch(
     () => route.query.id, // Watch the `id` query parameter
