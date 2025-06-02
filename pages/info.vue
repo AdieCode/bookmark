@@ -183,7 +183,7 @@
             :watch-overflow="true"
             :speed="400"
             @realIndexChange="handleSlideChange"
-            class="w-full max-w-3xl mt-24 cursor-pointer relative"
+            class="w-full max-w-3xl mt-32 cursor-pointer relative border-black border-t-4 border-b-4"
         >
             <SwiperSlide
                 v-for="(slide, i) in slides"
@@ -192,8 +192,8 @@
                 <div
                     class="transition-all duration-200 text-center"
                     :class="{
-                        'text-xl font-bold text-black scale-110 absolute -translate-y-4': i === activeIndex,
-                        'text-base text-black scale-75 absolute -translate-y-0': i !== activeIndex
+                        'text-xl font-bold text-black scale-110 absolute -translate-y-2': i === activeIndex,
+                        'text-base text-black scale-75 absolute -translate-y-2': i !== activeIndex
                     }"
                 >
                     {{ slide }}
@@ -205,7 +205,7 @@
         <!-- relations -->
         <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" 
             class="mt-10"
-            :class="{'!mt-4': useToggles.isMobile}">
+            :class="{'!mt-0': useToggles.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -226,7 +226,9 @@
          <div v-else-if="!(contentData.relations?.length > 0) && currentSelector === 0" class="text-center text-2xl font-normal my-16">No relations found</div>
                      
         <!-- characters -->
-        <div v-if="Array.isArray(contentData.characters) && contentData.characters?.length > 0 && currentSelector === 1" class="mt-10">
+        <div v-if="Array.isArray(contentData.characters) && contentData.characters?.length > 0 && currentSelector === 1" 
+            class="mt-10"
+            :class="{'!mt-0': useToggles.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -242,7 +244,9 @@
         <div v-else-if="!contentData?.characters?.length > 0 && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
 
         <!-- recommendations -->
-         <div v-if="contentData?.recommendations?.length > 0 && currentSelector === 2" class="mt-10">
+         <div v-if="contentData?.recommendations?.length > 0 && currentSelector === 2" 
+            class="mt-10"
+            :class="{'!mt-0': useToggles.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
