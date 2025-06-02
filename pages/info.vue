@@ -174,6 +174,7 @@
         </div> -->
         <Swiper
             v-if="useToggles.isMobile"
+            :modules="[Navigation]"
             :slides-per-view="1.2"
             :space-between="10"
             :loop="true"
@@ -182,9 +183,20 @@
             :touch-ratio="1"
             :watch-overflow="true"
             :speed="400"
+            @swiper="onSwiper"
             @realIndexChange="handleSlideChange"
             class="w-full max-w-3xl mt-32 cursor-pointer relative border-black border-t-4 border-b-4"
         >
+            <!-- go to next slide to the right  -->
+            <div class="absolute top-6 left-0 rotate-90" @click="goToNextSlide">
+                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
+            </div>
+
+            <!-- go to next slide to the left -->
+            <div class="absolute top-6 right-0 -rotate-90" @click="goToPrevSlide">
+                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
+            </div>
+
             <SwiperSlide
                 v-for="(slide, i) in slides"
                 :key="slide"
@@ -192,8 +204,8 @@
                 <div
                     class="transition-all duration-200 text-center"
                     :class="{
-                        'text-2xl font-bold text-black scale-110 absolute -translate-y-0': i === activeIndex,
-                        'text-base text-black scale-75 absolute translate-y-2': i !== activeIndex
+                        'text-2xl font-bold text-black scale-110 absolute -translate-y-0 opacity-100': i === activeIndex,
+                        'text-base text-black scale-75 absolute translate-y-2 opacity-10': i !== activeIndex
                     }"
                 >
                     {{ slide }}
@@ -291,6 +303,7 @@
 <script setup>
 import { ref } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
+import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 const content = useContentStore();
 const useToggles = useTogglesStore();
@@ -299,14 +312,28 @@ const route = useRoute();
 
 const currentSelector = ref(0);
 const searchShow = computed(() => useToggles.searchShow);
+const swiperRef = ref(null);
 
 const onSwiper = (swiper) => {
-    console.log(swiper);
+  swiperRef.value = swiper;
+  console.log('Swiper initialized:', swiper);
 };
 
-const onSlideChange = () => {
-    console.log('slide change');
-};
+function goToNextSlide() {
+  if (swiperRef.value) {
+    swiperRef.value.slideNext();
+  } else {
+    console.log('Swiper not initialized');
+  }
+}
+
+function goToPrevSlide() {
+  if (swiperRef.value) {
+    swiperRef.value.slidePrev();
+  } else {
+    console.log('Swiper not initialized');
+  }
+}
 
 const slides = [ 'Relations', 'Characters', 'Recommendations']
 const activeIndex = ref(0)
