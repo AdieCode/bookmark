@@ -121,8 +121,8 @@
             
         </div>
 
-        <!-- view toggler  -->
-        <div class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
+        <!-- view toggler not mobile -->
+        <div v-if="!useToggles.isMobile" class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
             <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
                 :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
                     '!text-xl': currentSelector !== 0 && useToggles.isMobile
@@ -145,6 +145,62 @@
                 Recommendations
             </div>
         </div>
+
+
+        <!-- view toggler for mobile -->
+         <!-- <div v-if="useToggles.isMobile" class="w-full flex justify-center gap-14 mt-36" 
+            :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
+            <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 0 && useToggles.isMobile
+                }" 
+                @click="() => toggleSelector(0)">
+                Relations
+            </div>
+            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 1 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 1 && useToggles.isMobile
+                }" 
+                @click="() => toggleSelector(1)">
+                Characters
+            </div>
+            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
+                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 2 && !useToggles.isMobile,
+                    '!text-xl': currentSelector !== 2 && useToggles.isMobile
+                }" 
+                @click="() => toggleSelector(2)">
+                Recommendations
+            </div>
+        </div> -->
+        <Swiper
+            v-if="useToggles.isMobile"
+            :slides-per-view="1.2"
+            :space-between="10"
+            :loop="true"
+            :centeredSlides="true"
+            :resistance-ratio="0.85"
+            :touch-ratio="1"
+            :watch-overflow="true"
+            :speed="400"
+            @realIndexChange="handleSlideChange"
+            class="w-full max-w-3xl mt-24 cursor-pointer relative"
+        >
+            <SwiperSlide
+                v-for="(slide, i) in slides"
+                :key="slide"
+            >
+                <div
+                    class="transition-all duration-200 text-center"
+                    :class="{
+                        'text-xl font-bold text-black scale-110 absolute -translate-y-4': i === activeIndex,
+                        'text-base text-black scale-75 absolute -translate-y-0': i !== activeIndex
+                    }"
+                >
+                    {{ slide }}
+                </div>
+            </SwiperSlide>
+        </Swiper>
+
 
         <!-- relations -->
         <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" 
@@ -230,6 +286,8 @@
 
 <script setup>
 import { ref } from 'vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 const content = useContentStore();
 const useToggles = useTogglesStore();
 const router = useRouter()
@@ -237,6 +295,17 @@ const route = useRoute();
 
 const currentSelector = ref(0);
 const searchShow = computed(() => useToggles.searchShow);
+
+const onSwiper = (swiper) => {
+    console.log(swiper);
+};
+
+const onSlideChange = () => {
+    console.log('slide change');
+};
+
+const slides = [ 'Relations', 'Characters', 'Recommendations']
+const activeIndex = ref(0)
 
 if (!(content?.selected_content.length > 0) ){
     await content.getContentDataById(route.query.id); 
@@ -277,8 +346,13 @@ function scrollToTop() {
 }
 
 function toggleSelector (index) {
-    console.log(index);
     currentSelector.value = index;
+}
+
+function handleSlideChange(swiper) {
+  activeIndex.value = swiper.realIndex
+  console.log(swiper.realIndex)
+  toggleSelector(swiper.realIndex)
 }
 
 watch(
@@ -309,6 +383,12 @@ definePageMeta({
 </script>
 
 <style scoped>
+.swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
 .page-enter-active,
 .page-leave-active {
   transition: all 0.2s;

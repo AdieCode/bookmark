@@ -13,34 +13,36 @@
         </header>
       <div>
         <div class="flex flex-row justify-start items-center h-full">
-            <ul class="p-5 w-56 flex flex-col gap-3 h-full">
+            <ul class="p-5 max-w-56 min-w-56  flex flex-col gap-3 h-full">
                 <li>
-                    <div class="p-1 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-md font-bold hover:bg-black hover:opacity-80 hover:text-white transition-colors duration-100" 
-                    :class="{'bg-black text-white': currentRoute === '/user'}" 
-                    @click="toUserInfo" >
-                        User info
-                    </div>
+                    <border-button 
+                        text="User info" 
+                        class="!p-1 w-full flex items-center justify-around"
+                        :conditionalClass="{'bg-black text-white': currentRoute === '/user'}"
+                        :onClick="toUserInfo" 
+                    />
                 </li>
                 <li>
-                    <div class="p-1 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-md font-bold hover:bg-black hover:text-white transition-colors duration-100" 
-                    :class="{'bg-black text-white': currentRoute === '/user/something'}" 
-                    @click="" >
-                        User settings
-                    </div>
+                    <border-button 
+                        text="User settings" 
+                        class="!p-1 w-full flex items-center justify-around"
+                        :conditionalClass="{'bg-black text-white': currentRoute === '/'}"
+                    />
                 </li>
                 <li>
-                    <div class="p-1 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-md font-bold hover:bg-black hover:text-white transition-colors duration-100" 
-                    :class="{'bg-black text-white': currentRoute === '/user/something'}" 
-                    @click="" >
-                        Contact us
-                    </div>
+                    <border-button 
+                        text="Contact us" 
+                        class="!p-1 w-full flex items-center justify-around"
+                        :conditionalClass="{'bg-black text-white': currentRoute === '/'}"
+                    />
                 </li>
                 <li>
-                    <div class="p-1 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-md font-bold hover:bg-black hover:text-white transition-colors duration-100" 
-                    :class="{'bg-black text-white': currentRoute === '/user/sign-out'}" 
-                    @click="toSignOut()" >
-                        Sign out
-                    </div>
+                    <border-button 
+                        text="Sign out" 
+                        class="!p-1 w-full flex items-center justify-around"
+                        :conditionalClass="{'bg-black text-white': currentRoute === '/user/sign-out'}"
+                        :onClick="toSignOut" 
+                    />
                 </li>
             </ul>
             <div class="h-full w-full m-4 p-4 rounded-lg">
