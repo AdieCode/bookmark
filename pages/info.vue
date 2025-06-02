@@ -192,8 +192,8 @@
                 <div
                     class="transition-all duration-200 text-center"
                     :class="{
-                        'text-xl font-bold text-black scale-110 absolute -translate-y-2': i === activeIndex,
-                        'text-base text-black scale-75 absolute -translate-y-2': i !== activeIndex
+                        'text-xl font-bold text-black scale-110 absolute -translate-y-0': i === activeIndex,
+                        'text-base text-black scale-75 absolute translate-y-2': i !== activeIndex
                     }"
                 >
                     {{ slide }}
