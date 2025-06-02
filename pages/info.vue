@@ -213,7 +213,11 @@
             </SwiperSlide>
         </Swiper>
 
-        <dotTracker :amountOfDots="slides.length" :currentDot="activeIndex"/>
+        <dotTracker 
+            v-if="useToggles.isMobile"
+            :amountOfDots="slides.length" 
+            :currentDot="activeIndex"
+        />
 
 
         <!-- relations -->
