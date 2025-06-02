@@ -185,17 +185,17 @@
             :speed="400"
             @swiper="onSwiper"
             @realIndexChange="handleSlideChange"
-            class="w-full max-w-3xl mt-32 cursor-pointer relative border-black border-t-4 border-b-4"
+            class="w-full max-w-3xl mt-32 cursor-pointer relative "
         >
             <!-- go to next slide to the right  -->
-            <div class="absolute top-6 left-0 rotate-90" @click="goToNextSlide">
+            <!-- <div class="absolute top-6 left-0 rotate-90" @click="goToNextSlide">
                 <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
-            </div>
+            </div> -->
 
             <!-- go to next slide to the left -->
-            <div class="absolute top-6 right-0 -rotate-90" @click="goToPrevSlide">
+            <!-- <div class="absolute top-6 right-0 -rotate-90" @click="goToPrevSlide">
                 <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
-            </div>
+            </div> -->
 
             <SwiperSlide
                 v-for="(slide, i) in slides"
@@ -212,6 +212,8 @@
                 </div>
             </SwiperSlide>
         </Swiper>
+
+        <dotTracker :amountOfDots="slides.length" :currentDot="activeIndex"/>
 
 
         <!-- relations -->
