@@ -21,7 +21,7 @@ const props = defineProps({
 // and then also inlcude the conditional class passesed and merge them basically into one
 // conditional class.
 const passebleClass = computed(() => {
-  return props.class
+  return props?.class
     ? { [props.class]: true, ...props.conditionalClass }
     : { ...props.conditionalClass };
 });

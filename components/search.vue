@@ -56,8 +56,8 @@ import { ref, watch, computed, onMounted } from "vue";
 const useToggles = useTogglesStore();
 const content = useContentStore();
 
-const contentData = computed(() => content.searched_content);
-const isMobile = computed(() => useToggles.isMobile);
+const contentData = computed(() => content?.searched_content);
+const isMobile = computed(() => useToggles?.isMobile);
 const searchText = ref("");
 const searchInput = ref(null);
 

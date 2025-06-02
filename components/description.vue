@@ -1,6 +1,23 @@
 <template>
-    <div class="text-black text-base font-semibold paragraph-width">
-        <p v-html="formattedText"></p>
+    <div class="text-black text-base font-semibold paragraph-width" 
+        @click="toggleView(true)">
+        <p :class="{'max-h-60 overflow-hidden relative': !viewAll && formattedText.length > 380}">
+            <span v-html="formattedText"></span>
+        </p>
+        <div v-if="!viewAll && formattedText.length > 380" 
+            @click.stop
+            @click="toggleView(false)"
+            class="text-sm font-light text-black mt-4 cursor-pointer"
+            >
+            Click to read more
+        </div>
+        <div v-if="viewAll && formattedText.length > 380" 
+            @click.stop
+            @click="toggleView(false)"
+            class="text-sm font-light text-black mt-4 cursor-pointer"
+            >
+            Click this collapse
+        </div>
     </div>
 </template>
 
@@ -11,17 +28,21 @@ const props = defineProps({
     text: { type: String, default: 'no description' },
 });
 
+const viewAll = ref(false);
+
+function toggleView(value) {
+    viewAll.value = value
+}
+
 const formattedText = computed(() => {
     if (!props.text) return '';
-    console.log('before: ', props.text)
     const newText = cleanDescription(props.text);
-    console.log('after', newText)
     
     const punctuationMarks = ['.', '!', '?'];
     let charCount = 0;
     let armed = false;
     
-    return newText.split('').map((char) => {
+    return newText?.split('').map((char) => {
         charCount++;
         
         // Arm the breaker after 230 characters

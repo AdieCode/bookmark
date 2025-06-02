@@ -60,8 +60,8 @@ import { ref } from 'vue';
 const content = useContentStore();
 const useToggles = useTogglesStore()
 
-const contentData = computed(() => content.data);
-const searchShow = computed(() => useToggles.searchShow);
+const contentData = computed(() => content?.data);
+const searchShow = computed(() => useToggles?.searchShow);
 const mounted = ref(false);
 // console.log(contentData)
 // const contentData = ref(content.data);

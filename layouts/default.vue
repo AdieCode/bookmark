@@ -136,16 +136,16 @@ const useToggles = useTogglesStore()
 const router = useRouter();
 const route = useRoute();
 
-const isHompage = computed(() => route.path === '/');
-const isMainPage = computed(() => route.path === '/mainpage');
-const isLoginPage = computed(() => route.path === '/auth/login' || route.path === '/auth/sign-up');
+const isHompage = computed(() => route?.path === '/');
+const isMainPage = computed(() => route?.path === '/mainpage');
+const isLoginPage = computed(() => route?.path === '/auth/login' || route?.path === '/auth/sign-up');
 const isOauthPage = computed(() => 
-    (route.path === '/google/callback' || route.path === '/github/callback') // && !!route.query.token
+    (route?.path === '/google/callback' || route?.path === '/github/callback') // && !!route.query.token
 );
 
 
 const isInfoPage = computed(() => 
-    (route.path === '/info') // && !!route.query.token
+    (route?.path === '/info') // && !!route.query.token
 );
 
 function scrollToTop() {

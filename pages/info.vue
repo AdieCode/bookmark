@@ -229,7 +229,10 @@
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
-                    <div v-for="(item, index) in contentData.relations" :key="index">
+                    <div v-for="(item, index) in contentData.relations" 
+                        :key="index"
+                        class="opacity-0 animate-fade-in"
+                        :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <ContentCard
                             v-if="!useToggles.isMobile && item"
                             :data="item"
@@ -252,7 +255,10 @@
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
-                    <div v-for="(item, index) in contentData.characters" :key="index">
+                    <div v-for="(item, index) in contentData.characters" 
+                        :key="index"
+                        class="opacity-0 animate-fade-in"
+                        :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <CharacterCard
                             v-if="item"
                             :data="item"
@@ -270,7 +276,10 @@
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
-                    <div v-for="(item, index) in contentData.recommendations" :key="index">
+                    <div v-for="(item, index) in contentData.recommendations"
+                         :key="index"
+                         class="opacity-0 animate-fade-in"
+                        :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <ContentCard
                             v-if="!useToggles.isMobile && item"
                             :data="item"
@@ -319,8 +328,10 @@ const router = useRouter()
 const route = useRoute();
 
 const currentSelector = ref(0);
-const searchShow = computed(() => useToggles.searchShow);
+const searchShow = computed(() => useToggles?.searchShow);
 const swiperRef = ref(null);
+
+const displayDelay = 30;
 
 const onSwiper = (swiper) => {
   swiperRef.value = swiper;
@@ -487,4 +498,18 @@ definePageMeta({
     }
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+}
 </style>

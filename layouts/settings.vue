@@ -59,7 +59,7 @@ const router = useRouter();
 const route = useRoute();
 
 const currentRoute = computed(() => {
-    return route.path
+    return route?.path
 });
 
 function toPrevious() {
