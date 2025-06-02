@@ -81,16 +81,16 @@
                             <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.type)}}</div>
                         </div>
                     </div>
-                    <span v-if="!useToggles.isMobile" class="text-xl">
-                        Chp's 
-                        <span class="font-black pl-1">{{ contentData.chapters }}</span>
-                    </span>
 
-                    <span v-if="contentData.volumes && !useToggles.isMobile" class="text-xl">
-                        <span class="px-4">|</span>
-                        Vol's
-                        <span class="font-black pl-1">{{ contentData.volumes }}</span>
-                    </span>
+                    <div v-if="!useToggles.isMobile" class="flex">
+                        <!-- Anime  -->
+                        <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1"><span class="font-medium">Episodes </span>{{ contentData.episodes }}</span>
+
+                        <!-- Manga  -->
+                        <span v-if="contentData?.type === 'MANGA'" class="text-xl font-black pl-1"><span class="font-medium">Chapters </span>{{ contentData.chapters }}</span>
+                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes" class="text-xl font-black pl-1"><span class="font-medium"><span class="px-4">|</span>Volumes </span>{{ contentData.volumes }}</span>
+
+                    </div>
 
                     <div v-if="useToggles.isMobile" class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
                         <!-- Anime  -->
@@ -281,11 +281,11 @@
                          class="opacity-0 animate-fade-in"
                         :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <ContentCard
-                            v-if="!useToggles.isMobile && item"
+                            v-if="!useToggles.isMobile && item && !(item.anilist_content_id === 'No ID')"
                             :data="item"
                         />
                         <MobileContentCard
-                            v-else-if="item"
+                            v-else-if="item && !(item.anilist_content_id === 'No ID')"
                             :data="item"
                             :key="'mobile-' + index"
                         />
