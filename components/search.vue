@@ -104,16 +104,16 @@ onMounted(() => {
 }
 @keyframes bounceDown {
     0% {
-    transform: translateY(0);
+      transform: translateY(0);
     }
     20% {
-    transform: translateY(-10px);
+      transform: translateY(-10px);
     }
     60% {
-    transform: translateY(4px);
+      transform: translateY(4px);
     }
     100% {
-    transform: translateY(0);
+      transform: translateY(0);
     }
 }
 

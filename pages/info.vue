@@ -11,22 +11,20 @@
                 <img v-if="contentData?.cover_image_url" :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover">
                 <div v-else class="p-10 text-xl font-bold text-center">No image found</div>
             </div>
-            <!-- </div> -->
 
             <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0"
-                   :class="{'!w-11/12': useToggles?.isMobile}">
-                <!-- Title -->
-                <!-- <span class="ml-1 max-w-40 text-center border-4 border-black px-1 rounded-md text-sm text-black font-black hidden md:inline-block">Planning to read</span> -->
-                <div class="flex flex-col mx-3 mt-1" :class="{'items-center': useToggles?.isMobile}">
+                :class="{'!w-11/12': useToggles?.isMobile}">
+
+                <!-- title -->
+                <div class="flex flex-col mx-3 mt-1" 
+                    :class="{'items-center': useToggles?.isMobile}">
                     <span v-if="contentData.title?.english && contentData.title?.romaji && contentData.title?.english.toLowerCase() === contentData.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
                         {{ contentData.title?.english }} 
-                        
                     </span>    
 
                     <div v-else-if="contentData.title?.english" class="flex flex-col">
                         <span class="text-black font-black text-xl">
                             {{ contentData.title?.english }} 
-                            
                         </span>
                         <span class="text-stone-800 font-black"
                             :class="{'!font-semibold': useToggles?.isMobile}"
@@ -37,14 +35,14 @@
 
                     <span v-else-if="contentData.title?.romaji" class="text-black font-extrabold text-xl">
                         {{ contentData.title?.romaji }} 
-                        
                     </span>
                     <span v-else class="text-black font-extrabold text-xl">No title found</span>
                 </div>
 
-                <!-- extra info -->
+                <!-- content info -->
                 <div class="ml-3 my-6 font-medium"
                     :class="{'!mx-2': useToggles.isMobile}">
+
                     <!-- tags -->
                     <tags :items="contentData?.genres" :bigger="true" width="300" :allowClick="true" />
 
@@ -82,14 +80,14 @@
                         </div>
                     </div>
 
-                    <div v-if="!useToggles.isMobile" class="flex">
+                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold">
                         <!-- Anime  -->
-                        <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1"><span class="font-medium">Episodes </span>{{ contentData.episodes }}</span>
+                        <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1 pr-2"><span class="font-thin">Episodes </span>{{ contentData.episodes }}</span>
 
                         <!-- Manga  -->
-                        <span v-if="contentData?.type === 'MANGA'" class="text-xl font-black pl-1"><span class="font-medium">Chapters </span>{{ contentData.chapters }}</span>
-                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes" class="text-xl font-black pl-1"><span class="font-medium"><span class="px-4">|</span>Volumes </span>{{ contentData.volumes }}</span>
-
+                        <span v-if="contentData?.type === 'MANGA'" class="text-xl font-black pl-1"><span class="font-thin">Chapters </span>{{ contentData.chapters }}</span>
+                        <span v-if="contentData?.type === 'MANGA' && contentData.volumes" class="text-xl font-black pl-1 pr-3"><span class="font-thin">Volumes </span>{{ contentData.volumes }}</span>
+                        <!-- <span v-if="contentData?.type === 'MANGA' && contentData.volumes" class="text-xl font-black pl-1"><span class="font-medium"><span class="px-4"></span>Volumes </span>{{ contentData.volumes }}</span> -->
                     </div>
 
                     <div v-if="useToggles.isMobile" class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
@@ -104,10 +102,9 @@
 
 
                 </div>
+
                 <!-- description -->
                 <div class="text-black text-base font-semibold mt-2 mx-4 paragraph-width">
-                    <!-- <p class="">{{ cleanDescription(contentData.description) }}</p> -->
-
                     <Description  v-if="contentData?.description" :text="contentData?.description"/>
                 </div>
                 
@@ -115,15 +112,13 @@
 
             <div v-if="!useToggles.isMobile"
                 class="cursor-pointer sticky top-20" 
-                @click="toPrevious"
-                >
+                @click="toPrevious">
                 <img class="w-12 pr-2" src="../public/bookmark_icons/bookmark.png" alt="" srcset="">
-                    <!-- Add {{ contentData.type.toLowerCase() }} to list -->
             </div>
             
         </div>
 
-        <!-- view toggler not mobile -->
+        <!-- view toggler for desktop -->
         <div v-if="!useToggles.isMobile" class="w-full flex justify-center gap-14 mt-36" :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
             <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
                 :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
@@ -148,32 +143,7 @@
             </div>
         </div>
 
-
         <!-- view toggler for mobile -->
-         <!-- <div v-if="useToggles.isMobile" class="w-full flex justify-center gap-14 mt-36" 
-            :class="{'scrollbar-hide overflow-x-scroll !justify-start gap-8 mt-24 px-4 !text-3xl': useToggles.isMobile, '!text-5xl': !useToggles.isMobile}">
-            <div class="text-center font-extrabold transition-all duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 0 && !useToggles.isMobile,
-                    '!text-xl': currentSelector !== 0 && useToggles.isMobile
-                }" 
-                @click="() => toggleSelector(0)">
-                Relations
-            </div>
-            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 1 && !useToggles.isMobile,
-                    '!text-xl': currentSelector !== 1 && useToggles.isMobile
-                }" 
-                @click="() => toggleSelector(1)">
-                Characters
-            </div>
-            <div class="text-center font-extrabold duration-200 cursor-pointer select-none" 
-                :class="{ 'text-center !text-4xl font-extrabold text-neutral-600': currentSelector !== 2 && !useToggles.isMobile,
-                    '!text-xl': currentSelector !== 2 && useToggles.isMobile
-                }" 
-                @click="() => toggleSelector(2)">
-                Recommendations
-            </div>
-        </div> -->
         <Swiper
             v-if="useToggles.isMobile"
             :modules="[Navigation]"
@@ -189,16 +159,6 @@
             @realIndexChange="handleSlideChange"
             class="w-full max-w-3xl mt-32 cursor-pointer relative "
         >
-            <!-- go to next slide to the right  -->
-            <!-- <div class="absolute top-6 left-0 rotate-90" @click="goToNextSlide">
-                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
-            </div> -->
-
-            <!-- go to next slide to the left -->
-            <!-- <div class="absolute top-6 right-0 -rotate-90" @click="goToPrevSlide">
-                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/expand-arrow--v1.png" alt="expand-arrow--v1"/>
-            </div> -->
-
             <SwiperSlide
                 v-for="(slide, i) in slides"
                 :key="slide"
@@ -248,6 +208,7 @@
          </div>
          <div v-else-if="!(contentData.relations?.length > 0) && currentSelector === 0" class="text-center text-2xl font-normal my-16">No relations found</div>
                      
+
         <!-- characters -->
         <div v-if="Array.isArray(contentData.characters) && contentData.characters?.length > 0 && currentSelector === 1" 
             class="mt-10"
@@ -268,6 +229,7 @@
             </div>
         </div>
         <div v-else-if="!contentData?.characters?.length > 0 && currentSelector === 1" class="text-center text-2xl font-normal my-16">No characters found</div>
+
 
         <!-- recommendations -->
          <div v-if="contentData?.recommendations?.length > 0 && currentSelector === 2" 
@@ -366,6 +328,7 @@ function cleanDescription(input) {
     if (!input) return 'No description found.';
 
     let result = input.replace(/<i>[\s\S]*?<\/i>/g, '');
+    result = input.replace(/<u>[\s\S]*?<\/u>/g, '');
     result = result.replace(/<I\s*\/?>/g, '');
     result = result.replace(/<\/b\s*\/?>/g, '');
     result = result.replace(/<b\s*\/?>/g, '');   
@@ -379,11 +342,6 @@ function cleanDescription(input) {
     return result;
 }
 
-const cleanedDes = computed(() => {
-    console.log('des == ', content?.selected_content?.description)
-    return cleanDescription(content?.selected_content?.description)
-});
-
 function toPrevious() {
   router.back()
 }
@@ -394,10 +352,10 @@ function capitalizeStatus(status) {
 }
 
 function scrollToTop() {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth' // This makes the scroll smooth
-        });
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth' // This makes the scroll smooth
+    });
 }
 
 function toggleSelector (index) {
@@ -411,15 +369,12 @@ function handleSlideChange(swiper) {
 }
 
 
-watch(
-    () => route.query.id, // Watch the `id` query parameter
-    async (newId, oldId) => {
-        if (newId !== oldId) {
-            await content.getContentDataById(newId);
-            scrollToTop()
-        }
+watch(() => route.query.id, async (newId, oldId) => {
+    if (newId !== oldId) {
+        await content.getContentDataById(newId);
+        scrollToTop()
     }
-);
+});
 
 watch(searchShow, (visible) => {
   if (visible) {
@@ -468,7 +423,7 @@ definePageMeta({
 }
 
 .move-around {
-    animation: moveAround 10s both infinite;
+    animation: moveAround 20s both infinite;
 }
 
 @keyframes moveAround {
@@ -486,11 +441,11 @@ definePageMeta({
     }
     50% {
         transform: translateY(-20px);
-        transform: translateX(40px); /* Moves bubble upwards */
+        transform: translateX(40px);
     }
     75% {
         transform: translateY(20px);
-        transform: translateX(-40px); /* Moves bubble upwards */
+        transform: translateX(-40px); 
     }
     100% {
         transform: translateX(0px);

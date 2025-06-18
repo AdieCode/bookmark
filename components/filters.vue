@@ -29,14 +29,14 @@
             :single="true"
             />  
 
-            <FilterOption 
+            <!-- <FilterOption 
             name="Year" 
             :options="useExtraData.filters.year" 
             :showDorpDown="useToggles.getFilterStatus('year')"
             :toggleFunction="() => {useToggles.toggleFilterStatus('year')}"
             category="year"
             :single="true"
-            />  
+            />   -->
 
             <FilterOption 
             name="Sort" 

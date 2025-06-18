@@ -1,17 +1,17 @@
 <template>
     <div class="text-black text-base font-semibold paragraph-width" 
         @click="toggleView(true)">
-        <p :class="{'max-h-60 overflow-hidden relative': !viewAll && formattedText.length > 380}">
+        <p :class="{'max-h-28 overflow-hidden relative': !viewAll && formattedText.length > 200}">
             <span v-html="formattedText"></span>
         </p>
-        <div v-if="!viewAll && formattedText.length > 380" 
+        <div v-if="!viewAll && formattedText.length > 200" 
             @click.stop
             @click="toggleView(false)"
             class="text-sm font-light text-black mt-4 cursor-pointer"
             >
             Click to read more
         </div>
-        <div v-if="viewAll && formattedText.length > 380" 
+        <div v-if="viewAll && formattedText.length > 200" 
             @click.stop
             @click="toggleView(false)"
             class="text-sm font-light text-black mt-4 cursor-pointer"
