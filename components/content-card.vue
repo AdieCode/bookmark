@@ -8,7 +8,9 @@
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer" @click="moreInfo">
-                    <span class="font-bold text-base pb-4">More info</span>
+                    <a :href="'/info?id=' + data.anilist_content_id" title="Go to homepage">
+                        <span class="font-bold text-base pb-4">More info</span>
+                    </a>
                 </div>
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
                     <img src="../public/bookmark_icons/bookmark.png" alt="" class="w-6">

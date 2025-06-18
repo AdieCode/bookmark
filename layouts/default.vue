@@ -5,9 +5,11 @@
 
         <title>Content Manging & Exploring</title>
         <div class="flex flex-row place-content-center justify-between mt-4 mb-4">
-            <div class="w-40 cursor-pointer flex justify-center" @click="toMain">
+            <div class="w-40 cursor-pointer flex justify-center">
                 <!-- <img src="../public/images/Logo-bookmark.png" alt=""> -->
-                <Icon/>
+                 <a href="/mainpage" title="Go to homepage">
+                     <Icon/>
+                 </a>
             </div> 
 
             <!-- Desktop/Tablet Search Bar -->
