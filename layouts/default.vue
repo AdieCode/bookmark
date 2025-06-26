@@ -7,7 +7,7 @@
         <div class="flex flex-row place-content-center justify-between mt-4 mb-4">
             <div class="w-40 cursor-pointer flex justify-center">
                  <a href="/mainpage" title="Go to mainpage">
-                     
+                    <Icon/>
                  </a>
             </div> 
 

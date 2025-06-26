@@ -73,6 +73,9 @@ export const useTogglesStore = defineStore('toggles', {
     },
 
     toggleContentType() {
+      const useContent = useContentStore();
+      useContent.data = [];
+      useContent.planningData = [];
       if (this.contentType === 'Anime') {
         this.contentType = "Manga";
       } else {
@@ -96,6 +99,7 @@ export const useTogglesStore = defineStore('toggles', {
       this.content.planningToRead = true;
       this.content.reading = false;
       this.content.completed = false;
+
     },
 
     toggleContentReading() {

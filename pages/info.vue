@@ -112,7 +112,7 @@
 
             <div v-if="!useToggles.isMobile"
                 class="cursor-pointer sticky top-20" 
-                @click="toPrevious">
+                @click="trackContent">
                 <img class="w-12 pr-2" src="../public/bookmark_icons/bookmark.png" alt="" srcset="">
             </div>
             
@@ -368,6 +368,18 @@ function handleSlideChange(swiper) {
   toggleSelector(swiper.realIndex)
 }
 
+function trackContent() {
+
+    useToggles.setNotification("Bookmarked", 3)
+    content.trackContent({
+        content_id: content?.selected_content?.anilist_content_id,
+        content_status:'planning',
+        content_type:content?.selected_content?.type,
+    })
+    setTimeout(() => {
+          useToggles.hideNotification();
+    }, 1000);
+}
 
 watch(() => route.query.id, async (newId, oldId) => {
     if (newId !== oldId) {

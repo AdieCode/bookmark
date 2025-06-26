@@ -16,7 +16,7 @@
         </div> -->
 
         <Discover v-if="toggle.content.discover" />
-        <Discover v-if="toggle.content.planningToRead" />
+        <PlanningToRead v-if="toggle.content.planningToRead" />
         <Discover v-if="toggle.content.reading" />
         <Discover v-if="toggle.content.completed" />
     </div>

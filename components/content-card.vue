@@ -12,7 +12,7 @@
                         <span class="font-bold text-base pb-4">More info</span>
                     </a>
                 </div>
-                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
+                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer" @click="trackContent">
                     <img src="../public/bookmark_icons/bookmark.png" alt="" class="w-6">
                 </div>
             </div>
@@ -89,7 +89,7 @@
 <script setup>
 import { ref } from 'vue';
 const useToggles = useTogglesStore()
-const content = useContentStore();
+const useContent = useContentStore();
 const router = useRouter();
 
 let showInfo = ref(false);
@@ -147,6 +147,14 @@ function copyText(text) {
     setTimeout(() => {
           useToggles.hideNotification();
     }, 1000);
+}
+
+function trackContent() {
+    useContent.trackContent({
+        content_id: props.data.anilist_content_id,
+        content_status:'planning',
+        content_type:props.data.type,
+    })
 }
 </script>
 

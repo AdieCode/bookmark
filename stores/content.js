@@ -10,6 +10,7 @@ export const useContentStore = defineStore('content', {
   state: () => {
     return {
       data: [],
+      planningData: [],
       currentPage: 1,
       totalContent: 0,
       contentFetched: false,
@@ -321,6 +322,93 @@ export const useContentStore = defineStore('content', {
       // }
       this.selected_content = data
       console.log(this.selected_content)
+    },
+
+    async trackContent(data){
+      if (!data.content_id && !data.content_status && !data.content_type) {
+        console.log('required data not provided to track content')
+        return null;
+      }
+
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        let response;
+        if (data.content_type === "ANIME") {
+          response = await $api.post(`${this.baseURL}/user_content/add_user_anime_content`, data);
+          return null;
+        }
+
+        if (data.content_type === "MANGA") {
+          response = await $api.post(`${this.baseURL}/user_content/add_user_manga_content`, data);
+          return null;
+        }
+
+        console.log("neither tracking request was initiated");
+        return null;
+
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log(error);
+        }
+      }
+    },
+
+    async getPlanningTrackedContent(status){
+      if (!status) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      this.currentPage = 1;
+      const toggle = useTogglesStore();
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        let response;
+        this.contentFetched = false;
+
+        if (toggle.contentType === "Anime") {
+          response = await $api.get(`${this.baseURL}/user_content/get_user_anime_content`, {
+            params: {
+              content_status: status
+            }
+          });
+        }
+
+        if (toggle.contentType === "Manga") {
+          response = await $api.get(`${this.baseURL}/user_content/get_user_manga_content`, {
+            params: {
+              content_status: status
+            }
+          });
+        }
+
+        this.totalContent = response?.data?.data?.page?.total;
+        this.contentFetched = true;
+        this.planningData = response?.data?.data?.media;
+
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          this.totalContent = 0;
+          this.contentFetched = true;
+          this.planningData = [];
+
+          console.log('somthing went wrong while fetching tracked conten: ', error);
+        }
+      }
     }
   },
 });
