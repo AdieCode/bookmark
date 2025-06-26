@@ -6,9 +6,8 @@
         <title>Content Manging & Exploring</title>
         <div class="flex flex-row place-content-center justify-between mt-4 mb-4">
             <div class="w-40 cursor-pointer flex justify-center">
-                <!-- <img src="../public/images/Logo-bookmark.png" alt=""> -->
-                 <a href="/mainpage" title="Go to homepage">
-                     <Icon/>
+                 <a href="/mainpage" title="Go to mainpage">
+                     
                  </a>
             </div> 
 

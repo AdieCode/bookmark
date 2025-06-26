@@ -20,9 +20,20 @@ export const useContentStore = defineStore('content', {
   },
 
   actions: {
+    init() {
+			if (process.client) {
+			const session = useCookie('session');
+			this.token = session.value?.token || null;
+			}
+
+			const config = useRuntimeConfig();
+			this.baseURL = config.public.baseUrl || 'http://localhost:3001';
+		},
+
     clearData(){
       this.data = [];
     },
+
     async getMangaContent(page=1) {
       const { $api } = useNuxtApp();
       if (abortController) {
@@ -220,6 +231,7 @@ export const useContentStore = defineStore('content', {
 
         toggle.hideNotification();
         this.selected_content = response.data.data.media[0];
+        localStorage.setItem('selectedContent', JSON.stringify(this.selected_content));
       } catch (error) {
         if (error.name === 'CanceledError') {
           console.log("Previous request canceled");
