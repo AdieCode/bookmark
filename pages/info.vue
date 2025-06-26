@@ -370,7 +370,7 @@ function handleSlideChange(swiper) {
 
 function trackContent() {
 
-    useToggles.setNotification("Bookmarked", 3)
+    useToggles.setNotification("Bookmarked", 0)
     content.trackContent({
         content_id: content?.selected_content?.anilist_content_id,
         content_status:'planning',

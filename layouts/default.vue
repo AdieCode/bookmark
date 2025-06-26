@@ -89,12 +89,14 @@
             <tagSearch/>
              <div></div>
             <div class="w-16 h-16 relative ml-4">
-                <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" @click="scrollToTop">
+                <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100"
+                     @click="scrollToTop">
                     <img src="../public/images/icons8-up-arrow-100.png" alt="">
                 </div>
 
-                <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100">
-                    <img src="../public/images/plus.png" alt="" class="h-8 w-8">
+                <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" v-if="isInfoPage">
+                    <!-- <img src="../public/images/plus.png" alt="" class="h-8 w-8"> -->
+                     <img src="../public/bookmark_icons/bookmark.png" alt="" class="h-8 w-8" @click="trackContent">
                 </div>
             </div>
         </div>
@@ -133,7 +135,8 @@
 
 <script setup>
 import { ref } from 'vue';
-const useToggles = useTogglesStore()
+const useToggles = useTogglesStore();
+const useContent = useContentStore();
 const router = useRouter();
 const route = useRoute();
 
@@ -189,6 +192,20 @@ const bubbles = ref(Array.from({ length: 50 }, () => ({
   delay: Math.random() * 10, // Random delay between 0s and 10s
   positionX: Math.random() * 100 // Random horizontal position between 0% and 100%
 })));
+
+function trackContent() {
+
+    useToggles.setNotification("Bookmarked", 0)
+    useContent.trackContent({
+        content_id: useContent?.selected_content?.anilist_content_id,
+        content_status:'planning',
+        content_type:useContent?.selected_content?.type,
+    });
+
+    setTimeout(() => {
+          useToggles.hideNotification();
+    }, 1000);
+}
 
 onMounted(() => {
   useToggles.checkMobile();
