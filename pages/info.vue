@@ -111,8 +111,7 @@
             </div>
 
             <div v-if="!useToggles.isMobile"
-                class="cursor-pointer sticky top-20" 
-                @click="trackContent">
+                class="cursor-pointer sticky top-20">
                 <img class="w-12 pr-2" src="../public/bookmark_icons/bookmark.png" alt="" srcset="">
             </div>
             
@@ -190,7 +189,7 @@
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <div v-for="(item, index) in contentData.relations" 
-                        :key="index"
+                        :key="'relations-' + index"
                         class="opacity-0 animate-fade-in"
                         :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <ContentCard
@@ -200,7 +199,7 @@
                         <MobileContentCard
                             v-else-if="item"
                             :data="item"
-                            :key="'mobile-' + index"
+                            :key="'relations-mobile-' + index"
                         />
                     </div>
                 </div>
@@ -217,7 +216,7 @@
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <div v-for="(item, index) in contentData.characters" 
-                        :key="index"
+                        :key="'characters-' + index"
                         class="opacity-0 animate-fade-in"
                         :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <CharacterCard
@@ -239,7 +238,7 @@
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
                     <div v-for="(item, index) in contentData.recommendations"
-                         :key="index"
+                         :key="'recommendations-' + index"
                          class="opacity-0 animate-fade-in"
                         :style="{ animationDelay: `${index * displayDelay}ms` }">
                         <ContentCard
@@ -249,7 +248,7 @@
                         <MobileContentCard
                             v-else-if="item && !(item.anilist_content_id === 'No ID')"
                             :data="item"
-                            :key="'mobile-' + index"
+                            :key="'recommendations-mobile-' + index"
                         />
                     </div>
                 </div>

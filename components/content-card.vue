@@ -7,13 +7,22 @@
             
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
-                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer">
-                    <a :href="'/info?id=' + data.anilist_content_id" title="Go to info page">
-                        <span class="font-bold text-base pb-4">More info</span>
-                    </a>
+                <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer" 
+                    @click="moreInfo"
+                    @mousedown="handleMouseDown">
+                    <span class="font-bold text-base pb-4">More info</span>
+                    <!-- <a :href="'/info?id=' + data.anilist_content_id" title="Go to info page">
+                    </a> -->
                 </div>
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer" @click="trackContent">
-                    <img src="../public/bookmark_icons/bookmark.png" alt="" class="w-6">
+                    <img v-if="data?.tracked?.status === 'UNTRACKED'"
+                        src="../public/bookmark_icons/bookmark.png" 
+                        alt="" 
+                        class="w-6">
+                    <img v-else 
+                        src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/48/external-bookmarking-syllabus-book-isolate-on-a-white-background-library-bold-tal-revivo.png" 
+                        alt="bookmarked-icon"
+                        class="w-6"/>
                 </div>
             </div>
         </div>
@@ -53,7 +62,6 @@
         <!-- Pop-up info, visible on hover or click -->
         <div v-if="showInfo" class="absolute w-64 max-h-64 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 transform -top-2 -left-6 pointer-events-none bounce-down md:pointer-events-auto">
             <div v-if="data.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
-                <!-- <span v-if="!data.isAdult" class="font-extrabold small-title">PG 13</span> -->
                 <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
             
@@ -72,14 +80,14 @@
 
             <!-- Scores and status -->
             <div class="flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-2">
-                <span><span class="font-extralight">Score </span>{{ data.average_score || "?" }}</span>
+                <span><span class="font-extralight">Score </span>{{ data?.average_score || "?" }}</span>
 
                 <!-- Anime  -->
-                <span v-if="data.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ data.episodes }}</span>
+                <span v-if="data.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ data?.episodes || "?" }}</span>
 
                 <!-- Manga  -->
-                <span v-if="data.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ data.chapters }}</span>
-                <span v-if="data.type === 'MANGA' && data.volumes"><span class="font-extralight">Vol's </span>{{ data.volumes }}</span>
+                <span v-if="data.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ data?.chapters || "?" }}</span>
+                <span v-if="data.type === 'MANGA' && data.volumes"><span class="font-extralight">Vol's </span>{{ data?.volumes }}</span>
 
             </div>
         </div>
@@ -156,6 +164,16 @@ function trackContent() {
         content_type:props.data.type,
     })
 }
+
+
+function handleMouseDown(event) {
+    if (event.button === 1) {
+        console.log("this ran")
+        const url = `/info?id=${props.data.anilist_content_id}`;
+        window.open(url, '_blank');
+    }
+}
+
 </script>
 
 <style scoped>

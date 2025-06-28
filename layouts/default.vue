@@ -97,7 +97,15 @@
 
                 <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" v-if="isInfoPage">
                     <!-- <img src="../public/images/plus.png" alt="" class="h-8 w-8"> -->
-                     <img src="../public/bookmark_icons/bookmark.png" alt="" class="h-8 w-8" @click="trackContent">
+                    <img v-if="useContent?.selected_content?.tracked?.status === 'UNTRACKED'"
+                        src="../public/bookmark_icons/bookmark.png" 
+                        alt="bookmark-icon" 
+                        class="h-8 w-8" 
+                        @click="trackContent">
+                    <img v-else 
+                        src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/48/external-bookmarking-syllabus-book-isolate-on-a-white-background-library-bold-tal-revivo.png" 
+                        alt="bookmarked-icon"
+                        class="h-8 w-8"/>
                 </div>
             </div>
         </div>
