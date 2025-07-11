@@ -164,6 +164,10 @@ function trackContent() {
         content_status:'planning',
         content_type:props.data.type,
     })
+
+    if (props.data.tracked) {
+        props.data.tracked.status = 'planning';
+    }
     setTimeout(() => {
       useToggles.hideNotification();
     }, 1000);
