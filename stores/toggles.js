@@ -63,7 +63,8 @@ export const useTogglesStore = defineStore('toggles', {
           type: 'sort',
           selected: false
         }
-      ]
+      ],
+      editContent: true,
     };
   },
 
@@ -85,6 +86,10 @@ export const useTogglesStore = defineStore('toggles', {
 
     toggleSearchShow() {
       this.searchShow = !this.searchShow;
+    },
+
+    toggleEditShow() {
+      this.editContent = !this.editContent;
     },
 
     toggleContentDiscover() {

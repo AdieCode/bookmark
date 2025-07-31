@@ -95,13 +95,12 @@
                     <img src="../public/images/icons8-up-arrow-100.png" alt="">
                 </div>
 
-                <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" v-if="isInfoPage">
+                <div class="absolute -top-2 -left-1 w-16 h-16 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100" v-if="isInfoPage" @click="trackContent">
                     <!-- <img src="../public/images/plus.png" alt="" class="h-8 w-8"> -->
                     <img v-if="useContent?.selected_content?.tracked?.status === 'UNTRACKED'"
                         src="../public/bookmark_icons/bookmark.png" 
                         alt="bookmark-icon" 
-                        class="h-8 w-8" 
-                        @click="trackContent">
+                        class="h-8 w-8">
                     <img v-else 
                         src="https://img.icons8.com/external-tal-revivo-bold-tal-revivo/48/external-bookmarking-syllabus-book-isolate-on-a-white-background-library-bold-tal-revivo.png" 
                         alt="bookmarked-icon"
@@ -119,6 +118,8 @@
                 {{ useToggles.notification.text }}
             </div>
         </div>
+
+        <ContentEditor :data="useContent.selected_content"/>
 
     </div>
 
@@ -203,13 +204,21 @@ const bubbles = ref(Array.from({ length: 50 }, () => ({
 })));
 
 function trackContent() {
-
-    useToggles.setNotification("Bookmarked", 0)
-    useContent.trackContent({
-        content_id: useContent?.selected_content?.anilist_content_id,
-        content_status:'planning',
-        content_type:useContent?.selected_content?.type,
-    });
+    
+    if (useContent.selected_content?.tracked?.status === 'UNTRACKED'){
+        useToggles.setNotification("Bookmarked", 0)
+        useContent.trackContent({
+            content_id: useContent?.selected_content?.anilist_content_id,
+            content_status:'planning',
+            content_type:useContent?.selected_content?.type,
+        });
+    
+        if (useContent?.selected_content?.tracked) {
+            useContent.selected_content.tracked.status = 'planning'
+        } 
+    }  else {
+        useToggles.toggleEditShow();
+    }
 
     setTimeout(() => {
           useToggles.hideNotification();

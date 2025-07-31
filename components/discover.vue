@@ -62,6 +62,7 @@ const useToggles = useTogglesStore()
 
 const contentData = computed(() => content?.data);
 const searchShow = computed(() => useToggles?.searchShow);
+const editorShow = computed(() => useToggles?.editContent);
 const mounted = ref(false);
 // console.log(contentData)
 // const contentData = ref(content.data);
@@ -120,6 +121,14 @@ watch(() => content.contentType, async () => {
 });
 
 watch(searchShow, (visible) => {
+  if (visible) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
+watch(editorShow, (visible) => {
   if (visible) {
     document.body.style.overflow = 'hidden'
   } else {
