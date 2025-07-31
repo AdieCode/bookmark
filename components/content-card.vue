@@ -174,6 +174,29 @@ function trackContent() {
 }
 
 
+// function trackContent() {
+    
+//     if (props.data?.tracked?.status === 'UNTRACKED'){
+//         useToggles.setNotification("Bookmarked", 0)
+//         useContent.trackContent({
+//             content_id: props.data.anilist_content_id,
+//             content_status:'planning',
+//             content_type:props.data.type,
+//         })
+    
+//         if (props.data.tracked) {
+//             props.data.tracked.status = 'planning';
+//         }
+//     }  else {
+//         useToggles.toggleEditShow();
+//     }
+
+//     setTimeout(() => {
+//           useToggles.hideNotification();
+//     }, 1000);
+// }
+
+
 function handleMouseDown(event) {
     if (event.button === 1) {
         console.log("this ran")
