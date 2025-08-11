@@ -41,10 +41,19 @@
         />
       </div>
 
-
-      <div v-else-if="searchText?.length > 4 && contentData?.length === 0"
+      <div v-else-if="userIsTyping"
           class="text-lg font-bold text-center mt-10">
-        No results found
+        typing 🫣
+      </div>
+
+      <div v-else-if="searching"
+          class="text-lg font-bold text-center mt-10">
+        Searching... 😊
+      </div>
+
+      <div v-else-if="!searching && contentData?.length === 0"
+          class="text-lg font-bold text-center mt-10">
+        No results found 🥲
       </div>
     </div>
   </div>
@@ -60,6 +69,8 @@ const contentData = computed(() => content?.searched_content);
 const isMobile = computed(() => useToggles?.isMobile);
 const searchText = ref("");
 const searchInput = ref(null);
+const searching = ref(false)
+const userIsTyping = ref(false);
 
 // --- Debounce Setup ---
 let debounceTimeout = null;
@@ -68,10 +79,17 @@ watch(searchText, (newValue) => {
   if (debounceTimeout) clearTimeout(debounceTimeout);
 
   if (newValue.trim()?.length > 3) {
-    debounceTimeout = setTimeout(() => {
-      content.getContentByText(newValue);
+    userIsTyping.value = true;
+    searching.value = true;
+    debounceTimeout = setTimeout(async () => {
+      userIsTyping.value = false; 
+      searching.value = true;
+      await content.getContentByText(newValue);
+      searching.value = false;
     }, 700);
   } else {
+    userIsTyping.value = false;
+    searching.value = false;
     content.searched_content = []; // optional: clear results if below 3 chars
   }
 });
