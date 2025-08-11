@@ -1,4 +1,5 @@
 import axios from 'axios';
+// file name will change, just making changes to make sure everything works.
 
 export default defineNuxtPlugin((nuxtApp) => {
   const auth = useAuthStore();
@@ -18,15 +19,18 @@ export default defineNuxtPlugin((nuxtApp) => {
     return config;
   });
 
-  // Handle 401 errors globally
+  // Handle errors globally
   api.interceptors.response.use(
     (response) => response,
     (error) => {
       if (error.response?.status === 401) {
         // auth.setAuthenticated(false);
         return navigateTo('/auth/login');
+      } else if(error.response?.status === 500) {
+        return navigateTo('exeption/error')
+      } else {
+        return Promise.reject(error);
       }
-      return Promise.reject(error);
     }
   );
 
