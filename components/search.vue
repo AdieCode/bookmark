@@ -30,7 +30,7 @@
 
       <!-- Results -->
       <div
-        v-if="contentData?.length > 0"
+        v-if="contentData?.length > 0 && !searching && !userIsTyping"
         class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto h-[560px] overflow-y-scroll"
         :class="useToggles.isMobile ? 'w-[310px] !h-[470px]' : 'w-[460px]'"
       >
@@ -51,7 +51,7 @@
         Searching... 😊
       </div>
 
-      <div v-else-if="!searching && contentData?.length === 0"
+      <div v-else-if="!searching && !userIsTyping && contentData?.length === 0"
           class="text-lg font-bold text-center mt-10">
         No results found 🥲
       </div>
