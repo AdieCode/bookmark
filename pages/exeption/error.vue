@@ -1,6 +1,6 @@
 <template>
     <div class=" flex justify-center items-center w-full font-extrabold text-xl">
-        <div class="flex flex-col justify-center items-center gap-4 mt-36">
+        <div class="flex flex-col justify-center items-center gap-4 mt-14">
             <img 
                 width="50" 
                 height="50" 
