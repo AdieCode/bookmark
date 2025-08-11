@@ -33,7 +33,7 @@ export default defineNuxtPlugin((nuxtApp) => {
             
         return navigateTo('/auth/login');
       } else if(error.response?.status === 500) {
-        return navigateTo('exeption/error')
+        return navigateTo('/exeption/error')
       } else {
         return Promise.reject(error);
       }
