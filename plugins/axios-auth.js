@@ -3,6 +3,7 @@ import axios from 'axios';
 
 export default defineNuxtPlugin((nuxtApp) => {
   const auth = useAuthStore();
+  const useToggles = useTogglesStore();
     // const authStore = useAuthStore();
     // const isAuthenticated = await authStore.checkAuth();
 
@@ -25,6 +26,11 @@ export default defineNuxtPlugin((nuxtApp) => {
     (error) => {
       if (error.response?.status === 401) {
         // auth.setAuthenticated(false);
+        useToggles.setNotification("Not Authenticated", 2)
+        setTimeout(() => {
+              useToggles.hideNotification();
+        }, 1000);
+            
         return navigateTo('/auth/login');
       } else if(error.response?.status === 500) {
         return navigateTo('exeption/error')
