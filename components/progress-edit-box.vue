@@ -1,10 +1,9 @@
 <template>
-    <div class="relative max-w-48 p-2 border-4 bg-white border-black rounded-lg">
+    <div class="relative min-w-48 max-w-48  p-2 border-4 bg-white border-black rounded-lg">
         <!-- label  -->
         <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold">
             {{ label }}
         </div>
-
 
         <!-- input -->
         <input v-show="edit_active"
@@ -37,7 +36,7 @@ const inputValue = ref(0);
 const props = defineProps({
     label: { type: String, default: 'no label' },
     current_progress: { type: Number, default: 0 },
-    total_progress: { type: Number, default: 123 },
+    total_progress: { type: Number, default: 0 },
     name: { type: String, default: 'progress-edit-box-name' },
 });
 

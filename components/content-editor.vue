@@ -4,7 +4,7 @@
         <div class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md w-full" @click="useToggles.toggleEditShow"></div>
 
         <!-- editor  -->
-        <div class="relative flex justify-center gap-4 bg-white border-black rounded-3xl border-4 z-20 m-28 mb-10 mt-48 p-10 overflow-x-hidden"
+        <div class="relative flex justify-center gap-4 bg-white border-black rounded-t-3xl border-4 z-20 m-28 mb-10 mt-48 p-10 overflow-x-hidden"
             :class="{'flex-col !m-0 !mt-48': useToggles.isMobile}">
             <div class="flex flex-col justify-center items-center">
                 <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content">
@@ -34,15 +34,41 @@
                 </div>
             </div>
             <div class="p-8">
-                <h2 class="text-center font-semibold text-2xl mb-6">tracking details</h2>
-                <divider-line text="status"/>
+                <h2 class="text-center font-light text-2xl mb-10">tracking details</h2>
+                <!-- <divider-line text="status" -->
                 <div class="mt-5 flex flex-col gap-8 ">
-                    <form ref="myForm" @submit.prevent="handleSubmit">
-                        <ContentStatusSeter/>
+                    <form ref="myForm" 
+                    class="flex flex-col justify-center items-center gap-6 "
+                        @submit.prevent="handleSubmit">
                         <DateEditBox label="start date" name="start_date"/>
-                        <EditBox label="title" name="title"/>
-                        <ProgressEditBox label="currrent chapter" name="currrent_chapter"/>
-                        <button type="submit">save data</button>
+                        <!-- <EditBox label="title" name="title"/> -->
+                        
+                        <ProgressEditBox 
+                        :total_progress="data.volumes"
+                        label="currrent volume" 
+                        name="currrent_volume"
+                        />
+                        
+                        <ProgressEditBox 
+                            :total_progress="data?.chapters"
+                            label="currrent chapter" 
+                            name="currrent_chapter"
+                        />
+
+                        <ProgressEditBox 
+                            :total_progress="data.current_page"
+                            label="currrent page" 
+                            name="currrent_page"
+                        />
+
+                        <DropDown
+                            name="Reading Status"
+                            :showDorpDown="dropDownVisible"
+                            :toggleFunction="toggleDropDown"
+                            :options="trackingStatus"
+                        />
+
+                        <BorderButton text="save"/>
                     </form>
                 </div>
             </div>
@@ -62,6 +88,16 @@ const props = defineProps({
 })
 
 const myForm = ref(null);
+const dropDownVisible = ref(false)
+const trackingStatus = ref([
+    'planning',
+    'busy',
+    'completed'
+])
+
+function toggleDropDown(){
+    dropDownVisible.value = !dropDownVisible.value
+}
 
 function capitalizeStatus(status) {
     if (!status) return ''; // Handle undefined or null inputs
