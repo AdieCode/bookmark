@@ -61,7 +61,7 @@
 
 
 <script setup>
-import { ref, watch, computed, onMounted } from "vue";
+import { ref, watch, computed, onMounted, nextTick } from "vue";
 const useToggles = useTogglesStore();
 const content = useContentStore();
 
@@ -102,16 +102,22 @@ function toggleSearch() {
 
 watch(
   () => useToggles.searchShow,
-  (newValue) => {
-    if (newValue && searchInput.value) {
-      searchInput.value.focus();
+  async (newValue) => {
+    if (newValue) {
+      await nextTick();
+      if (searchInput.value) {
+        searchInput.value.focus();
+      }
     }
   }
 );
 
-onMounted(() => {
-  if (useToggles.searchShow && searchInput.value) {
-    searchInput.value.focus();
+onMounted(async () => {
+  if (useToggles.searchShow) {
+    await nextTick();
+    if (searchInput.value) {
+      searchInput.value.focus();
+    }
   }
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <div class="relative min-w-48 max-w-48  p-2 border-4 bg-white border-black rounded-lg">
+    <div ref="rootEl" class="relative min-w-48 max-w-48  p-2 border-4 bg-white border-black rounded-lg">
         <!-- label  -->
         <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold">
             {{ label }}
@@ -7,6 +7,7 @@
 
         <!-- input -->
         <input v-show="edit_active"
+            ref="inputEl"
             class="outline-none text-lg font-extrabold w-full" 
             type="number" 
             :name="name" 
@@ -20,18 +21,17 @@
             @click="toggleEdit">
             {{ inputValue }} / {{ total_progress }}
         </div>
-
-
-
     </div>
 </template>
 
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onUnmounted } from 'vue';
 
 const edit_active = ref(false);
 const inputValue = ref(0);
+const rootEl = ref(null);
+const inputEl = ref(null);
 
 const props = defineProps({
     label: { type: String, default: 'no label' },
@@ -44,8 +44,28 @@ inputValue.value = props.current_progress;
 
 function toggleEdit() {
     edit_active.value = !edit_active.value;
+    if (edit_active.value) {
+        // Focus the input after next tick
+        setTimeout(() => {
+            inputEl.value?.focus();
+        }, 0);
+    }
 }
 
+// Click outside handler
+function handleClickOutside(event) {
+    if (edit_active.value && rootEl.value && !rootEl.value.contains(event.target)) {
+        edit_active.value = false;
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('mousedown', handleClickOutside);
+});
 
 </script>
 

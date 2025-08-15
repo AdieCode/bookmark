@@ -1,6 +1,6 @@
 <template>
     <button
-        :class="['inline-flex items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100', passebleClass]"
+        :class="['inline-flex justify-center items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100', passebleClass]"
         @click="onClick"
     >
         {{ text }}

@@ -1,5 +1,5 @@
 <template>
-    <div class="relative">
+    <div ref="rootEl" class="relative">
 
         <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100"
             @click="toggleFunction">
@@ -40,7 +40,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 const useToggles = useTogglesStore();
 
 const props = defineProps({
@@ -53,6 +53,7 @@ const props = defineProps({
 
 const selectedIndex = ref(-1);
 const selectedOptionName = ref('');
+const rootEl = ref(null);
 
 const updatedOptions = computed(() =>
     props.options.map((opt, idx) => ({
@@ -66,6 +67,21 @@ function selectOption(index) {
     selectedOptionName.value = updatedOptions.value[index].name;
     props.toggleFunction()
 }
+
+// Click outside handler
+function handleClickOutside(event) {
+    if (props.showDorpDown && rootEl.value && !rootEl.value.contains(event.target)) {
+        props.toggleFunction();
+    }
+}
+
+onMounted(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+});
+
+onUnmounted(() => {
+    document.removeEventListener('mousedown', handleClickOutside);
+});
 
 </script>
 
