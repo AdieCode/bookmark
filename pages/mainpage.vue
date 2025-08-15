@@ -16,14 +16,52 @@
         </div> -->
 
         <Discover v-if="toggle.content.discover" />
-        <PlanningToRead v-if="toggle.content.planningToRead" />
-        <Discover v-if="toggle.content.reading" />
-        <Discover v-if="toggle.content.completed" />
+
+        <content-fetcher-displayer v-if="toggle.content.planningToRead" 
+            :content-type="toggle.contentType" 
+            :triggerFunction="useContent.getPlanningContent"
+            :content-list="useContent.plannaningContentData.contentList"/>
+
+        <content-fetcher-displayer v-if="toggle.content.reading" 
+            :content-type="toggle.contentType" 
+            :triggerFunction="useContent.getBusyContent"
+            :content-list="useContent.busyContentData.contentList"/>
+
+        <content-fetcher-displayer v-if="toggle.content.completed" 
+            :content-type="toggle.contentType" 
+            :triggerFunction="useContent.getCompletedContent"
+            :content-list="useContent.completedContentData.contentList"/>
+
+        <!-- <Discover v-if="toggle.content.reading" /> -->
+        <!-- <Discover v-if="toggle.content.completed" /> -->
     </div>
 </template>
 
 <script setup>
 const toggle = useTogglesStore();
+const useContent = useContentStore();
+
+// async function getPlanninContent(contentType) {
+//     await useContent.getPlanningContent(contentType);
+// }
+
+// watch(toggle.contentType, async (newValue) => {
+//   if (toggle.content.discover){
+//     console.log('discover')
+//   }
+//   if (toggle.content.planningToRead){
+//     console.log('planningToRead')
+//     await useContent.getPlanningContent(toggle.contentType);
+//   }
+//   if (toggle.content.reading){
+//     console.log('reading')
+//   }
+//   if (toggle.content.completed){
+//     console.log('completed')
+//   }
+// });
+
+
 
 const bubbles = ref(Array.from({ length: 50 }, () => ({
     size: Math.random() * 50 + 20, // Random size between 20px and 70px

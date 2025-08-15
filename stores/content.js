@@ -11,6 +11,24 @@ export const useContentStore = defineStore('content', {
     return {
       data: [],
       planningData: [],
+      plannaningContentData:{
+        currentPage: 0,
+        hasNextPage: true,
+        contentType: '',
+        contentList: []
+      },
+      busyContentData:{
+        currentPage: 0,
+        hasNextPage: true,
+        contentType: '',
+        contentList: []
+      },
+      completedContentData:{
+        currentPage: 0,
+        hasNextPage: true,
+        contentType: '',
+        contentList: []
+      },
       currentPage: 1,
       totalContent: 0,
       contentFetched: false,
@@ -409,6 +427,154 @@ export const useContentStore = defineStore('content', {
           console.log('somthing went wrong while fetching tracked conten: ', error);
         }
       }
+    },
+
+
+    async getPlanningContent(contentType){
+      const currentContentType = this.plannaningContentData.contentType;
+
+      if (!contentType && !page) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      if (contentType != currentContentType) {
+        this.plannaningContentData.contentType = contentType;
+        this.plannaningContentData.contentList = [];
+        this.plannaningContentData.hasNextPage = true;
+        this.plannaningContentData.currentPage = 0;
+      }
+
+      if (!this.plannaningContentData.hasNextPage) {
+        return this.plannaningContentData;
+      }
+
+      this.plannaningContentData.currentPage += 1;
+      this.contentFetched = false;
+
+      const response = await this.getTrackedContentByStatusAndContentType(this.plannaningContentData.contentType, 'planning', this.plannaningContentData.currentPage);
+
+      this.contentFetched = true;
+
+      this.plannaningContentData.contentList = this.plannaningContentData.contentList.concat(response.data.media);
+      this.plannaningContentData.hasNextPage = response.data.page.hasNextPage;
+
+      return this.plannaningContentData;
+
+    },
+
+    async getBusyContent(contentType){
+      const currentContentType = this.busyContentData.contentType;
+
+      if (!contentType && !page) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      if (contentType != currentContentType) {
+        this.busyContentData.contentType = contentType;
+        this.busyContentData.contentList = [];
+        this.busyContentData.hasNextPage = true;
+        this.busyContentData.currentPage = 0;
+      }
+
+      if (!this.busyContentData.hasNextPage) {
+        return this.busyContentData;
+      }
+
+      this.busyContentData.currentPage += 1;
+      this.contentFetched = false;
+
+      const response = await this.getTrackedContentByStatusAndContentType(this.busyContentData.contentType, 'busy', this.busyContentData.currentPage);
+
+      this.contentFetched = true;
+
+      this.busyContentData.contentList = this.busyContentData.contentList.concat(response.data.media);
+      this.busyContentData.hasNextPage = response.data.page.hasNextPage;
+
+      return this.busyContentData;
+    },
+
+    async getCompletedContent(contentType){
+      const currentContentType = this.completedContentData.contentType;
+
+      if (!contentType && !page) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      if (contentType != currentContentType) {
+        this.completedContentData.contentType = contentType;
+        this.completedContentData.contentList = [];
+        this.completedContentData.hasNextPage = true;
+        this.completedContentData.currentPage = 0;
+      }
+
+      if (!this.completedContentData.hasNextPage) {
+        return this.completedContentData;
+      }
+
+      this.completedContentData.currentPage += 1;
+      this.contentFetched = false;
+
+      const response = await this.getTrackedContentByStatusAndContentType(this.completedContentData.contentType, 'completed', this.completedContentData.currentPage);
+
+      this.contentFetched = true;
+
+      this.completedContentData.contentList = this.completedContentData.contentList.concat(response.data.media);
+      this.completedContentData.hasNextPage = response.data.page.hasNextPage;
+
+      return this.completedContentData;
+    },
+
+
+    async getTrackedContentByStatusAndContentType(contentType, status, page){
+      if (!contentType && !status) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        let response;
+
+        if (contentType === "Anime") {
+          response = await $api.get(`${this.baseURL}/user_content/get_user_anime_content`, {
+            params: {
+              content_status: status,
+              page: page
+            }
+          });
+        }
+
+        if (contentType === "Manga") {
+          response = await $api.get(`${this.baseURL}/user_content/get_user_manga_content`, {
+            params: {
+              content_status: status,
+              page: page
+            }
+          });
+        }
+
+        return response.data;
+
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log('somthing went wrong while fetching tracked conten: ', error);
+        }
+        return {}
+      }
     }
+
+
+
+
   },
 });
