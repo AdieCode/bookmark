@@ -290,6 +290,7 @@ const route = useRoute();
 
 const currentSelector = ref(0);
 const searchShow = computed(() => useToggles?.searchShow);
+const editorShow = computed(() => useToggles?.editContent);
 const swiperRef = ref(null);
 
 const displayDelay = 30;
@@ -388,6 +389,14 @@ watch(() => route.query.id, async (newId, oldId) => {
 });
 
 watch(searchShow, (visible) => {
+  if (visible) {
+    document.body.style.overflow = 'hidden'
+  } else {
+    document.body.style.overflow = ''
+  }
+})
+
+watch(editorShow, (visible) => {
   if (visible) {
     document.body.style.overflow = 'hidden'
   } else {

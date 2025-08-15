@@ -11,21 +11,30 @@
                 <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/down-squared--v2.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>
             </div>
         </div>
-        <div v-if="showDorpDown" class="grow flex flex-col absolute max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg !z-30 ">
-            <div
-            v-for="(option, index) in updatedOptions"
-            :key="index"
-            class="p-1 px-2 m-1 flex items-center gap-1 cursor-pointer rounded-lg whitespace-nowrap "
-            :class="{'bg-gray-300': option.selected,
-                    'hover:bg-gray-400': !useToggles.isMobile
-            }"
-            @click="selectOption(index)"
-            >
-                <div class="w-4 h-4 border-4 border-black rounded-md" :class="{'bg-black': option.selected}"></div>
-                <span class="mb-1 font-bold">{{ option.name }}</span>
+        <Transition name="grow">
+            <div v-if="showDorpDown" class="grow flex flex-col max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg ">
+                <div
+                v-for="(option, index) in updatedOptions"
+                :key="index"
+                class="p-1 px-2 m-1 flex items-center gap-1 cursor-pointer rounded-lg whitespace-nowrap "
+                :class="{'bg-gray-300': option.selected,
+                        'hover:bg-gray-400': !useToggles.isMobile
+                }"
+                @click="selectOption(index)"
+                >
+                    <div class="w-4 h-4 border-4 border-black rounded-md" :class="{'bg-black': option.selected}"></div>
+                    <span class="mb-1 font-bold">{{ option.name }}</span>
+                </div>
             </div>
-    
-        </div>
+        </Transition>
+
+        <input v-show="false"
+            class="" 
+            type="text" 
+            :name="name" 
+            id=""
+            v-model="selectedOptionName"
+        >
     </div>
 
 </template>
@@ -43,6 +52,7 @@ const props = defineProps({
 });
 
 const selectedIndex = ref(-1);
+const selectedOptionName = ref('');
 
 const updatedOptions = computed(() =>
     props.options.map((opt, idx) => ({
@@ -53,6 +63,8 @@ const updatedOptions = computed(() =>
 
 function selectOption(index) {
     selectedIndex.value = index;
+    selectedOptionName.value = updatedOptions.value[index].name;
+    props.toggleFunction()
 }
 
 </script>
@@ -74,15 +86,31 @@ function selectOption(index) {
 
 @keyframes growingDown {
     0% {
+        transform: scaleY(0);
         opacity: 0;
     }
     100% {
+        transform: scaleY(1);
         opacity: 1;
     }
 }
 
 
-.grow{
-    animation: growingDown 0.1s linear;
+.grow {
+    animation: growingDown 0.1s ease;
+    transform-origin: top;
+}
+
+.grow-enter-active, .grow-leave-active {
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    transform-origin: top;
+}
+.grow-enter-from, .grow-leave-to {
+    transform: scaleY(0);
+    opacity: 0;
+}
+.grow-enter-to, .grow-leave-from {
+    transform: scaleY(1);
+    opacity: 1;
 }
 </style>

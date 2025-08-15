@@ -40,6 +40,13 @@
                     <form ref="myForm" 
                     class="flex flex-col justify-center items-center gap-6 "
                         @submit.prevent="handleSubmit">
+                        <DropDown
+                            name="Reading Status"
+                            :showDorpDown="dropDownVisible"
+                            :toggleFunction="toggleDropDown"
+                            :options="trackingStatus"
+                        />
+                        
                         <DateEditBox label="start date" name="start_date"/>
                         <!-- <EditBox label="title" name="title"/> -->
                         
@@ -61,12 +68,6 @@
                             name="currrent_page"
                         />
 
-                        <DropDown
-                            name="Reading Status"
-                            :showDorpDown="dropDownVisible"
-                            :toggleFunction="toggleDropDown"
-                            :options="trackingStatus"
-                        />
 
                         <BorderButton text="save"/>
                     </form>
