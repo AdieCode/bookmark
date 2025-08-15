@@ -571,9 +571,66 @@ export const useContentStore = defineStore('content', {
         }
         return {}
       }
+    },
+
+    async updateTrackedContent(id, contentType, updateData){
+      if (!updateData) {
+        console.log('required data not provided to get update tracked content')
+        return null;
+      }
+
+      const { $api } = useNuxtApp();
+      if (abortController) {
+        abortController.abort(); 
+      }
+
+      abortController = new AbortController(); 
+      try {
+        let response;
+        
+        if (contentType === "ANIME") {
+          const requestBody = {
+            content_id: id,
+            current_episode: updateData?.current_episode,
+            score: updateData?.personal_score,
+            status: updateData?.content_status,
+            start_date: updateData?.start_date,
+            end_date: updateData?.end_date,
+            user_comment: updateData?.user_comment,
+            // deleted: updateData?.deleted,
+          }
+          
+          response = await $api.post(`${this.baseURL}/user_content/update_user_anime_content`, requestBody);
+        }
+        
+        if (contentType === "MANGA") {
+          const requestBody = {
+            content_id: id,
+            current_volume: updateData?.current_volume,
+            current_chapter: updateData?.current_chapter,
+            current_page: updateData?.current_page,
+            score: updateData?.personal_score,
+            status: updateData?.status,
+            start_date: updateData?.start_date,
+            end_date: updateData?.end_date,
+            user_comment: updateData?.user_comment,
+            // deleted: updateData?.deleted,
+          }
+
+          response = await $api.post(`${this.baseURL}/user_content/update_user_manga_content`, requestBody);
+        }
+
+        return true;
+
+      } catch (error) {
+        if (error.name === 'CanceledError') {
+          console.log("Previous request canceled");
+        } else {
+          console.log('somthing went wrong while updateting tracked content: ', error);
+        }
+        return false
+      }
     }
-
-
 
 
   },

@@ -4,7 +4,7 @@
         <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100"
             @click="toggleFunction">
             <span class="text-xl font-bold">
-                {{ name }}
+                {{ label }}
             </span>
             <div>
                 <!-- <img src="https://img.icons8.com/ios/50/down-squared--v1.png" alt="down-squared--v1" class="w-5 h-5 mt-1"/> -->
@@ -44,8 +44,10 @@ import { ref, computed, onMounted, onUnmounted } from 'vue';
 const useToggles = useTogglesStore();
 
 const props = defineProps({
-    name: { type: String, default: '100' },
+    label: { type: String, default: 'No label' },
+    name: { type: String, default: 'no_name_given' },
     options: { type: Array, default: [] },
+    current_option: { type: String, default: '' },
     showDorpDown: { type: Boolean, default: true },
     toggleFunction: { type: Function, default: () => {} },
     single: { type: Boolean, default: true }
@@ -55,10 +57,12 @@ const selectedIndex = ref(-1);
 const selectedOptionName = ref('');
 const rootEl = ref(null);
 
+selectedOptionName.value = props.current_option
+
 const updatedOptions = computed(() =>
-    props.options.map((opt, idx) => ({
+    props.options.map(opt => ({
         name: opt,
-        selected: idx === selectedIndex.value
+        selected: opt === props.current_option
     }))
 );
 
@@ -74,6 +78,10 @@ function handleClickOutside(event) {
         props.toggleFunction();
     }
 }
+
+// watch(() => props.current_option, (newVal) => {
+    
+// }, { immediate: true })
 
 onMounted(() => {
     document.addEventListener('mousedown', handleClickOutside);

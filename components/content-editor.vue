@@ -42,37 +42,38 @@
                     <div class="mt-5 flex flex-col gap-8 ">
                         <form ref="myForm" 
                         class="flex flex-col justify-center items-center gap-6 "
-                            @submit.prevent="handleSubmit">
+                            @submit.prevent>
                             <DropDown
-                                name="Reading Status"
+                                label="Content Status"
+                                name="status"
                                 :showDorpDown="dropDownVisible"
                                 :toggleFunction="toggleDropDown"
                                 :options="trackingStatus"
+                                :current_option="data.tracked.status"
                             />
                             
-                            <DateEditBox label="start date" name="start_date"/>
+                            <!-- <DateEditBox label="start date" name="start_date"/> -->
                             <!-- <EditBox label="title" name="title"/> -->
                             
                             <ProgressEditBox 
-                            :total_progress="data.volumes"
-                            label="currrent volume" 
-                            name="currrent_volume"
+                                :total_progress="data.volumes"
+                                label="current volume" 
+                                name="current_volume"
                             />
                             
                             <ProgressEditBox 
                                 :total_progress="data?.chapters"
-                                label="currrent chapter" 
-                                name="currrent_chapter"
+                                label="current chapter" 
+                                name="current_chapter"
                             />
 
                             <ProgressEditBox 
                                 :total_progress="data.current_page"
-                                label="currrent page" 
-                                name="currrent_page"
+                                label="current page" 
+                                name="current_page"
                             />
 
-
-                            <BorderButton text="update" class=""/>
+                            <BorderButton text="update" class="" :onclick="handleSubmit"/>
                         </form>
                     </div>
                 </div>
@@ -88,6 +89,7 @@
 <script setup>
 
 const useToggles = useTogglesStore();
+const useContent = useContentStore();
 const props = defineProps({
     data: Object,
 })
@@ -100,6 +102,11 @@ const trackingStatus = ref([
     'completed'
 ])
 
+console.log(props.data)
+console.table(props.data) // for flat objects
+console.dir(props.data, { depth: null }) // for nested objects
+console.log(JSON.stringify(props.data, null, 2)) // pretty JSON
+
 function toggleDropDown(){
     dropDownVisible.value = !dropDownVisible.value
 }
@@ -110,12 +117,30 @@ function capitalizeStatus(status) {
 }
 
 
-function handleSubmit() {
+function getChangedFields(formDataObj, originalData) {
+    const changed = {};
+    for (const key in formDataObj) {
+        // Compare values as strings for consistency
+        if (
+            originalData[key] === undefined ||
+            String(formDataObj[key]) !== String(originalData[key])
+        ) {
+            changed[key] = formDataObj[key];
+        }
+    }
+    return changed;
+}
+
+async function handleSubmit() {
   const formData = new FormData(myForm.value)
   const data = Object.fromEntries(formData.entries())
-  console.log(data) 
+  const originalTrackedData = props.data.tracked || {};
+  const updateObject = getChangedFields(data, originalTrackedData) 
+  console.log('changed data :', updateObject)
   // ➜ { username: 'John', age: '30' }
+  useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject)
 }
+
 
 </script>
 
