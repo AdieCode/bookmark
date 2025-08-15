@@ -132,13 +132,22 @@ function getChangedFields(formDataObj, originalData) {
 }
 
 async function handleSubmit() {
-  const formData = new FormData(myForm.value)
-  const data = Object.fromEntries(formData.entries())
-  const originalTrackedData = props.data.tracked || {};
-  const updateObject = getChangedFields(data, originalTrackedData) 
-  console.log('changed data :', updateObject)
-  // ➜ { username: 'John', age: '30' }
-  useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject)
+    const formData = new FormData(myForm.value)
+    const data = Object.fromEntries(formData.entries())
+    const originalTrackedData = props.data.tracked || {};
+    const updateObject = getChangedFields(data, originalTrackedData) 
+    console.log('changed data :', updateObject)
+    // ➜ { username: 'John', age: '30' }
+    useToggles.setNotification("Updating", 0)
+
+    await useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject);
+    useToggles.toggleEditShow();
+
+    useToggles.setNotification("Updated", 1)
+
+    setTimeout(() => {
+          useToggles.hideNotification();
+    }, 1000);
 }
 
 
