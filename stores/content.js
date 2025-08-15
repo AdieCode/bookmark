@@ -593,7 +593,7 @@ export const useContentStore = defineStore('content', {
             content_id: id,
             current_episode: updateData?.current_episode,
             score: updateData?.personal_score,
-            status: updateData?.content_status,
+            status: updateData?.status,
             start_date: updateData?.start_date,
             end_date: updateData?.end_date,
             user_comment: updateData?.user_comment,

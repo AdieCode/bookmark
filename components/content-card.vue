@@ -98,6 +98,7 @@
 import { ref } from 'vue';
 const useToggles = useTogglesStore()
 const useContent = useContentStore();
+const useExtraData = useExtraDataStore()
 const router = useRouter();
 
 let showInfo = ref(false);
@@ -158,18 +159,29 @@ function copyText(text) {
 }
 
 function trackContent() {
-    useToggles.setNotification("Bookmarked", 0)
-    useContent.trackContent({
-        content_id: props.data.anilist_content_id,
-        content_status:'planning',
-        content_type:props.data.type,
-    })
-
-    if (props.data.tracked) {
+    console.log(props.data?.tracked?.status)
+    
+    if (props.data?.tracked?.status === 'UNTRACKED'){
+        useToggles.setNotification("Bookmarked", 0)
+        useContent.trackContent({
+            content_id: props.data.anilist_content_id,
+            content_status:'planning',
+            content_type:props.data.type,
+        })
+    
         props.data.tracked.status = 'planning';
+
+        setTimeout(() => {
+          useToggles.hideNotification();
+        }, 1000);
+
+    }  else {
+        useExtraData.setNewEditableData(props.data)
+        useToggles.toggleEditShow();
     }
+
     setTimeout(() => {
-      useToggles.hideNotification();
+          useToggles.hideNotification();
     }, 1000);
 }
 

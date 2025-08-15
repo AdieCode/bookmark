@@ -62,7 +62,7 @@ selectedOptionName.value = props.current_option
 const updatedOptions = computed(() =>
     props.options.map(opt => ({
         name: opt,
-        selected: opt === props.current_option
+        selected: opt === selectedOptionName.value
     }))
 );
 

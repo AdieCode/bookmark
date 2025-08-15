@@ -8,7 +8,8 @@ export const useExtraDataStore = defineStore('extraData', {
     filters: transformFiltersData(animeFiltersData),
     tags: [],
     extraTags: [],
-    reqFilters: {}
+    reqFilters: {},
+    editableContent: {}
   }),
 
   actions: {
@@ -75,6 +76,10 @@ export const useExtraDataStore = defineStore('extraData', {
       for (const category in this.filters) {
         this.filters[category].forEach(item => (item.selected = false));
       }
+    },
+
+    setNewEditableData(data) {
+      this.editableContent = data
     }
   },
 });

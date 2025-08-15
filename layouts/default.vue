@@ -119,7 +119,7 @@
             </div>
         </div>
 
-        <ContentEditor :data="useContent.selected_content"/>
+        <ContentEditor :data="useExtraData.editableContent"/>
 
     </div>
 
@@ -147,6 +147,7 @@
 import { ref } from 'vue';
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
+const useExtraData = useExtraDataStore()
 const router = useRouter();
 const route = useRoute();
 
@@ -217,6 +218,7 @@ function trackContent() {
             useContent.selected_content.tracked.status = 'planning'
         } 
     }  else {
+        useExtraData.setNewEditableData(useContent.selected_content)
         useToggles.toggleEditShow();
     }
 
