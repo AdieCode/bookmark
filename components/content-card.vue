@@ -6,7 +6,7 @@
             <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover">
 
             <!-- Info section, visible when showInfo is true -->
-            <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-4 flex justify-center items-center gap-2 bounce-down">
+            <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-2 flex justify-center items-center gap-2 bounce-down">
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer"
                     @click="moreInfo"
                     @mousedown="handleMouseDown">
@@ -65,9 +65,39 @@
                 <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
 
+            <div class="p-2 flex justify-center gap-2 border border-black rounded mb-2">
+                <!-- <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span> -->
+                <div class="flex flex-col justify-center items-start">
+                    <div class="text-xs font-light ">Content</div>
+                    <div class="text-xs font-extrabold">{{ data.type }}</div>
+                </div>
+
+                <div class="h-full py-5 border border-black"></div>
+
+                <div class="flex flex-col justify-center items-start">
+                    <div class="text-xs font-light">Release</div>
+                    <div v-if="data.status === 'NOT_YET_RELEASED'"
+                        class="text-xs font-extrabold"
+                    >
+                        UNRELEASED
+                    </div>
+                    <div v-else class="text-xs font-extrabold">
+                        {{ data.status }}
+                    </div>
+                    
+                </div>
+
+                <div class="h-full py-5 border border-black"></div>
+
+                <div class="flex flex-col justify-center items-start">
+                    <div class="text-xs font-light">Tracking</div>
+                    <div class="text-xs font-extrabold">{{ data.tracked.status.toUpperCase() }}</div>
+                </div>
+            </div>
+<!-- 
             <div class="mt-4 p-2">
                 <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span>
-            </div>
+            </div> -->
 
             <!-- Genres -->
             <tags :items="data.genres" width="300" :max-height="52"/>
