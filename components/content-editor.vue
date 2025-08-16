@@ -57,18 +57,21 @@
                             
                             <ProgressEditBox 
                                 :total_progress="data.volumes"
+                                :current_progress="data?.tracked.current_volume"
                                 label="current volume" 
                                 name="current_volume"
                             />
                             
                             <ProgressEditBox 
                                 :total_progress="data?.chapters"
+                                :current_progress="data?.tracked.current_chapter"
                                 label="current chapter" 
                                 name="current_chapter"
                             />
 
                             <ProgressEditBox 
                                 :total_progress="data.current_page"
+                                :current_progress="data?.tracked.current_page"
                                 label="current page" 
                                 name="current_page"
                             />
