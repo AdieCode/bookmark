@@ -64,7 +64,7 @@ export const useTogglesStore = defineStore('toggles', {
           selected: false
         }
       ],
-      editContent: true,
+      editContent: false,
     };
   },
 
