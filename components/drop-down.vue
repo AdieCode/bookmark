@@ -1,11 +1,18 @@
 <template>
-    <div ref="rootEl" class="relative">
+    <div ref="rootEl" class="relative w-48">
 
-        <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100"
-            @click="toggleFunction">
-            <span class="text-xl font-bold">
-                {{ label }}
-            </span>
+        <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-between items-center hover:shadow-lg duration-100"
+            @click="toggleFunction"
+            >
+            <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold">
+            {{ label }}
+            </div>
+            <div v-if="!edit_active"
+                class=" text-lg font-extrabold text-center cursor-pointer"
+                @click="toggleEdit"
+                >
+                {{selectedOptionName}}
+            </div>
             <div>
                 <!-- <img src="https://img.icons8.com/ios/50/down-squared--v1.png" alt="down-squared--v1" class="w-5 h-5 mt-1"/> -->
                 <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/down-squared--v2.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>

@@ -49,29 +49,29 @@
                                 :showDorpDown="dropDownVisible"
                                 :toggleFunction="toggleDropDown"
                                 :options="trackingStatus"
-                                :current_option="data.tracked.status"
+                                :current_option="data?.tracked?.status"
                             />
                             
                             <!-- <DateEditBox label="start date" name="start_date"/> -->
                             <!-- <EditBox label="title" name="title"/> -->
                             
                             <ProgressEditBox 
-                                :total_progress="data.volumes"
-                                :current_progress="data?.tracked.current_volume"
+                                :total_progress="data?.volumes"
+                                :current_progress="data?.tracked?.current_volume"
                                 label="current volume" 
                                 name="current_volume"
                             />
                             
                             <ProgressEditBox 
                                 :total_progress="data?.chapters"
-                                :current_progress="data?.tracked.current_chapter"
+                                :current_progress="data?.tracked?.current_chapter"
                                 label="current chapter" 
                                 name="current_chapter"
                             />
 
                             <ProgressEditBox 
-                                :total_progress="data.current_page"
-                                :current_progress="data?.tracked.current_page"
+                                :total_progress="data?.current_page"
+                                :current_progress="data?.tracked?.current_page"
                                 label="current page" 
                                 name="current_page"
                             />
