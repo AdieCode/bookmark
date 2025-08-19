@@ -143,8 +143,8 @@ async function handleSubmit() {
     // ➜ { username: 'John', age: '30' }
     useToggles.setNotification("Updating", 0)
 
-    await useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject);
     useToggles.toggleEditShow();
+    await useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject);
 
     useToggles.setNotification("Updated", 1)
 
