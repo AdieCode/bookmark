@@ -110,9 +110,9 @@
                 
             </div>
 
-            <div v-if="!useToggles.isMobile"
-                class="cursor-pointer sticky top-20">
-                <img class="w-12 pr-2" src="../public/bookmark_icons/bookmark.png" alt="" srcset="">
+            <div v-if="!useToggles.isMobile && contentData?.isAdult"
+                class="cursor-pointer sticky top-20 bg-black text-white p-2 pl-3 rounded">
+                <span class="font-extrabold text-lg">18+</span>
             </div>
             
         </div>
