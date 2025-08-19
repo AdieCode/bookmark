@@ -16,7 +16,7 @@ export default defineNuxtConfig({
       baseUrl: process.env.API_URL,
     }
   },
-  css: ['swiper/css'],
+  css: ['swiper/css', '~/assets/css/global.css'],
   // components: [
   //   { path: '~/components/search', pathPrefix: false },
   // ],

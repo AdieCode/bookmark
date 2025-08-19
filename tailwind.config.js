@@ -5,8 +5,16 @@ module.exports = {
       "./layouts/**/*.{js,ts,vue}",
       "./app/**/*.{js,ts,vue}",
     ],
+    darkMode: 'class',
     theme: {
-      extend: {},
+      extend: {
+        colors: {
+          lightBg: '#ffffff',
+          darkBg: '#121212',
+          lightText: '#000000',
+          darkText: '#ffffff',
+        },
+      },
     },
     plugins: [],
   };

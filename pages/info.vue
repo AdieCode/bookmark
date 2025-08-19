@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="w-full h-full fixed top-0 left-0 -z-10 bg-white bg-opacity-90 backdrop-blur-3xl">
+        <div class="w-full h-full fixed top-0 left-0 -z-10 bg-white bg-opacity-90 backdrop-blur-3xl dark:bg-black">
             <img v-if="contentData.cover_image_url" :src="contentData.cover_image_url" alt="" class="move-around w-full h-full object-cover opacity-40 filter blur-2xl">
         </div>
 
@@ -23,10 +23,10 @@
                     </span>    
 
                     <div v-else-if="contentData.title?.english" class="flex flex-col">
-                        <span class="text-black font-black text-xl">
+                        <span class="text-black font-black text-xl dark:text-white">
                             {{ contentData.title?.english }} 
                         </span>
-                        <span class="text-stone-800 font-black"
+                        <span class="text-stone-800 font-black dark:text-stone-200 q"
                             :class="{'!font-semibold': useToggles?.isMobile}"
                             >
                             {{ contentData.title?.romaji }}
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold">
+                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold dark: dark:bg-stone-900">
                         <!-- Anime  -->
                         <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1 pr-2"><span class="font-thin">Episodes </span>{{ contentData.episodes }}</span>
 

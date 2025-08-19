@@ -15,14 +15,14 @@
 
       <!-- Toggle Switch -->
       <div
-          class="w-14 h-8 rounded-full border-4 border-black flex items-center transition-all duration-100"
+          class="w-14 h-8 rounded-full border-4 border-black flex items-center transition-all duration-100 dark:border-white"
           :class="{
           'justify-start': useToggles.contentType === 'Anime',
           'justify-end': useToggles.contentType === 'Manga'
         }"
       >
         <div
-            class="w-4 h-4 m-1 rounded-full bg-black transition-transform duration-100 ease-in-out"
+            class="w-4 h-4 m-1 rounded-full bg-black transition-transform duration-100 ease-in-out dark:bg-white"
         ></div>
       </div>
 

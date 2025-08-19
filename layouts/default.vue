@@ -59,25 +59,25 @@
                 <border-button 
                     text="Discover" 
                     :onClick="useToggles.toggleContentDiscover" 
-                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.discover}"
+                    :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.discover}"
                     class=""
                 />
                 <border-button 
                     text="Planning to read" 
                     :onClick="useToggles.toggleContentPlanningToRead" 
-                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.planningToRead}"
+                    :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.planningToRead}"
                     class=""
                 />
                 <border-button 
                     text="Busy Reading" 
                     :onClick="useToggles.toggleContentReading" 
-                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.reading}"
+                    :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.reading}"
                     class=""
                 />
                 <border-button 
                     text="Completed" 
                     :onClick="useToggles.toggleContentCompleted" 
-                    :conditionalClass="{'bg-black text-white bounce-down': useToggles.content.completed}"
+                    :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.completed}"
                     class=""
                 />
             </div>
@@ -148,7 +148,8 @@
 import { ref } from 'vue';
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
-const useExtraData = useExtraDataStore()
+const useExtraData = useExtraDataStore();
+const useTheme = useThemeStore();
 const router = useRouter();
 const route = useRoute();
 

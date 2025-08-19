@@ -7,7 +7,7 @@
 
         <!-- editor  -->
         <Transition name="slide-up">
-            <div v-if="useToggles.editContent" class="relative flex justify-center gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden"
+            <div v-if="useToggles.editContent" class="relative flex justify-start items-start gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden overflow-y-auto max-h-[90vh]"
                 :class="{'flex-col rounded-t-3xl !m-0 !mt-80': useToggles.isMobile}"
             >
                 <!-- close button -->
@@ -48,7 +48,7 @@
                         <span v-else class="text-black font-extrabold text-xl">No title found</span>
                     </div>
                 </div>
-                <div class="p-8">
+                <div class="px-8">
                     <!-- <h2 class="text-center font-light text-2xl mb-10">tracking details</h2> -->
                     <!-- <divider-line text="status" -->
                     <div class="mt-5 flex flex-col gap-8 ">

@@ -26,7 +26,8 @@
                     <border-button 
                         text="User settings" 
                         class="!p-1 w-full flex items-center justify-around"
-                        :conditionalClass="{'bg-black text-white': currentRoute === '/'}"
+                        :conditionalClass="{'bg-black text-white': currentRoute === '/user/user-settings'}"
+                        :onClick="toUserSettings"
                     />
                 </li>
                 <li>
@@ -75,7 +76,7 @@ function toUserInfo() {
 }
 
 function toUserSettings() {
-  router.push('/user/settings');
+  router.push('/user/user-settings');
 }
 
 function toContact() {
