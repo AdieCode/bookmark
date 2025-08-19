@@ -18,7 +18,7 @@
                 <!-- title -->
                 <div class="flex flex-col mx-3 mt-1" 
                     :class="{'items-center': useToggles?.isMobile}">
-                    <span v-if="contentData.title?.english && contentData.title?.romaji && contentData.title?.english.toLowerCase() === contentData.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
+                    <span v-if="contentData.title?.english && contentData.title?.romaji && contentData.title?.english.toLowerCase() === contentData.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl dark:text-white">
                         {{ contentData.title?.english }} 
                     </span>    
 
@@ -26,14 +26,14 @@
                         <span class="text-black font-black text-xl dark:text-white">
                             {{ contentData.title?.english }} 
                         </span>
-                        <span class="text-stone-800 font-black dark:text-stone-200 q"
+                        <span class="text-stone-800 font-black dark:text-stone-300"
                             :class="{'!font-semibold': useToggles?.isMobile}"
                             >
                             {{ contentData.title?.romaji }}
                         </span>
                     </div>
 
-                    <span v-else-if="contentData.title?.romaji" class="text-black font-extrabold text-xl">
+                    <span v-else-if="contentData.title?.romaji" class="text-black font-extrabold text-xl dark:text-white">
                         {{ contentData.title?.romaji }} 
                     </span>
                     <span v-else class="text-black font-extrabold text-xl">No title found</span>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold dark: dark:bg-stone-900">
+                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold">
                         <!-- Anime  -->
                         <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1 pr-2"><span class="font-thin">Episodes </span>{{ contentData.episodes }}</span>
 
