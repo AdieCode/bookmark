@@ -84,10 +84,11 @@
         </div>
 
         <filters v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage"/>
-
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="fixed bottom-4 right-5 md:bottom-10 md:right-10 w-10/12 h-16 flex justify-between items-end z-30">
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage" 
+            class="fixed bottom-4 right-5 md:bottom-10 md:right-10 h-16 flex justify-between items-end z-30"
+            :class="{ 'w-10/12': useExtraData?.tags?.length > 0}">
             <tagSearch/>
-             <div></div>
+            <div></div>
             <div class="w-16 h-16 relative ml-4">
                 <div class="absolute -top-20 -left-0 w-14 h-14 border-4 bg-white border-black rounded-2xl cursor-pointer flex justify-center items-center hover:shadow-lg hover:-translate-y-1 duration-100"
                     :class="{'!-top-2': !isInfoPage}"
