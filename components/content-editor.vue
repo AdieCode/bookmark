@@ -8,7 +8,7 @@
         <!-- editor  -->
         <Transition name="slide-up">
             <div v-if="useToggles.editContent" class="relative flex justify-center gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden"
-                :class="{'flex-col rounded-t-3xl !m-0 !mt-52 !mb-10': useToggles.isMobile}"
+                :class="{'flex-col rounded-t-3xl !m-0 !mt-80': useToggles.isMobile}"
             >
                 <!-- close button -->
                 <div class="absolute top-4 right-4">
