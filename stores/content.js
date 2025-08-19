@@ -53,6 +53,10 @@ export const useContentStore = defineStore('content', {
       this.data = [];
     },
 
+    clearSelectedContent(){
+      this.selected_content = {};
+    },
+
     async getMangaContent(page=1) {
       const { $api } = useNuxtApp();
       if (abortController) {
@@ -249,6 +253,7 @@ export const useContentStore = defineStore('content', {
         });
 
         toggle.hideNotification();
+        this.clearSelectedContent()
         this.selected_content = response.data.data.media[0];
         localStorage.setItem('selectedContent', JSON.stringify(this.selected_content));
       } catch (error) {

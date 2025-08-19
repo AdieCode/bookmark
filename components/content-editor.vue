@@ -1,5 +1,5 @@
 <template>
-    <div v-if="useToggles.editContent" class="w-full h-screen fixed top-0 left-0 z-30  overflow-y-scroll hide-scrollbar">
+    <div v-if="useToggles.editContent" class="fixed inset-0 flex justify-center items-center top-0 left-0 z-30  overflow-y-scroll hide-scrollbar">
         <!-- backgroud blur  -->
         <Transition name="fade-blur">
             <div v-if="useToggles.editContent" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md w-full" @click="useToggles.toggleEditShow"></div>
@@ -7,8 +7,20 @@
 
         <!-- editor  -->
         <Transition name="slide-up">
-            <div v-if="useToggles.editContent" class="relative flex justify-center gap-4 bg-white border-black rounded-t-3xl border-4 z-20 m-28 mb-10 mt-48 p-10 overflow-x-hidden"
-                :class="{'flex-col !m-0 !mt-48': useToggles.isMobile}">
+            <div v-if="useToggles.editContent" class="relative flex justify-center gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden"
+                :class="{'flex-col rounded-t-3xl !m-0 !mt-52 !mb-10': useToggles.isMobile}"
+            >
+                <!-- close button -->
+                <div class="absolute top-4 right-4">
+                    <img src="../public/bookmark_icons/close-icon-48.svg"
+                         alt="close-icon-48.svg" 
+                         class="h-8 cursor-pointer"
+                         :class="{'!h-7': useToggles.isMobile}"
+                         @click="useToggles.toggleEditShow()"
+                    >
+                </div>
+
+                <!-- image / edit_form -->
                 <div class="flex flex-col justify-center items-center">
                     <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content">
                         <img v-if="data?.cover_image_url" :src="data?.cover_image_url" alt="" class="w-full h-full object-cover">

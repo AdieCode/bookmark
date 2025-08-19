@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[
-      'btn-base',
+      'custom-button inline-flex justify-center items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-all duration-100',
       passebleClass
     ]"
     @click="onClick"
@@ -17,7 +17,7 @@ const props = defineProps({
   text: { type: String, default: 'Default Text' },
   class: { type: String, default: '' },
   conditionalClass: { type: Object, default: {} },
-  onClick: Function,
+  onClick: Function
 });
 
 const passebleClass = computed(() => {
@@ -28,13 +28,12 @@ const passebleClass = computed(() => {
 </script>
 
 <style scoped>
-.btn-base {
-  @apply inline-flex justify-center items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition duration-100;
-  transition: transform 0.1s ease-in-out, background-color 0.1s ease, color 0.1s ease;
+.custom-button {
+  transition: transform 0.1s ease-in-out, background-color 0.1s, color 0.1s;
 }
 
-/* shrink effect */
-.btn-base:active {
-  transform: scale(0.95); /* shrinks ~4px depending on size */
+/* Shrinks by 4px but keeps centered */
+.custom-button:active {
+  transform: scale(0.95);
 }
 </style>
