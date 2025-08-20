@@ -98,9 +98,13 @@
             :single="true"
             />  
 
-            <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white" @click="searchFilters">
+            <!-- <div class="p-2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white" @click="searchFilters">
               Filter 
-            </div>
+            </div> -->
+            <border-button 
+                text="Filter" 
+                :onClick="searchFilters" 
+            />
         </div>
     </div>
 
