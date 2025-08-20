@@ -160,6 +160,7 @@ const isOauthPage = computed(() =>
     (route?.path === '/google/callback' || route?.path === '/github/callback') // && !!route.query.token
 );
 
+useTheme.initTheme();
 
 const isInfoPage = computed(() => 
     (route?.path === '/info') // && !!route.query.token

@@ -117,11 +117,6 @@ const trackingStatus = ref([
     'completed'
 ])
 
-console.log(props.data)
-console.table(props.data) // for flat objects
-console.dir(props.data, { depth: null }) // for nested objects
-console.log(JSON.stringify(props.data, null, 2)) // pretty JSON
-
 function toggleDropDown(){
     dropDownVisible.value = !dropDownVisible.value
 }
@@ -151,7 +146,7 @@ async function handleSubmit() {
     const data = Object.fromEntries(formData.entries())
     const originalTrackedData = props.data.tracked || {};
     const updateObject = getChangedFields(data, originalTrackedData) 
-    console.log('changed data :', updateObject)
+    // console.log('changed data :', updateObject)
     // ➜ { username: 'John', age: '30' }
     useToggles.setNotification("Updating", 0)
 

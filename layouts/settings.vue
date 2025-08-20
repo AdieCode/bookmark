@@ -56,8 +56,11 @@
 </template>
 
 <script setup>
+const useTheme = useThemeStore();
 const router = useRouter();
 const route = useRoute();
+
+useTheme.initTheme();
 
 const currentRoute = computed(() => {
     return route?.path
