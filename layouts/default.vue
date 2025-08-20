@@ -13,24 +13,64 @@
 
             <!-- Desktop/Tablet Search Bar -->
              <div v-if="!isLoginPage && !isOauthPage && !isHompage" class="flex items-center gap-3">
-                <div v-if="isMainPage" class=" w-12 h-12  border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer" @click="useToggles.toggleFilters()">
-                    <img src="https://img.icons8.com/pastel-glyph/64/filter.png" alt="Filter Icon" class="w-7 h-7 ">
+                <div v-if="isMainPage" class=" w-12 h-12  border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer dark:border-white" @click="useToggles.toggleFilters()">
+                    <!-- <img src="https://img.icons8.com/pastel-glyph/64/filter.png" alt="Filter Icon" class="w-7 h-7 "> -->
+                    <img v-if="isDarkMode" 
+                        src="../public/bookmark_icons/filter-white.png" 
+                        alt="Filter Icon" 
+                        class="w-7 h-7"
+                    >
+                    <img v-else
+                        src="../public/bookmark_icons/filter.png" 
+                        alt="Filter Icon" 
+                        class="w-7 h-7"
+                    >
+
                 </div>
 
-                 <div v-if="!useToggles.isMobile" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100" @click="toggleSearch">
+                 <div v-if="!useToggles.isMobile" class="hidden md:flex w-80 h-12 border-4 border-black rounded-xl m-auto cursor-pointer items-center text-black/40 font-medium hover:w-96 hover:text-black/80 hover:font-bold duration-100 dark:border-white dark:text-white/40 dark:hover:text-white/80" @click="toggleSearch">
                      <span class="ml-3">Search for anime/manga here</span>
-                     <div class="h-full w-14 border-l-4 border-black ml-auto flex justify-center items-center">
-                         <img src="../public/images/search.png" alt="" class="w-7 h-7">
+                     <div class="h-full w-14 border-l-4 border-black ml-auto flex justify-center items-center dark:border-white">
+                         <img v-if="isDarkMode" 
+                            src="../public/bookmark_icons/search-light.svg" 
+                            alt="Search Icon" 
+                            class="w-7 h-7"
+                        >
+                        <img v-else
+                            src="../public/bookmark_icons/search-dark.svg" 
+                            alt="Search Icon" 
+                            class="w-7 h-7"
+                        >
                      </div>
                  </div>
 
-                <div v-else class="  w-14 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer" @click="toggleSearch">
-                    <img src="../public/images/search.png" alt="Search Icon" class="w-7 h-7">
+                <div v-else class="  w-12 h-12 border-4 border-black rounded-xl flex justify-center items-center ml-auto cursor-pointer dark:border-white" @click="toggleSearch">
+                    <!-- <img src="../public/bookmark_icons/search-light.svg" alt="Search Icon" class="w-7 h-7"> -->
+                    <img v-if="isDarkMode" 
+                        src="../public/bookmark_icons/search-light.svg" 
+                        alt="Search Icon" 
+                        class="w-7 h-7"
+                    >
+                    <img v-else
+                        src="../public/bookmark_icons/search-dark.svg" 
+                        alt="Search Icon" 
+                        class="w-7 h-7"
+                    >
                 </div>
 
                 <div v-if="useToggles.isMobile" class="flex justify-center items-center">
-                    <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toUserPage">
-                        <img src="../public/images/User.png" alt="">
+                    <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 pl-6 cursor-pointer" @click="toUserPage">
+                        <img v-if="isDarkMode" 
+                            src="../public/bookmark_icons/user-light.png" 
+                            alt=""
+                            class="w-10"
+                        >
+                        <img v-else 
+                            src="../public/bookmark_icons/user-dark.png" 
+                            alt=""
+                            class="w-10"
+                        >
+                        <!-- <img src="../public/images/User.png" alt=""> -->
                     </div>
                     <border-button 
                         v-if="isLoginPage || isInfoPage"
@@ -43,7 +83,8 @@
 
              <div v-if="!useToggles.isMobile" class="flex justify-center items-center">
                  <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toUserPage">
-                     <img src="../public/images/User.png" alt="">
+                        <img v-if="isDarkMode" src="../public/bookmark_icons/user-light.png" alt="">
+                        <img v-else src="../public/bookmark_icons/user-dark.png" alt="">
                  </div>
                  <div v-if="isLoginPage || isInfoPage" class="p-2 mr-4 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="toPrevious">
                      Go Back
@@ -153,6 +194,7 @@ const useTheme = useThemeStore();
 const router = useRouter();
 const route = useRoute();
 
+const isDarkMode = computed(() => useTheme.isDarkMode);
 const isHompage = computed(() => route?.path === '/');
 const isMainPage = computed(() => route?.path === '/mainpage');
 const isLoginPage = computed(() => route?.path === '/auth/login' || route?.path === '/auth/sign-up');
@@ -160,7 +202,6 @@ const isOauthPage = computed(() =>
     (route?.path === '/google/callback' || route?.path === '/github/callback') // && !!route.query.token
 );
 
-useTheme.initTheme();
 
 const isInfoPage = computed(() => 
     (route?.path === '/info') // && !!route.query.token
@@ -231,13 +272,14 @@ function trackContent() {
 }
 
 onMounted(() => {
-  useToggles.checkMobile();
-  window.addEventListener('resize', useToggles.checkMobile);
+    useTheme.initTheme();
+    useToggles.checkMobile();
+    window.addEventListener('resize', useToggles.checkMobile);
 });
 
 // Cleanup on unmount
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', useToggles.checkMobile);
+    window.removeEventListener('resize', useToggles.checkMobile);
 });
 
 </script>

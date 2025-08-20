@@ -60,8 +60,6 @@ const useTheme = useThemeStore();
 const router = useRouter();
 const route = useRoute();
 
-useTheme.initTheme();
-
 const currentRoute = computed(() => {
     return route?.path
 });
@@ -90,6 +88,9 @@ function toSignOut() {
   router.push('/user/sign-out'); // Fixed to use `router.push()`
 }
 
+onMounted(() => {
+    useTheme.initTheme();
+});
 </script>
 
 <style lang="css" scoped>

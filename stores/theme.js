@@ -26,6 +26,7 @@ export const useThemeStore = defineStore('theme', {
         }
 
         this.applyTheme(this.isDarkMode);
+        
 
         // Watcher logic — just inline reactivity here
         this.$subscribe(() => {

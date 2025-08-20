@@ -16,7 +16,7 @@
             v-model="searchText"
             type="text"
             :placeholder="useToggles.isMobile ? 'Search anime/manga' : 'Search for anime/manga here'"
-            class="flex-grow h-14 outline-none border-4 border-black p-4 rounded-l-xl text-base sm:text-lg font-bold"
+            class="flex-grow h-14 outline-none border-4 border-black p-4 rounded-l-xl text-base sm:text-lg font-bold dark:text-black"
           />
           <div class="h-14 w-14 min-w-[56px] min-h-[56px] bg-white border-4 border-l-0 border-black rounded-r-xl flex justify-center items-center cursor-pointer shrink-0">
             <img
