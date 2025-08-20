@@ -1,13 +1,13 @@
 <template>
     <div 
-        class="flex flex-wrap gap-1 " 
+        class="flex flex-wrap gap-1" 
         :style="{ maxWidth: width + 'px', maxHeight: maxHeight ? maxHeight + 'px' : 'auto', overflow: maxHeight ? 'hidden' : 'visible' }"
     >
         <div 
             v-for="(item, index) in items" 
             :key="index" 
             class="p-1 px-2 bg-black text-white text-xs rounded font-semibold dark:shadow-[0_0_8px_1px_rgba(255,255,255,0.1)]"
-            :class="{'!text-sm': bigger, 'cursor-pointer': allowClick}"
+            :class="{'!text-sm': bigger, 'cursor-pointer': allowClick, 'bg-white !text-black':invert}"
             @click="addTag(item)"
         >
             {{ item }}
@@ -25,6 +25,7 @@ const props = defineProps({
     maxHeight: { type: [String, Number], default: null }, // New prop for max height
     bigger: { type: Boolean, default: false },
     allowClick: { type: Boolean, default: false },
+    invert: { type: Boolean, default: false },
 });
 
 function addTag(item) {

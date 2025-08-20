@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold dark:shadow-[0_0_10px_1px_rgba(255,255,255,0.4)]">
+                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold dark:shadow-[0_0_4px_1px_rgba(255,255,255,0.1)]">
                         <!-- Anime  -->
                         <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1 pr-2"><span class="font-thin">Episodes </span>{{ contentData.episodes }}</span>
 

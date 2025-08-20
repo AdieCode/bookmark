@@ -3,7 +3,7 @@
         <div 
             v-for="(item, index) in scoreItems" 
             :key="index"
-            class="shadow rounded max-w-4 max-h-6 min-w-4 min-h-6 border-black"
+            class="shadow rounded max-w-4 max-h-6 min-w-4 min-h-6 border-black dark:shadow-[0_0_2px_1px_rgba(255,255,255,0.1)]"
             :class="{'bg-black': item.fill, 'bg-slate-500 ': !item.fill, '!max-w-3 !max-h-5 !min-w-3 !min-h-5': useToggles.isMobile}"
             
         >
