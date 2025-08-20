@@ -2,10 +2,10 @@
     <div class="center">
 
         <div class="relative">
-            <div v-if="text?.length > 0" class="absolute bg-white text-black text-base font-bold px-2 -top-3 z-10 left-1/2 -translate-x-1/2 text-center">
+            <div v-if="text?.length > 0" class="absolute bg-white text-black text-base font-bold px-2 -top-3 z-10 left-1/2 -translate-x-1/2 text-center dark:bg-black dark:text-white">
                 {{ text }}
             </div>
-            <hr class="w-60 mx-auto border-black border-2"/>
+            <hr class="w-60 mx-auto border-black border-2 dark: dark:border-white"/>
         </div>
     </div>
 </template>

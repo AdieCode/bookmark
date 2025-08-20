@@ -182,9 +182,9 @@
 
 
         <!-- relations -->
-        <div v-if="Array.isArray(contentData.relations) && contentData.relations?.length > 0 && currentSelector === 0" 
+        <div v-if="Array.isArray(contentData?.relations) && contentData?.relations?.length > 0 && currentSelector === 0" 
             class="mt-10"
-            :class="{'!mt-0': useToggles.isMobile}">
+            :class="{'!mt-0': useToggles?.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Relations</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -211,7 +211,7 @@
         <!-- characters -->
         <div v-if="Array.isArray(contentData.characters) && contentData.characters?.length > 0 && currentSelector === 1" 
             class="mt-10"
-            :class="{'!mt-0': useToggles.isMobile}">
+            :class="{'!mt-0': useToggles?.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Characters</div> -->
             <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                 <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">
@@ -233,7 +233,7 @@
         <!-- recommendations -->
          <div v-if="contentData?.recommendations?.length > 0 && currentSelector === 2" 
             class="mt-10"
-            :class="{'!mt-0': useToggles.isMobile}">
+            :class="{'!mt-0': useToggles?.isMobile}">
             <!-- <div class="text-center text-4xl font-extrabold">Recommendations</div> -->
              <div class="w-3/4 mx-auto flex" :class="{'w-full': useToggles.isMobile}">
                  <div class="mt-10 px-4 flex flex-row justify-center flex-wrap gap-8 z-20 sm:w-full" :class="{'!gap-2 !p-1 mt-0': useToggles.isMobile}">

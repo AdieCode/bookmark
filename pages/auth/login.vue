@@ -11,7 +11,7 @@
                 type="email" 
                 placeholder="Email" 
                 name="email" 
-                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4"
+                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4 dark:text-white dark:bg-black dark:border-white"
                 :class="{'!w-72': useToggles?.isMobile}">
         </div>
 
@@ -21,7 +21,7 @@
                 :type="passwordType" 
                 placeholder="Password" 
                 name="password" 
-                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4"
+                class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4 dark:text-white dark:bg-black dark:border-white"
                 :class="{'!w-72': useToggles?.isMobile}">
             <div class="absolute top-2 -right-10"
                 :class="{'backdrop-blur-3xl rounded-lg  !top-1 !right-1 p-1': useToggles?.isMobile}"
@@ -34,12 +34,13 @@
         <divider-line text="" width="200"/>
 
         <div class="flex justify-center items-center my-5 gap-2">
-            <div class="p-2 w-2/3 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold" 
+            <div class="p-2 w-2/3 border-4 bg-black text-white border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold dark:bg-white dark:text-black dark:border-white" 
                 :class="{'!text-lg !w-7/12': useToggles?.isMobile}"
                 @click="login">
                 Login
             </div>
-            <div class="p-2 w-1/3 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+
+            <div class="p-2 w-1/3 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold dark:border-white"
                 :class="{'!text-lg !w-5/12': useToggles?.isMobile}"
                  @click="toSignup">
                 Sign up
@@ -48,18 +49,20 @@
 
         <divider-line text="or login with" width="200"/>
         <div class="flex flex-row justify-center items-center my-5 gap-2">
-            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold dark:border-white"
                 :class="{'!text-lg': useToggles?.isMobile}"
                 @click="redirectToGoogle"
                 >
-                <img src="../../public/images/icons8-google-100.png" alt="" class="w-10 pointer-events-none">
+                <img v-if="useTheme.isDarkMode" src="../../public/images/google-white.png" alt=""  class="w-10 pointer-events-none">
+                <img v-else src="../../public/images/icons8-google-100.png" alt="" class="w-10 pointer-events-none">
                 <span class="pointer-events-none">Google</span>
                 <!-- https://accounts.google.com/o/oauth2/auth?client_id=1092384774274-2s5jb68iobabko0rk1rumcbnbt5laf26.apps.googleusercontent.com&redirect_uri=http://localhost:3001/auth/google/callback&response_type=code&scope=email%20profile -->
             </div>
-            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold"
+            <div class="p-2 w-1/2 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold dark:border-white"
                 :class="{'!text-lg': useToggles?.isMobile}"
                 @click="redirectToGithub">
-                <img src="../../public/images/icons8-github-90.png" alt="" class="w-10 pointer-events-none">
+                <img v-if="useTheme.isDarkMode" src="../../public/images/github-white.png" alt=""  class="w-10 pointer-events-none">
+                <img v-else src="../../public/images/icons8-github-90.png" alt="" class="w-10 pointer-events-none">
                 <span class="pointer-events-none">Github</span>
             </div>
         </div>
@@ -70,6 +73,7 @@
 <script setup>
 import { ref } from 'vue';
 const useToggles = useTogglesStore();
+const useTheme = useThemeStore();
 
 const config = useRuntimeConfig();
 const router = useRouter()

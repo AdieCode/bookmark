@@ -86,9 +86,12 @@
                         <img v-if="isDarkMode" src="../public/bookmark_icons/user-light.png" alt="">
                         <img v-else src="../public/bookmark_icons/user-dark.png" alt="">
                  </div>
-                 <div v-if="isLoginPage || isInfoPage" class="p-2 mr-4 border-4 border-black rounded-xl cursor-pointer flex items-center justify-around text-xl font-bold hover:bg-black hover:text-white transition-colors duration-100" @click="toPrevious">
-                     Go Back
-                 </div>
+                 <border-button 
+                        v-if="isLoginPage || isInfoPage"
+                        text="Go back" 
+                        class="mr-4"
+                        :onClick="toPrevious" 
+                    />
              </div>
 
             <search/>

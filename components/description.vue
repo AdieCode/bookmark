@@ -1,37 +1,51 @@
 <template>
-    <div class="text-black text-base font-semibold paragraph-width dark:text-white" 
-        @click="toggleView(true)">
-        <p :class="{'max-h-28 overflow-hidden relative': !viewAll && formattedText.length > 200}">
-            <span v-html="formattedText"></span>
-        </p>
-        <div v-if="!viewAll && formattedText.length > 200" 
-            @click.stop
-            @click="toggleView(false)"
-            class="text-sm font-light text-black mt-4 cursor-pointer"
-            >
-            Click to read more
-        </div>
-        <div v-if="viewAll && formattedText.length > 200" 
-            @click.stop
-            @click="toggleView(false)"
-            class="text-sm font-light text-black mt-4 cursor-pointer"
-            >
-            Click this collapse
-        </div>
+  <div class="text-black text-base font-semibold paragraph-width dark:text-white">
+    <!-- Text container -->
+    <div
+      ref="textContainer"
+      class="relative transition-all duration-300"
+      :style="{
+        maxHeight: !viewAll ? `${maxHeight}px` : 'none',
+        overflow: !viewAll ? 'hidden' : 'visible',
+        WebkitMaskImage: !viewAll && isOverflowing
+          ? `linear-gradient(to bottom, black 50%, transparent 100%)`
+          : 'none',
+        maskImage: !viewAll && isOverflowing
+          ? `linear-gradient(to bottom, black 50%, transparent 100%)`
+          : 'none',
+        WebkitMaskRepeat: 'no-repeat',
+        maskRepeat: 'no-repeat',
+      }"
+    >
+      <p v-html="formattedText"></p>
     </div>
+
+    <!-- Toggle controls -->
+    <div
+      v-if="isOverflowing"
+      @click="toggleView"
+      class="text-center text-lg font-light p-2 cursor-pointer select-none"
+    >
+      {{ viewAll ? "Collapse" : "Read more" }}
+    </div>
+  </div>
 </template>
 
 <script setup>
-import { cleanDescription } from '@/utils/dataFormating.js';
-  
+import { cleanDescription } from "@/utils/dataFormating.js";
+import { onMounted, ref, watch, nextTick } from "vue";
+
 const props = defineProps({
-    text: { type: String, default: 'no description' },
+  text: { type: String, default: "no description" },
+  maxHeight: { type: Number, default: 112 }, // px
 });
 
 const viewAll = ref(false);
+const isOverflowing = ref(false);
+const textContainer = ref(null);
 
-function toggleView(value) {
-    viewAll.value = value
+function toggleView() {
+  viewAll.value = !viewAll.value;
 }
 
 const formattedText = computed(() => {
@@ -61,10 +75,24 @@ const formattedText = computed(() => {
     }).join('');
 });
 
+const checkOverflow = () => {
+  if (!textContainer.value) return;
+  const el = textContainer.value;
+  isOverflowing.value = el.scrollHeight > props.maxHeight;
+};
+
+onMounted(() => {
+  nextTick(checkOverflow);
+});
+
+watch(() => props.text, async () => {
+  await nextTick();
+  checkOverflow();
+});
 </script>
 
-<style lang="css" scoped>
-.paragraph-width{
-    max-width: 750px;
+<style scoped>
+.paragraph-width {
+  max-width: 750px;
 }
 </style>
