@@ -7,7 +7,7 @@
         <div class="flex flex-col h-auto items-start justify-center md:flex-row mt-12 gap-4 relative">
 
 
-            <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content">
+            <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]">
                 <img v-if="contentData?.cover_image_url" :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover">
                 <div v-else class="p-10 text-xl font-bold text-center">No image found</div>
             </div>
@@ -80,7 +80,7 @@
                         </div>
                     </div>
 
-                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold">
+                    <div v-if="!useToggles.isMobile" class="flex gap-6 w-fit text-white bg-black mt-7 p-3 rounded-md font-bold dark:shadow-[0_0_10px_1px_rgba(255,255,255,0.4)]">
                         <!-- Anime  -->
                         <span v-if="contentData.type === 'ANIME'" class="text-xl font-black pl-1 pr-2"><span class="font-thin">Episodes </span>{{ contentData.episodes }}</span>
 
@@ -165,8 +165,8 @@
                 <div
                     class="transition-all duration-200 text-center"
                     :class="{
-                        'text-2xl font-bold text-black scale-110 absolute -translate-y-0 opacity-100': i === activeIndex,
-                        'text-base text-black scale-75 absolute translate-y-2 opacity-10': i !== activeIndex
+                        'text-2xl font-bold text-black scale-110 absolute -translate-y-0 opacity-100 dark:text-white': i === activeIndex,
+                        'text-base text-black scale-75 absolute translate-y-2 opacity-10 dark:text-white': i !== activeIndex
                     }"
                 >
                     {{ slide }}

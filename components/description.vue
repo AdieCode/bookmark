@@ -1,5 +1,5 @@
 <template>
-    <div class="text-black text-base font-semibold paragraph-width" 
+    <div class="text-black text-base font-semibold paragraph-width dark:text-white" 
         @click="toggleView(true)">
         <p :class="{'max-h-28 overflow-hidden relative': !viewAll && formattedText.length > 200}">
             <span v-html="formattedText"></span>

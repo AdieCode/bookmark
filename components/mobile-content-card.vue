@@ -1,7 +1,7 @@
 <template>
     <div class="w-28 relative mb-2" @click="moreInfo">
         <!-- Manga cover card -->
-        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out" :class="{'h-32' : !data.cover_image_url}">
+        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-white dark:shadow-[0_0_6px_1px_rgba(255,255,255,0.6)]" :class="{'h-32' : !data.cover_image_url}">
             <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
             <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-40 object-cover">
         </div>
@@ -9,19 +9,19 @@
         <!-- Title -->
         <div class="flex flex-col mx-2 w-24 mt-1">
             <span v-if="data.title?.english" 
-                class="text-stone-600 font-extrabold text-xs line-clamp-2"
+                class="text-stone-600 font-extrabold text-xs line-clamp-2 dark:text-white"
                 :title="data.title?.english">
                 {{ data.title?.english }}
             </span>
 
             <div v-else-if="data.title?.romaji" class="flex flex-col">
-                <span class="text-stone-600 font-extrabold text-xs line-clamp-2" 
+                <span class="text-stone-600 font-extrabold text-xs line-clamp-2 dark:text-white" 
                     :title="data.title?.romaji">
                     {{ data.title?.romaji }}
                 </span>
             </div>
             
-            <span v-else class="text-stone-600 font-extrabold text-xs">No title found</span>
+            <span v-else class="text-stone-600 font-extrabold text-xs dark:text-white">No title found</span>
         </div>
     </div>
 </template>

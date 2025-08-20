@@ -6,7 +6,7 @@
         <div 
             v-for="(item, index) in items" 
             :key="index" 
-            class="p-1 px-2 bg-black text-white text-xs rounded font-semibold"
+            class="p-1 px-2 bg-black text-white text-xs rounded font-semibold dark:shadow-[0_0_8px_1px_rgba(255,255,255,0.1)]"
             :class="{'!text-sm': bigger, 'cursor-pointer': allowClick}"
             @click="addTag(item)"
         >

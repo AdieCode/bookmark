@@ -1,7 +1,7 @@
 <template>
     <div  class="w-52 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card -->
-        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-whit" 
+        <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]" 
             :class="{'h-80' : !data.cover_image_url}"
             >
             <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
@@ -32,19 +32,19 @@
         <!-- Title -->
         <div class="flex flex-col mx-3 w-48 mt-1">
             <span v-if="data.title?.english && data.title?.romaji && data.title?.english.toLowerCase() === data.title?.romaji.toLowerCase()"
-                class="text-stone-600 font-extrabold md-title cursor-pointer"
+                class="text-stone-600 font-extrabold md-title cursor-pointer dark:text-white"
                 @click="copyText(data.title?.english)"
                 :title="data.title?.english">
                 {{ data.title?.english }}
             </span>
 
             <div v-else-if="data.title?.english" class="flex flex-col">
-                <span class="text-stone-600 font-extrabold md-title line-clamp-1 cursor-pointer"
+                <span class="text-stone-600 font-extrabold md-title line-clamp-1 cursor-pointer dark:text-white"
                     @click="copyText(data.title?.english)"
                     :title="data.title?.english">
                     {{ data.title?.english }}
                 </span>
-                <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer"
+                <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer dark:text-white"
                     @click="copyText(data.title?.romaji)"
                     :title="data.title?.romaji">
                     {{ data.title?.romaji }}
@@ -52,7 +52,7 @@
             </div>
 
             <span v-else-if="data.title?.romaji"
-                class="text-stone-600 font-extrabold md-title line-clamp-2 cursor-pointer"
+                class="text-stone-600 font-extrabold md-title line-clamp-2 cursor-pointer dark:text-white"
                 @click="copyText(data.title?.romaji)"
                 :title="data.title?.romaji">
                 {{ data.title?.romaji }}
