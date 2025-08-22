@@ -55,7 +55,7 @@
                     :title="data.title?.english">
                     {{ data.title?.english }}
                 </span>
-                <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer dark:text-white"
+                <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer dark:text-white/70"
                     @click="copyText(data.title?.romaji)"
                     :title="data.title?.romaji">
                     {{ data.title?.romaji }}

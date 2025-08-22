@@ -1,14 +1,14 @@
 <template>
-    <div ref="rootEl" class="relative min-w-48 max-w-48  p-2 border-4 bg-white border-black rounded-lg">
+    <div ref="rootEl" class="relative min-w-48 max-w-48  p-2 border-4 bg-white border-black rounded-lg dark:bg-black dark:border-white">
         <!-- label  -->
-        <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold">
+        <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold dark:bg-black dark:text-white">
             {{ label }}
         </div>
 
         <!-- input -->
         <input v-show="edit_active"
             ref="inputEl"
-            class="outline-none text-lg font-extrabold w-full" 
+            class="outline-none text-lg font-extrabold w-full dark:bg-black dark:text-white" 
             type="number" 
             :name="name" 
             id=""

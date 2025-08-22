@@ -26,7 +26,7 @@
                         <span class="text-black font-black text-xl dark:text-white">
                             {{ contentData.title?.english }} 
                         </span>
-                        <span class="text-stone-800 font-black dark:text-stone-300"
+                        <span class="text-stone-800 font-black dark:text-white/70"
                             :class="{'!font-semibold': useToggles?.isMobile}"
                             >
                             {{ contentData.title?.romaji }}

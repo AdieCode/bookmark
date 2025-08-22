@@ -7,19 +7,25 @@
 
         <!-- editor  -->
         <Transition name="slide-up">
-            <div v-if="useToggles.editContent" class="relative flex justify-start items-start gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden overflow-y-auto max-h-[90vh]"
+            <div v-if="useToggles.editContent" class="relative flex justify-start items-start gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden overflow-y-auto max-h-[90vh] dark:bg-black dark:border-white"
                 :class="{'flex-col rounded-t-3xl !m-0 !mt-80': useToggles.isMobile}"
             >
                 <!-- close button -->
-                <div class="absolute top-4 right-4">
-                    <img src="../public/bookmark_icons/close-icon-48.svg"
+                 <div class="absolute top-4 right-4">
+                    <img v-if="isDarkMode" src="../public/bookmark_icons/close-light.svg"
+                         alt="close-icon-48.svg" 
+                         class="h-8 cursor-pointer"
+                         :class="{'!h-7': useToggles.isMobile}"
+                         @click="useToggles.toggleEditShow()"
+                    >
+                    <img v-else src="../public/bookmark_icons/close-icon-48.svg"
                          alt="close-icon-48.svg" 
                          class="h-8 cursor-pointer"
                          :class="{'!h-7': useToggles.isMobile}"
                          @click="useToggles.toggleEditShow()"
                     >
                 </div>
-
+       
                 <!-- image / edit_form -->
                 <div class="flex flex-col justify-center items-center">
                     <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content">
@@ -27,25 +33,25 @@
                         <div v-else class="p-10 text-xl font-bold text-center">No image found</div>
                     </div>
                     <div class="flex flex-col mx-3 mt-1 items-center">
-                        <span v-if="data.title?.english && data.title?.romaji && data.title?.english.toLowerCase() === data.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl">
+                        <span v-if="data.title?.english && data.title?.romaji && data.title?.english.toLowerCase() === data.title?.romaji.toLowerCase()" class="text-black font-extrabold text-xl dark:text-white">
                             {{ data.title?.english }} 
                         </span>    
 
                         <div v-else-if="data.title?.english" class="flex flex-col">
-                            <span class="text-black font-black text-xl">
+                            <span class="text-black font-black text-xl dark:text-white">
                                 {{ data.title?.english }} 
                             </span>
-                            <span class="text-stone-800 font-black"
+                            <span class="text-stone-800 font-black dark:text-white/70"
                                 :class="{'!font-semibold': useToggles?.isMobile}"
                                 >
                                 {{ data.title?.romaji }}
                             </span>
                         </div>
 
-                        <span v-else-if="data.title?.romaji" class="text-black font-extrabold text-xl">
+                        <span v-else-if="data.title?.romaji" class="text-black font-extrabold text-xl dark:text-white">
                             {{ data.title?.romaji }} 
                         </span>
-                        <span v-else class="text-black font-extrabold text-xl">No title found</span>
+                        <span v-else class="text-black font-extrabold text-xl dark:text-white">No title found</span>
                     </div>
                 </div>
                 <div class="px-8">
@@ -105,6 +111,9 @@
 
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
+const useTheme = useThemeStore();
+
+const isDarkMode = computed(() => useTheme.isDarkMode);
 const props = defineProps({
     data: Object,
 })

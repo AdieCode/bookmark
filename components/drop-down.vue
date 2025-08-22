@@ -1,10 +1,10 @@
 <template>
     <div ref="rootEl" class="relative w-48">
 
-        <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-between items-center hover:shadow-lg duration-100"
+        <div class=" select-none p-2 px-3 border-4 border-black rounded-xl flex gap-2 justify-between items-center hover:shadow-lg duration-100 dark:border-white"
             @click="toggleFunction"
             >
-            <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold">
+            <div class="bg-white px-2 absolute -top-4 left-3 text-base font-bold dark:bg-black">
             {{ label }}
             </div>
             <div v-if="!edit_active"
@@ -15,21 +15,22 @@
             </div>
             <div>
                 <!-- <img src="https://img.icons8.com/ios/50/down-squared--v1.png" alt="down-squared--v1" class="w-5 h-5 mt-1"/> -->
-                <img width="50" height="50" src="https://img.icons8.com/ios-filled/50/down-squared--v2.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>
+                <img v-if="isDarkMode" width="50" height="50" src="../public/images/down-squared-white.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>
+                <img v-else width="50" height="50" src="../public/images/down-squared-black.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>
             </div>
         </div>
         <Transition name="grow">
-            <div v-if="showDorpDown" class="grow flex flex-col max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg ">
+            <div v-if="showDorpDown" class="grow flex flex-col max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg dark:border-white dark:bg-black">
                 <div
                 v-for="(option, index) in updatedOptions"
                 :key="index"
                 class="p-1 px-2 m-1 flex items-center gap-1 cursor-pointer rounded-lg whitespace-nowrap "
-                :class="{'bg-gray-300': option.selected,
-                        'hover:bg-gray-400': !useToggles.isMobile
+                :class="{'bg-gray-300 dark:bg-gray-700': option.selected,
+                        'hover:bg-gray-400 dark:hover:bg-gray-800': !useToggles.isMobile
                 }"
                 @click="selectOption(index)"
                 >
-                    <div class="w-4 h-4 border-4 border-black rounded-md" :class="{'bg-black': option.selected}"></div>
+                    <div class="w-4 h-4 border-4 border-black rounded-md dark:border-white" :class="{'bg-black dark:bg-white': option.selected}"></div>
                     <span class="mb-1 font-bold">{{ option.name }}</span>
                 </div>
             </div>
@@ -49,6 +50,9 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 const useToggles = useTogglesStore();
+const useTheme = useThemeStore();
+
+const isDarkMode = computed(() => useTheme.isDarkMode);
 
 const props = defineProps({
     label: { type: String, default: 'No label' },
