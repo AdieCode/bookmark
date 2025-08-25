@@ -597,11 +597,11 @@ export const useContentStore = defineStore('content', {
           const requestBody = {
             content_id: id,
             current_episode: updateData?.current_episode,
-            score: updateData?.personal_score,
+            personal_score: updateData?.personal_score,
             status: updateData?.status,
             start_date: updateData?.start_date,
             end_date: updateData?.end_date,
-            user_comment: updateData?.user_comment,
+            user_comment: updateData?.comment,
             // deleted: updateData?.deleted,
           }
           
@@ -614,11 +614,11 @@ export const useContentStore = defineStore('content', {
             current_volume: updateData?.current_volume,
             current_chapter: updateData?.current_chapter,
             current_page: updateData?.current_page,
-            score: updateData?.personal_score,
+            personal_score: updateData?.personal_score,
             status: updateData?.status,
             start_date: updateData?.start_date,
             end_date: updateData?.end_date,
-            user_comment: updateData?.user_comment,
+            user_comment: updateData?.comment,
             // deleted: updateData?.deleted,
           }
 

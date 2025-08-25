@@ -59,7 +59,7 @@
                     <!-- <divider-line text="status" -->
                     <div class="mt-5 flex flex-col gap-8 ">
                         <form ref="myForm" 
-                        class="flex flex-col justify-center items-center gap-6 "
+                            class="flex flex-col justify-center items-center gap-6 "
                             @submit.prevent>
                             <DropDown
                                 label="Content Status"
@@ -73,7 +73,9 @@
                             <!-- <DateEditBox label="start date" name="start_date"/> -->
                             <!-- <EditBox label="title" name="title"/> -->
                             
+
                             <ProgressEditBox 
+                                v-if="contentType === 'MANGA'"
                                 :total_progress="data?.volumes"
                                 :current_progress="data?.tracked?.current_volume"
                                 label="current volume" 
@@ -81,18 +83,42 @@
                             />
                             
                             <ProgressEditBox 
+                                v-if="contentType === 'MANGA'"
                                 :total_progress="data?.chapters"
                                 :current_progress="data?.tracked?.current_chapter"
                                 label="current chapter" 
                                 name="current_chapter"
                             />
-
+                            
                             <ProgressEditBox 
+                                v-if="contentType === 'MANGA'"
                                 :total_progress="data?.current_page"
                                 :current_progress="data?.tracked?.current_page"
                                 label="current page" 
                                 name="current_page"
                             />
+                            
+                            <ProgressEditBox 
+                                v-if="contentType === 'ANIME'"
+                                :total_progress="data?.episodes"
+                                :current_progress="data?.tracked?.current_episode"
+                                label="current episode" 
+                                name="current_episode"
+                            />
+                            
+                            <ProgressEditBox 
+                                v-if="contentType === 'ANIME'"
+                                :total_progress="100"
+                                :current_progress="data?.tracked?.personal_score"
+                                label="score" 
+                                name="personal_score"
+                            />
+
+                            <TextBox 
+                                label="comment" 
+                                name="comment" 
+                            />
+                            <!-- <TextBox -->
 
                             <BorderButton text="update" class="" :onclick="handleSubmit"/>
                         </form>
@@ -108,6 +134,8 @@
 </template>
 
 <script setup>
+import TextBox from './cards/text-box.vue';
+
 
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
@@ -118,6 +146,7 @@ const props = defineProps({
     data: Object,
 })
 
+const contentType = computed(() => props?.data?.type);
 const myForm = ref(null);
 const dropDownVisible = ref(false)
 const trackingStatus = ref([
@@ -139,12 +168,17 @@ function capitalizeStatus(status) {
 function getChangedFields(formDataObj, originalData) {
     const changed = {};
     for (const key in formDataObj) {
-        // Compare values as strings for consistency
-        if (
-            originalData[key] === undefined ||
-            String(formDataObj[key]) !== String(originalData[key])
-        ) {
-            changed[key] = formDataObj[key];
+        const formValue = formDataObj[key].trim();
+        const originalValue = originalData[key];
+        
+        // Skip if both are empty/null/undefined
+        if ((!formValue || formValue === '0') && (!originalValue || originalValue === 0)) {
+            continue;
+        }
+        
+        // Only add if values are different
+        if (String(formValue) !== String(originalValue)) {
+            changed[key] = formValue;
         }
     }
     return changed;
@@ -155,8 +189,18 @@ async function handleSubmit() {
     const data = Object.fromEntries(formData.entries())
     const originalTrackedData = props.data.tracked || {};
     const updateObject = getChangedFields(data, originalTrackedData) 
-    // console.log('changed data :', updateObject)
-    // ➜ { username: 'John', age: '30' }
+    console.log('changed data :', updateObject)
+
+    if (Object.keys(updateObject).length === 0) {
+        // No changes detected
+        useToggles.setNotification("No changes detected", 2)
+        setTimeout(() => {
+            useToggles.hideNotification();
+        }, 1000);
+        useToggles.toggleEditShow();
+        return;
+    }
+
     useToggles.setNotification("Updating", 0)
 
     useToggles.toggleEditShow();
