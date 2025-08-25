@@ -111,6 +111,10 @@ function passwordToggle(){
         passwordType.value = 'password'
     }
 }
+
+onMounted(() => {
+  useToggles.hideNotification();
+});
 </script>
 
 <style scoped>
