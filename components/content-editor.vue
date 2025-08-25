@@ -1,5 +1,5 @@
 <template>
-    <div v-if="useToggles.editContent" class="fixed inset-0 flex justify-center items-center top-0 left-0 z-30  overflow-y-scroll hide-scrollbar">
+    <div v-if="useToggles.editContent" class="fixed inset-0 flex justify-center items-start top-0 left-0 z-30 overflow-y-auto">
         <!-- backgroud blur  -->
         <Transition name="fade-blur">
             <div v-if="useToggles.editContent" class="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-md w-full" @click="useToggles.toggleEditShow"></div>
@@ -7,8 +7,12 @@
 
         <!-- editor  -->
         <Transition name="slide-up">
-            <div v-if="useToggles.editContent" class="relative flex justify-start items-start gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 mb-10 mt-48 p-10 overflow-x-hidden overflow-y-auto max-h-[90vh] dark:bg-black dark:border-white"
-                :class="{'flex-col rounded-t-3xl !m-0 !mt-80': useToggles.isMobile}"
+            <div v-if="useToggles.editContent" 
+                class="relative flex justify-start items-start gap-4 rounded-3xl bg-white border-black border-4 z-20 m-20 p-10 overflow-x-hidden dark:bg-black dark:border-white"
+                :class="{
+                    'flex-col items-center rounded-t-3xl !m-0 min-h-screen w-full': useToggles.isMobile,
+                    'my-10 mt-32': !useToggles.isMobile
+                }"
             >
                 <!-- close button -->
                  <div class="absolute top-4 right-4">
@@ -57,7 +61,7 @@
                 <div class="px-8">
                     <!-- <h2 class="text-center font-light text-2xl mb-10">tracking details</h2> -->
                     <!-- <divider-line text="status" -->
-                    <div class="mt-5 flex flex-col gap-8 ">
+                    <div class="mt-5">
                         <form ref="myForm" 
                             class="flex flex-col justify-center items-center gap-6 "
                             @submit.prevent>
@@ -244,8 +248,10 @@ async function handleSubmit() {
 
 /* Hide scrollbar for the editor overlay */
 .hide-scrollbar {
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    height: 100%;
+    max-height: 100vh;
 }
 .hide-scrollbar::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Opera */
