@@ -113,7 +113,7 @@
                             <ProgressEditBox 
                                 :total_progress="100"
                                 :current_progress="data?.tracked?.personal_score"
-                                label="score" 
+                                label="personal score" 
                                 name="personal_score"
                             />
 
