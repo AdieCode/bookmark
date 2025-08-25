@@ -71,7 +71,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 const useToggles = useTogglesStore();
 const useTheme = useThemeStore();
 
@@ -114,6 +114,10 @@ function passwordToggle(){
 
 onMounted(() => {
   useToggles.hideNotification();
+});
+
+onBeforeUnmount(() => {
+    useToggles.hideNotification();
 });
 </script>
 
