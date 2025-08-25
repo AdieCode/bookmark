@@ -111,7 +111,6 @@
                             />
                             
                             <ProgressEditBox 
-                                v-if="contentType === 'ANIME'"
                                 :total_progress="100"
                                 :current_progress="data?.tracked?.personal_score"
                                 label="score" 
