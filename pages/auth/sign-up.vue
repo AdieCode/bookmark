@@ -5,29 +5,29 @@
 
         <!-- Username input -->
         <div>
-            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4">
+            <input v-model="username" type="username" placeholder="username" name="username" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-10 mb-4 dark:bg-black dark:border-white">
         </div>
 
         <!-- Email input -->
         <divider-line text="email"/>
         <div>
-            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-4 mb-4">
+            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-4 mb-4 dark:bg-black dark:border-white">
         </div>
         <div>
-            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-2 mb-4">
+            <input v-model="email" type="email" placeholder="Email" name="email" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mt-2 mb-4 dark:bg-black dark:border-white">
         </div>
 
         <!-- Password input -->
         <divider-line text="password"/>
         <div class="relative mt-4">
-            <input v-model="password" :type="passwordType1" placeholder="Password" name="password" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4">
+            <input v-model="password" :type="passwordType1" placeholder="Password" name="password" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4 dark:bg-black dark:border-white">
             <div class="absolute top-2 -right-10">
                 <img v-if="passwordType1 === 'password'" src="https://img.icons8.com/ios-glyphs/30/visible--v1.png" alt="eye" @click="passwordToggle1">
                 <img v-else src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="eye" @click="passwordToggle1">
             </div>
         </div>
         <div class="relative mt-2">
-            <input v-model="password" :type="passwordType2" placeholder="Password" name="password" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4">
+            <input v-model="password" :type="passwordType2" placeholder="Password" name="password" class="w-80 h-12 border-4 border-black p-4 rounded-lg text-lg font-bold mb-4 dark:bg-black dark:border-white">
             <div class="absolute top-2 -right-10">
                 <img v-if="passwordType2 === 'password'" src="https://img.icons8.com/ios-glyphs/30/visible--v1.png" alt="eye" @click="passwordToggle2">
                 <img v-else src="https://img.icons8.com/ios-glyphs/30/hide.png" alt="eye" @click="passwordToggle2">
@@ -52,12 +52,13 @@ const router = useRouter()
 const authStore = useAuthStore();
 const passwordType1 = ref('password');
 const passwordType2 = ref('password');
+const username = ref('');
 const email = ref('');
 const password = ref('');
 
 
 async function login() {
-    const isAuth = await authStore.login(email.value, password.value)
+    const isAuth = await authStore.signUp(username.value, email.value, password.value)
     // router.push("/auth/login");
 }
 

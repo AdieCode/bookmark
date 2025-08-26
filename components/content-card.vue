@@ -4,8 +4,13 @@
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]" 
             :class="{'h-80' : !data.cover_image_url}"
             >
-            <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
-            <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover">
+                <!-- Emergency stripes background while image is loading -->
+                <div v-if="imageLoading" class="absolute inset-0 w-full h-full rounded-lg stripes-bg dark:stripes-bg-dark z-0"></div>
+                <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
+                <img v-if="data.cover_image_url" :src="data.cover_image_url+'dsf'" alt="" class="rounded-lg w-full h-80 object-cover relative z-10"
+                    @load="imageLoading = false"
+                    @error="imageLoading = false"
+                >
 
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-2 flex justify-center items-center gap-2 bounce-down">
@@ -138,7 +143,19 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+let imageLoading = ref(true);
+
+onMounted(() => {
+    if (props.data?.cover_image_url) {
+        const img = new window.Image();
+        img.src = props.data.cover_image_url;
+        img.onload = () => { imageLoading.value = false; };
+        img.onerror = () => { imageLoading.value = false; };
+    } else {
+        imageLoading.value = false;
+    }
+});
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
 const useExtraData = useExtraDataStore();
@@ -295,4 +312,29 @@ function handleMouseDown(event) {
 .small-title{
     font-size: 13px;
 }
+
+/* Emergency stripes background */
+.stripes-bg {
+    background: repeating-linear-gradient(
+        45deg,
+        #000 0px,
+        #000 10px,
+        #fff 10px,
+        #fff 20px
+    );
+    opacity: 0.7;
+}
+
+/* Emergency stripes background (opposite: white first, then black) */
+.stripes-bg-dark {
+    background: repeating-linear-gradient(
+        45deg,
+        #fff 0px,
+        #fff 10px,
+        #000 10px,
+        #000 20px
+    );
+    opacity: 0.7;
+}
+
 </style>
