@@ -7,7 +7,7 @@
                 <!-- Emergency stripes background while image is loading -->
                 <div v-if="imageLoading" class="absolute inset-0 w-full h-full rounded-lg stripes-bg dark:stripes-bg-dark z-0"></div>
                 <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
-                <img v-if="data.cover_image_url" :src="data.cover_image_url+'dsf'" alt="" class="rounded-lg w-full h-80 object-cover relative z-10"
+                <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover relative z-10"
                     @load="imageLoading = false"
                     @error="imageLoading = false"
                 >
