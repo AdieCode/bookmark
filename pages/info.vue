@@ -70,13 +70,21 @@
                             <div :class="{'text-sm font-light': useToggles.isMobile}">
                                 Release status
                             </div>
-                            <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.status)}}</div>
+                            <!-- <div class="font-black text-lg p-0 tracking-wider">{{capitalizeStatus(contentData.status)}}</div> -->
+                            <div v-if="contentData.status === 'NOT_YET_RELEASED'"
+                                class="font-black text-lg p-0 tracking-wider"
+                            >
+                                UNRELEASED
+                            </div>
+                            <div v-else class="font-black text-lg p-0 tracking-wider">
+                                {{ capitalizeStatus(contentData.status) }}
+                            </div>
                         </div>
                         <div class="mt-4">
                             <div :class="{'text-sm font-light': useToggles.isMobile}">
                                 Content type
                             </div>
-                            <div class="font-black text-lg p-0">{{capitalizeStatus(contentData.type)}}</div>
+                            <div class="font-black text-lg p-0 tracking-wider">{{capitalizeStatus(contentData.type)}}</div>
                         </div>
                     </div>
 

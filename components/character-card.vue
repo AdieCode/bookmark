@@ -5,6 +5,13 @@
             :class="{'!w-28 !h-32': useToggles.isMobile}">
             <img v-if="!data.character_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 p-2">
             <img v-if="data.character_image_url" :src="data.character_image_url" alt="" class="w-full object-cover">
+            <striper 
+                class="rounded-lg"
+                :class="{
+                    '!w-36 !h-48': !useToggles.isMobile,
+                    '!w-28 !h-32': useToggles.isMobile
+                }"
+            />
         </div>
         <div :class="{'px-1': useToggles.isMobile}">
             <div class="font-extrabold text-stone-600 dark:text-white"

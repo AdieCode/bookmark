@@ -5,12 +5,9 @@
             :class="{'h-80' : !data.cover_image_url}"
             >
                 <!-- Emergency stripes background while image is loading -->
-                <div v-if="imageLoading" class="absolute inset-0 w-full h-full rounded-lg stripes-bg dark:stripes-bg-dark z-0"></div>
                 <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
-                <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover relative z-10"
-                    @load="imageLoading = false"
-                    @error="imageLoading = false"
-                >
+                <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover relative z-10">
+                <striper/>
 
             <!-- Info section, visible when showInfo is true -->
             <div v-if="showInfo" class="absolute w-full z-10 p-2 bottom-2 flex justify-center items-center gap-2 bounce-down">
@@ -143,19 +140,6 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-let imageLoading = ref(true);
-
-onMounted(() => {
-    if (props.data?.cover_image_url) {
-        const img = new window.Image();
-        img.src = props.data.cover_image_url;
-        img.onload = () => { imageLoading.value = false; };
-        img.onerror = () => { imageLoading.value = false; };
-    } else {
-        imageLoading.value = false;
-    }
-});
 const useToggles = useTogglesStore();
 const useContent = useContentStore();
 const useExtraData = useExtraDataStore();
@@ -322,7 +306,7 @@ function handleMouseDown(event) {
         #fff 10px,
         #fff 20px
     );
-    opacity: 0.7;
+    opacity: 1;
 }
 
 /* Emergency stripes background (opposite: white first, then black) */
@@ -334,7 +318,7 @@ function handleMouseDown(event) {
         #000 10px,
         #000 20px
     );
-    opacity: 0.7;
+    opacity: 1;
 }
 
 </style>
