@@ -1,15 +1,23 @@
 <template>
     <div>
         <div class="w-full h-full fixed top-0 left-0 -z-10 bg-white bg-opacity-90 backdrop-blur-3xl dark:bg-black">
-            <img v-if="contentData.cover_image_url" :src="contentData.cover_image_url" alt="" class="move-around w-full h-full object-cover opacity-40 filter blur-2xl">
+            <img v-if="contentData.cover_image_url" :src="contentData.cover_image_url" alt="" class="move-around w-full h-full object-cover opacity-40 filter blur-2xl z-10">
         </div>
 
         <div class="flex flex-col h-auto items-start justify-center md:flex-row mt-12 gap-4 relative">
 
 
-            <div class="w-52 m-auto md:m-0 md:w-80 h-fit border-black border-4 rounded-xl contain-content dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]">
-                <img v-if="contentData?.cover_image_url" :src="contentData.cover_image_url" alt="" class="w-full h-full object-cover">
+            <div class="w-52 m-auto md:m-0 md:w-80 min-h-52 h-fit border-black border-4 rounded-xl contain-content transition-all dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]">
+                <img v-if="contentData?.cover_image_url" 
+                    :key="contentData.cover_image_url" 
+                    :src="contentData.cover_image_url" 
+                    alt="" 
+                    class="w-full h-full object-cover"
+                >
                 <div v-else class="p-10 text-xl font-bold text-center">No image found</div>
+                <striper 
+                    class="rounded-lg w-full h-full"
+                />
             </div>
 
             <div class="w-4/5 h-auto m-auto md:w-1/3 md:m-0"
@@ -494,5 +502,15 @@ definePageMeta({
 
 .animate-fade-in {
     animation: fadeIn 0.5s ease-out forwards;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.15s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
 }
 </style>

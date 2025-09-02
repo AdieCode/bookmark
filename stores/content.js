@@ -459,9 +459,9 @@ export const useContentStore = defineStore('content', {
 
       const response = await this.getTrackedContentByStatusAndContentType(this.plannaningContentData.contentType, 'planning', this.plannaningContentData.currentPage);
 
-      this.contentFetched = true;
-
+      
       this.plannaningContentData.contentList = this.plannaningContentData.contentList.concat(response.data.media);
+      this.contentFetched = true;
       this.plannaningContentData.hasNextPage = response.data.page.hasNextPage;
 
       return this.plannaningContentData;
@@ -492,9 +492,9 @@ export const useContentStore = defineStore('content', {
 
       const response = await this.getTrackedContentByStatusAndContentType(this.busyContentData.contentType, 'busy', this.busyContentData.currentPage);
 
-      this.contentFetched = true;
-
+      
       this.busyContentData.contentList = this.busyContentData.contentList.concat(response.data.media);
+      this.contentFetched = true;
       this.busyContentData.hasNextPage = response.data.page.hasNextPage;
 
       return this.busyContentData;
@@ -524,9 +524,9 @@ export const useContentStore = defineStore('content', {
 
       const response = await this.getTrackedContentByStatusAndContentType(this.completedContentData.contentType, 'completed', this.completedContentData.currentPage);
 
-      this.contentFetched = true;
-
+      
       this.completedContentData.contentList = this.completedContentData.contentList.concat(response.data.media);
+      this.contentFetched = true;
       this.completedContentData.hasNextPage = response.data.page.hasNextPage;
 
       return this.completedContentData;

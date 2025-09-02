@@ -1,7 +1,7 @@
 <template>
   <button
     :class="[
-      'custom-button inline-flex justify-center items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-all duration-100  dark:border-white dark:hover:bg-white dark:hover:text-black',
+      'custom-button inline-flex justify-center items-center gap-2 p-2 border-4 border-black rounded-xl cursor-pointer text-xl font-bold hover:bg-black hover:text-white transition-all duration-100 dark:border-white dark:hover:bg-white dark:hover:text-black',
       passebleClass
     ]"
     @click="onClick"

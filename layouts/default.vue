@@ -98,7 +98,7 @@
             
         </div>
         <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-1 mx-2">
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-3 mx-2">
             <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[690px] mx-auto"> <!-- Adjusted max width and gap -->
                 <border-button 
                     text="Discover" 

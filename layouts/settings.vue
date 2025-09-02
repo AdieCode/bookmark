@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col">
         <header class="flex justify-between m-4">
-            <div class="w-36 cursor-pointer flex justify-center " @click="toUserInfo">
+            <div class="w-36 cursor-pointer flex justify-center " @click="toPrevious">
                 <Icon/>
             </div>
             <!-- <h1 class="p-4 font-extrabold text-4xl text-center ">User Options</h1> -->

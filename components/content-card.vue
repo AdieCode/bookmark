@@ -2,11 +2,11 @@
     <div  class="w-52 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card -->
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]" 
-            :class="{'h-80' : !data.cover_image_url}"
+            :class="{'h-80' : !data?.cover_image_url}"
             >
                 <!-- Emergency stripes background while image is loading -->
-                <img v-if="!data.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
-                <img v-if="data.cover_image_url" :src="data.cover_image_url" alt="" class="rounded-lg w-full h-80 object-cover relative z-10">
+                <img v-if="!data?.cover_image_url" src="../public/gif/icons8-waiting.gif" alt="" class="w-8 rounded-lg p-2">
+                <img v-if="data?.cover_image_url" :src="data?.cover_image_url" :key="data?.cover_image_url"  alt="" class="rounded-lg w-full h-80 object-cover relative z-10">
                 <striper/>
 
             <!-- Info section, visible when showInfo is true -->
@@ -15,7 +15,7 @@
                     @click="moreInfo"
                     @mousedown="handleMouseDown">
                     <span class="font-bold text-base pb-4">More info</span>
-                    <!-- <a :href="'/info?id=' + data.anilist_content_id" title="Go to info page">
+                    <!-- <a :href="'/info?id=' + data?.anilist_content_id" title="Go to info page">
                     </a> -->
                 </div>
                 <div class="p-3 bg-white border-2 border-black rounded-lg cursor-pointer dark:bg-black dark:border-white" @click="trackContent">
@@ -44,31 +44,31 @@
 
         <!-- Title -->
         <div class="flex flex-col mx-3 w-48 mt-1">
-            <span v-if="data.title?.english && data.title?.romaji && data.title?.english.toLowerCase() === data.title?.romaji.toLowerCase()"
+            <span v-if="data?.title?.english && data?.title?.romaji && data?.title?.english.toLowerCase() === data?.title?.romaji.toLowerCase()"
                 class="text-stone-600 font-extrabold md-title cursor-pointer dark:text-white"
-                @click="copyText(data.title?.english)"
-                :title="data.title?.english">
-                {{ data.title?.english }}
+                @click="copyText(data?.title?.english)"
+                :title="data?.title?.english">
+                {{ data?.title?.english }}
             </span>
 
-            <div v-else-if="data.title?.english" class="flex flex-col">
+            <div v-else-if="data?.title?.english" class="flex flex-col">
                 <span class="text-stone-600 font-extrabold md-title line-clamp-1 cursor-pointer dark:text-white"
-                    @click="copyText(data.title?.english)"
-                    :title="data.title?.english">
-                    {{ data.title?.english }}
+                    @click="copyText(data?.title?.english)"
+                    :title="data?.title?.english">
+                    {{ data?.title?.english }}
                 </span>
                 <span class="text-stone-600 font-semibold small-title line-clamp-1 cursor-pointer dark:text-white/70"
-                    @click="copyText(data.title?.romaji)"
-                    :title="data.title?.romaji">
-                    {{ data.title?.romaji }}
+                    @click="copyText(data?.title?.romaji)"
+                    :title="data?.title?.romaji">
+                    {{ data?.title?.romaji }}
                 </span>
             </div>
 
-            <span v-else-if="data.title?.romaji"
+            <span v-else-if="data?.title?.romaji"
                 class="text-stone-600 font-extrabold md-title line-clamp-2 cursor-pointer dark:text-white"
-                @click="copyText(data.title?.romaji)"
-                :title="data.title?.romaji">
-                {{ data.title?.romaji }}
+                @click="copyText(data?.title?.romaji)"
+                :title="data?.title?.romaji">
+                {{ data?.title?.romaji }}
             </span>
 
             <span v-else class="text-stone-600 font-extrabold md-title">No title found</span>
@@ -76,28 +76,28 @@
 
         <!-- Pop-up info, visible on hover or click -->
         <div v-if="showInfo" class="absolute w-64 max-h-64 bg-white border-2 border-black rounded-lg shadow-lg z-10 p-2 transform -top-2 -left-6 pointer-events-none bounce-down md:pointer-events-auto dark:bg-black dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.4)]">
-            <div v-if="data.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
-                <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
+            <div v-if="data?.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
+                <span v-if="data?.isAdult" class="font-extrabold small-title">18+</span>
             </div>
 
             <div class="p-2 flex justify-center gap-2 border border-black rounded mb-2 dark:border-white">
-                <!-- <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span> -->
+                <!-- <span class="font-extrabold"><span class="text-lg font-normal">{{data?.type}}</span> - {{ data?.status }}</span> -->
                 <div class="flex flex-col justify-center items-start">
                     <div class="text-xs font-light ">Content</div>
-                    <div class="text-xs font-extrabold">{{ data.type }}</div>
+                    <div class="text-xs font-extrabold">{{ data?.type }}</div>
                 </div>
 
                 <div class="h-full py-5 border border-black dark:border-white"></div>
 
                 <div class="flex flex-col justify-center items-start">
                     <div class="text-xs font-light">Release</div>
-                    <div v-if="data.status === 'NOT_YET_RELEASED'"
+                    <div v-if="data?.status === 'NOT_YET_RELEASED'"
                         class="text-xs font-extrabold"
                     >
                         UNRELEASED
                     </div>
                     <div v-else class="text-xs font-extrabold">
-                        {{ data.status }}
+                        {{ data?.status }}
                     </div>
                     
                 </div>
@@ -106,16 +106,16 @@
 
                 <div class="flex flex-col justify-center items-start">
                     <div class="text-xs font-light">Tracking</div>
-                    <div class="text-xs font-extrabold">{{ data.tracked.status.toUpperCase() }}</div>
+                    <div class="text-xs font-extrabold">{{ data?.tracked.status.toUpperCase() }}</div>
                 </div>
             </div>
 <!-- 
             <div class="mt-4 p-2">
-                <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span>
+                <span class="font-extrabold"><span class="text-lg font-normal">{{data?.type}}</span> - {{ data?.status }}</span>
             </div> -->
 
             <!-- Genres -->
-            <tags :items="data.genres" width="300" :max-height="56" :invert="isDarkMode"/>
+            <tags :items="data?.genres" width="300" :max-height="56" :invert="isDarkMode"/>
 
             <!-- Description -->
             <div class="text-black text-sm mt-2 mx-2 dark:text-white text-start">
@@ -128,11 +128,11 @@
                 <span><span class="font-extralight">Score </span>{{ data?.average_score || "?" }}</span>
 
                 <!-- Anime  -->
-                <span v-if="data.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ data?.episodes || "?" }}</span>
+                <span v-if="data?.type === 'ANIME'"><span class="font-extralight">Episodes </span>{{ data?.episodes || "?" }}</span>
 
                 <!-- Manga  -->
-                <span v-if="data.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ data?.chapters || "?" }}</span>
-                <span v-if="data.type === 'MANGA' && data.volumes"><span class="font-extralight">Vol's </span>{{ data?.volumes }}</span>
+                <span v-if="data?.type === 'MANGA'"><span class="font-extralight">Chp's </span>{{ data?.chapters || "?" }}</span>
+                <span v-if="data?.type === 'MANGA' && data?.volumes"><span class="font-extralight">Vol's </span>{{ data?.volumes }}</span>
 
             </div>
         </div>
@@ -188,7 +188,7 @@ const truncatedDescription = computed(() => {
 
 async function moreInfo() {
     // await content.mapNewContentData(props.data);
-    router.push('/info?id=' + props.data.anilist_content_id);
+    router.push('/info?id=' + props.data?.anilist_content_id);
 }
 
 function copyText(text) {
