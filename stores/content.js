@@ -9,6 +9,7 @@ let abortController = null;
 export const useContentStore = defineStore('content', {
   state: () => {
     return {
+      initialized: false,
       data: [],
       planningData: [],
       plannaningContentData:{
@@ -39,15 +40,19 @@ export const useContentStore = defineStore('content', {
   },
 
   actions: {
-    init() {
-			if (process.client) {
-			const session = useCookie('session');
-			this.token = session.value?.token || null;
-			}
+    async init() {
+      if (this.initialized) return;
+      
+      if (process.client) {
+        const session = useCookie('session');
+        this.token = session.value?.token || null;
+      }
 
-			const config = useRuntimeConfig();
-			this.baseURL = config.public.baseUrl || 'http://localhost:3001';
-		},
+      const config = useRuntimeConfig();
+      this.baseURL = config.public.baseUrl || 'http://localhost:3001';
+      
+      this.initialized = true;
+    },
 
     clearData(){
       this.data = [];

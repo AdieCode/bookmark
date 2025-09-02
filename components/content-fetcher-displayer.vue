@@ -27,7 +27,7 @@
 	<!-- The target div you want to observe for new content -->
 	<div class="pb-40">
 		<client-only>
-		<GettingContent v-if="!useContent?.contentFetched"/>
+		<GettingContent v-if="!useContent?.initialized || !useContent?.contentFetched"/>
 		</client-only>
 	</div>
 
@@ -49,6 +49,12 @@ const useToggles = useTogglesStore();
 
 const observedDiv = ref(null);
 const mounted = ref(false);
+
+onMounted(async () => {
+  if (!useContent.initialized) {
+    await useContent.init();
+  }
+});
 
 const props = defineProps({
     visible: { type: Boolean, default: false }, 
