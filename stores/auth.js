@@ -62,12 +62,12 @@ export const useAuthStore = defineStore('auth', {
 			}
 		},
 
-		async googleLogin(token) {
+		async oAuthLogin(token) {
 			try {
 				
-				if (process.client) {
-					useCookie('session').value = { token }; // Store the token in a cookie
-				}
+				useCookie('session', { 
+					maxAge: 60 * 60 * 24 * 7 // 24 hours from now
+				}).value = { token };
 
 				this.token = token;
 				this.isAuthenticated = true;

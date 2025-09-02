@@ -11,7 +11,7 @@ const route = useRoute();
 const authStore = useAuthStore();
 const token = route.query.token || 'no token';
 
-await authStore.googleLogin(token)
+await authStore.oAuthLogin(token)
 
 if (authStore.checkAuth()){
     // router.back();
