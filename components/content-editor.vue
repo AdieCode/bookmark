@@ -208,7 +208,7 @@ async function handleSubmit() {
 
     useToggles.toggleEditShow();
     await useContent.updateTrackedContent(props.data.anilist_content_id, props.data.type, updateObject);
-
+    useContent.updateLocalTrackedContent(props.data.anilist_content_id, updateObject);
     useToggles.setNotification("Updated", 1)
 
     setTimeout(() => {

@@ -67,6 +67,12 @@ const props = defineProps({
     triggerFunction: { type: Function, default: () => {}}
 })
 
+watch(() => useToggles.contentType, (newContentType, oldContentType) => {
+    if (mounted.value && newContentType !== oldContentType) {
+        getNextPage();
+    }
+}, { immediate: false });
+
 // --- One-time batch animation state ---
 // Use a module-level in-memory Set so animations repeat on full page refresh
 // but do NOT replay when navigating back within the SPA (in-memory persists during the SPA lifecycle).
@@ -139,7 +145,6 @@ const handleIntersection = (entries) => {
 };
 
 const getNextPage = () => {
-    console.log('fetching for: ', props.contentType);
     props.triggerFunction(props.contentType);
 };
 
@@ -147,7 +152,6 @@ onMounted(async () => {
     window.scrollTo(0,0);
     mounted.value = true;
 
-    console.log('fetching planning');
     getNextPage();
 
     const observer = new IntersectionObserver(handleIntersection, {

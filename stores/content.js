@@ -62,6 +62,43 @@ export const useContentStore = defineStore('content', {
       this.selected_content = {};
     },
 
+    updateLocalTrackedContent(id, updateData) {
+      const updateItem = (list) => {
+        const index = list.findIndex(item => item.anilist_content_id === id);
+        if (index !== -1) {
+          list[index] = {
+            ...list[index],
+            tracked: {
+              ...list[index].tracked,
+              ...updateData,   // merge new tracked values
+            },
+          };
+        }
+      };
+
+      // update selected_content if it matches
+      if (this.selected_content?.anilist_content_id === id) {
+        this.selected_content = {
+          ...this.selected_content,
+          tracked: {
+            ...this.selected_content.tracked,
+            ...updateData,
+          },
+        };
+      }
+
+      // update tracked lists
+      updateItem(this.plannaningContentData.contentList);
+      updateItem(this.busyContentData.contentList);
+      updateItem(this.completedContentData.contentList);
+
+      // also update search or general data (optional, if needed)
+      updateItem(this.data);
+      updateItem(this.selected_content?.recommendations);
+      updateItem(this.selected_content?.relations);
+      updateItem(this.searched_content);
+    },
+
     async getMangaContent(page=1) {
       const { $api } = useNuxtApp();
       if (abortController) {
