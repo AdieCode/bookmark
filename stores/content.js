@@ -12,6 +12,12 @@ export const useContentStore = defineStore('content', {
       initialized: false,
       data: [],
       planningData: [],
+      searchedContentData:{
+        searchTerm: '',
+        currentPage: 0,
+        hasNextPage: true,
+        contentList: []
+      },
       plannaningContentData:{
         currentPage: 0,
         hasNextPage: true,
@@ -353,7 +359,7 @@ export const useContentStore = defineStore('content', {
       this.data = this.data.concat(newContent);
     },
 
-    async getContentByText(text) {
+    async getContentByText(text, page, perPage) {
       const { $api } = useNuxtApp();
       if (abortController) {
         abortController.abort(); 
@@ -361,14 +367,16 @@ export const useContentStore = defineStore('content', {
 
       abortController = new AbortController(); 
       try {
-        this.searched_content = [];
         const response = await $api.get(`${this.baseURL}/content/get_content_by_search`,{
             params: {
-              search: text
+              search: text,
+              page: page,
+              perPage: perPage
             }
         });
 
-        this.searched_content = response.data.data.media;
+        // this.searched_content = response.data.data.media;
+        return response;
       } catch (error) {
         if (error.name === 'CanceledError') {
           console.log("Previous request canceled");
@@ -376,6 +384,43 @@ export const useContentStore = defineStore('content', {
           console.log(error);
         }
       }
+    },
+
+    setSearchTerm(term) {
+      this.searchedContentData.searchTerm = term;
+      this.completedContentData.contentList = [];
+      this.completedContentData.hasNextPage = true;
+      this.completedContentData.currentPage = 0;
+    },
+
+    async getContentBysearch(text){
+      const response = await this.getContentByText(text, 1, 5);
+      this.searched_content = response.data.data.media;
+    },
+
+    async getAllContentBysearch(){
+      const searchTerm = this.searchedContentData.searchTerm;
+
+      if (!searchTerm) {
+        console.log('required data not provided to get tracked content')
+        return null;
+      }
+
+      if (!this.searchedContentData.hasNextPage) {
+        return this.searchedContentData;
+      }
+
+      this.searchedContentData.currentPage += 1;
+      this.contentFetched = false;
+
+      const response = await this.getContentByText(searchTerm, this.searchedContentData.currentPage, 50);
+
+      this.searchedContentData.contentList = this.searchedContentData.contentList.concat(response.data.data.media);
+      this.contentFetched = true;
+      this.searchedContentData.hasNextPage = response.data.data.page.hasNextPage;
+
+      return this.searchedContentData;
+
     },
 
     mapNewContentData(data) {

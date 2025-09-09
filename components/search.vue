@@ -17,6 +17,7 @@
             type="text"
             :placeholder="useToggles.isMobile ? 'Search anime/manga' : 'Search for anime/manga here'"
             class="flex-grow h-14 outline-none border-4 border-black p-4 rounded-l-xl text-base sm:text-lg font-bold dark:text-black"
+            @keyup.enter="handleEnterKey"
           />
           <div class="h-14 w-14 min-w-[56px] min-h-[56px] bg-white border-4 border-l-0 border-black rounded-r-xl flex justify-center items-center cursor-pointer shrink-0">
             <img
@@ -84,7 +85,7 @@ watch(searchText, (newValue) => {
     debounceTimeout = setTimeout(async () => {
       userIsTyping.value = false; 
       searching.value = true;
-      await content.getContentByText(newValue);
+      await content.getContentBysearch(newValue);
       searching.value = false;
     }, 700);
   } else {
@@ -98,6 +99,19 @@ function toggleSearch() {
   searchText.value = '';
   content.searched_content = [];
   useToggles.toggleSearchShow();
+}
+
+function handleEnterKey() {
+  if (searchText.value.trim().length > 0) {
+    // Set the search term in the store
+    content.setSearchTerm(searchText.value.trim());
+    
+    // Navigate to search page
+    navigateTo('/search');
+    
+    // Close the search overlay
+    toggleSearch();
+  }
 }
 
 watch(
