@@ -59,7 +59,7 @@
                 </div>
 
                 <div v-if="useToggles.isMobile" class="flex justify-center items-center">
-                    <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 pl-6 cursor-pointer" @click="toUserPage">
+                    <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isSearchPage" class="w-20 pl-6 cursor-pointer" @click="toUserPage">
                         <img v-if="isDarkMode" 
                             src="../public/bookmark_icons/user-light.png" 
                             alt=""
@@ -73,7 +73,7 @@
                         <!-- <img src="../public/images/User.png" alt=""> -->
                     </div>
                     <border-button 
-                        v-if="isLoginPage || isInfoPage"
+                        v-if="isLoginPage || isInfoPage || isSearchPage"
                         text="Go back" 
                         class="mr-4"
                         :onClick="toPrevious" 
@@ -82,12 +82,12 @@
              </div>
 
              <div v-if="!useToggles.isMobile" class="flex justify-center items-center">
-                 <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage" class="w-20 cursor-pointer" @click="toUserPage">
+                 <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isSearchPage" class="w-20 cursor-pointer" @click="toUserPage">
                         <img v-if="isDarkMode" src="../public/bookmark_icons/user-light.png" alt="">
                         <img v-else src="../public/bookmark_icons/user-dark.png" alt="">
                  </div>
                  <border-button 
-                        v-if="isLoginPage || isInfoPage"
+                        v-if="isLoginPage || isInfoPage || isSearchPage"
                         text="Go back" 
                         class="mr-4"
                         :onClick="toPrevious" 
@@ -97,8 +97,8 @@
             <search/>
             
         </div>
-        <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage"/>
-        <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage" class="flex flex-row items-center justify-around mt-3 mx-2">
+        <typeContentSwitcher v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isSearchPage"/>
+        <div v-if="!isLoginPage && !isOauthPage && !isHompage && !isInfoPage && !isInfoPage && !isSearchPage" class="flex flex-row items-center justify-around mt-3 mx-2">
             <div class="flex flex-row flex-wrap items-center justify-center gap-3 max-w-[690px] mx-auto"> <!-- Adjusted max width and gap -->
                 <border-button 
                     text="Discover" 
@@ -200,6 +200,7 @@ const route = useRoute();
 const isDarkMode = computed(() => useTheme.isDarkMode);
 const isHompage = computed(() => route?.path === '/');
 const isMainPage = computed(() => route?.path === '/mainpage');
+const isSearchPage = computed(() => route?.path === '/search');
 const isLoginPage = computed(() => route?.path === '/auth/login' || route?.path === '/auth/sign-up');
 const isOauthPage = computed(() => 
     (route?.path === '/google/callback' || route?.path === '/github/callback') // && !!route.query.token
