@@ -388,9 +388,9 @@ export const useContentStore = defineStore('content', {
 
     setSearchTerm(term) {
       this.searchedContentData.searchTerm = term;
-      this.completedContentData.contentList = [];
-      this.completedContentData.hasNextPage = true;
-      this.completedContentData.currentPage = 0;
+      this.searchedContentData.contentList = [];
+      this.searchedContentData.hasNextPage = true;
+      this.searchedContentData.currentPage = 0;
     },
 
     async getContentBysearch(text){
