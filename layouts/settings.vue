@@ -62,8 +62,11 @@
 
 <script setup>
 const useTheme = useThemeStore();
+const useUser = useUserStore();
 const router = useRouter();
 const route = useRoute();
+
+useUser.getcontentCount();
 
 const currentRoute = computed(() => {
     return route?.path

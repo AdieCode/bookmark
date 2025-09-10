@@ -4,11 +4,11 @@ import { defineStore } from 'pinia';
 export const useAuthStore = defineStore('auth', {
   state: () => {
     return {
-      isAuthenticated: false,
-      user: null,
-      token: null,
-      error: null,
-	  baseURL: 'http://localhost:3001',
+		isAuthenticated: false,
+		user: null,
+		token: null,
+		error: null,
+		baseURL: 'http://localhost:3001',
     };
   },
 

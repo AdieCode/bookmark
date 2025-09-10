@@ -52,9 +52,14 @@
         Searching... 😊
       </div>
 
-      <div v-else-if="!searching && !userIsTyping && contentData?.length === 0"
+      <div v-else-if="!searching && !userIsTyping && contentData?.length === 0 && searchText.trim().length > 3"
           class="text-lg font-bold text-center mt-10">
         No results found 🥲
+      </div>
+
+      <div v-else
+          class="text-lg font-bold text-center mt-10">
+        Type something to search 😉
       </div>
     </div>
   </div>
@@ -70,7 +75,7 @@ const contentData = computed(() => content?.searched_content);
 const isMobile = computed(() => useToggles?.isMobile);
 const searchText = ref("");
 const searchInput = ref(null);
-const searching = ref(false)
+const searching = ref(false);
 const userIsTyping = ref(false);
 
 // --- Debounce Setup ---
