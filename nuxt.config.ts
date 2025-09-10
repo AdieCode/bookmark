@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
-  plugins: ['~/plugins/theme-init.client.js', '~/plugins/axios-auth.js', '~/plugins/scrollToTop.client.js'],
+  plugins: ['~/plugins/axios-auth.js', '~/plugins/scrollToTop.client.js'],
   app: {
     pageTransition: { name: 'page', mode: 'out-in' }
   },
