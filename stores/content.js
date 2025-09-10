@@ -392,6 +392,7 @@ export const useContentStore = defineStore('content', {
       this.searchedContentData.contentList = [];
       this.searchedContentData.hasNextPage = true;
       this.searchedContentData.currentPage = 0;
+      this.searchedContentData.totalContent = 0;
     },
 
     async getContentBysearch(text){

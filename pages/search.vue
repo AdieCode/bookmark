@@ -15,7 +15,10 @@
                     results count
                 </div>
                 <div class="font-bold text-2xl">
-                    {{ useContent.searchedContentData.totalContent }}
+                    {{ useContent.contentFetched ? useContent.searchedContentData.totalContent : '' }}
+                    <span v-if="!useContent.contentFetched" class="waiting-text">
+                        waiting<span class="dot-1">.</span><span class="dot-2">.</span><span class="dot-3">.</span>
+                    </span>
                 </div>
             </div>
         </div>
@@ -47,7 +50,33 @@ onMounted(() => {
 </script>
 
 <style scoped>
+@keyframes bounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-10px);
+    }
+}
 
+.waiting-text .dot-1,
+.waiting-text .dot-2,
+.waiting-text .dot-3 {
+    display: inline-block;
+    animation: bounce 1.2s infinite ease-in-out;
+}
+
+.waiting-text .dot-1 {
+    animation-delay: 0s;
+}
+
+.waiting-text .dot-2 {
+    animation-delay: 0.2s;
+}
+
+.waiting-text .dot-3 {
+    animation-delay: 0.4s;
+}
 
 .background {
     position: fixed;
@@ -56,6 +85,5 @@ onMounted(() => {
     /* height: full; */
     overflow: hidden;
 }
-
 
 </style>
