@@ -18,27 +18,12 @@ export const useThemeStore = defineStore('theme', {
 
     initTheme() {
       if (process.client) {
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme) {
-          this.isDarkMode = savedTheme === 'dark';
-        } else {
-          this.isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
-        }
-
-        this.applyTheme(this.isDarkMode);
-        
-
-        // Watcher logic — just inline reactivity here
+        // Theme is already initialized by the plugin, just set up the watcher
         this.$subscribe(() => {
           if (this.initialLoad) {
             this.applyTheme(this.isDarkMode);
             localStorage.setItem('theme', this.isDarkMode ? 'dark' : 'light');
           }
-        });
-
-        // Mark initial load complete after hydration
-        window.addEventListener('load', () => {
-          this.initialLoad = true;
         });
       }
     },
