@@ -32,8 +32,8 @@
       <!-- Results -->
       <div
         v-if="contentData?.length > 0 && !searching && !userIsTyping"
-        class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto h-[560px] overflow-y-scroll"
-        :class="useToggles.isMobile ? 'w-[310px] !h-[470px]' : 'w-[460px]'"
+        class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto max-h-[560px] overflow-y-scroll"
+        :class="useToggles.isMobile ? 'w-[310px] !max-h-[470px]' : 'w-[460px]'"
       >
         <SearchCard
           v-for="(item, index) in contentData"
@@ -101,7 +101,7 @@ function toggleSearch() {
   useToggles.toggleSearchShow();
 }
 
-function handleEnterKey() {
+async function handleEnterKey() {
   if (searchText.value.trim().length > 0) {
     // Set the search term in the store
     content.setSearchTerm(searchText.value.trim());

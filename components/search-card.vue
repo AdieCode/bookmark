@@ -1,5 +1,5 @@
 <template>
-    <div class="relative rounded-xl hover:bg-gray-300 flex flex-row justify-start items-center cursor-pointer"
+    <div class="relative rounded-lg hover:bg-gray-300 flex flex-row justify-start items-center cursor-pointer"
         @click="moreInfo">
 
         <div v-if="!useToggles.isMobile" class="w-28 h-32 m-2 rounded-md border-4 border-black  flex items-center justify-center overflow-hidden"

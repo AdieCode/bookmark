@@ -16,7 +16,8 @@ export const useContentStore = defineStore('content', {
         searchTerm: '',
         currentPage: 0,
         hasNextPage: true,
-        contentList: []
+        contentList: [],
+        totalContent: 0
       },
       plannaningContentData:{
         currentPage: 0,
@@ -401,7 +402,7 @@ export const useContentStore = defineStore('content', {
     async getAllContentBysearch(){
       const searchTerm = this.searchedContentData.searchTerm;
 
-      if (!searchTerm) {
+      if (!searchTerm && searchTerm.length < 4) {
         console.log('required data not provided to get tracked content')
         return null;
       }
@@ -416,6 +417,7 @@ export const useContentStore = defineStore('content', {
       const response = await this.getContentByText(searchTerm, this.searchedContentData.currentPage, 50);
 
       this.searchedContentData.contentList = this.searchedContentData.contentList.concat(response.data.data.media);
+      this.searchedContentData.totalContent = response?.data?.data?.page?.total;
       this.contentFetched = true;
       this.searchedContentData.hasNextPage = response.data.data.page.hasNextPage;
 
