@@ -17,8 +17,8 @@
             />
         </header>
         <div>
-            <div class="flex flex-row justify-start items-center h-full">
-                <ul class="p-5 max-w-56 min-w-56  flex flex-col gap-3 h-full">
+            <div class="flex flex-row justify-start items-start h-full">
+                <ul class="p-5 max-w-56 min-w-56  flex flex-col gap-3 sticky top-6">
                     <li>
                         <border-button 
                             text="User info" 
@@ -56,7 +56,9 @@
                 </div>
             </div>
         </div>
-      <!-- <footer>Special Layout Footer</footer> -->
+        <footer class="w-full h-52 bg-gray-950 border-t-2 p-4">
+            <Icon/>
+        </footer>
     </div>
 </template>
 

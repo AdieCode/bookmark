@@ -186,6 +186,9 @@
     <div>
         <slot/>
     </div>
+    <footer class="w-full h-52 bg-gray-950 border-t-2 p-4">
+        <Icon/>
+    </footer>
 </template>
 
 <script setup>
