@@ -12,7 +12,11 @@
                 <img v-else width="50" height="50" src="../public/images/down-squared-black.png" alt="down-squared--v2" class="w-5 h-5 mt-1"/>
             </div>
         </div>
-        <div v-if="showDorpDown" class=" grow flex flex-col absolute max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg !z-30 dark:bg-black dark:border-white dark:shadow-[0_0_6px_1px_rgba(255,255,255,0.6)]">
+        <div v-if="showDorpDown" 
+            ref="dropdownRef"
+            class=" grow flex flex-col absolute max-w-80 max-h-96 overflow-y-auto p-3 mt-2 bg-white border-4 border-black rounded-lg !z-30 dark:bg-black dark:border-white dark:shadow-[0_0_6px_1px_rgba(255,255,255,0.6)]"
+            :class="{'!right-0': isRightOverflow()}"
+            >
             <div
             v-for="(option, index) in options"
             :key="index"
@@ -32,12 +36,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 const useExtraData = useExtraDataStore()
 const useToggles = useTogglesStore();
 const useTheme = useThemeStore();
 
 const isDarkMode = computed(() => useTheme.isDarkMode);
+const dropdownRef = ref(null);
 
 const props = defineProps({
     name: { type: String, default: '100' },
@@ -50,6 +55,13 @@ const props = defineProps({
 
 function toggleDropDown() {
     showDorpDown.value = !showDorpDown.value;
+}
+
+function isRightOverflow() {
+    if (!dropdownRef.value) return false;
+    
+    const dropdownRect = dropdownRef.value.getBoundingClientRect();
+    return dropdownRect.right + 10 > window.innerWidth;
 }
 
 </script>
