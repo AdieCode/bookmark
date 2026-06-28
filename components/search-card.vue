@@ -1,8 +1,8 @@
 <template>
-    <div class="relative rounded-lg hover:bg-gray-300 flex flex-row justify-start items-center cursor-pointer"
+    <div v-if="!data?.isAdult" class="relative rounded-lg hover:bg-gray-300 flex flex-row justify-start items-center cursor-pointer dark:hover:bg-gray-800"
         @click="moreInfo">
 
-        <div v-if="!useToggles.isMobile" class="w-28 h-32 m-2 rounded-md border-4 border-black  flex items-center justify-center overflow-hidden"
+        <div v-if="!useToggles.isMobile" class="w-28 h-32 m-2 rounded-md border-2 border-black  flex items-center justify-center overflow-hidden dark:border-white dark:shadow-[0_0_6px_2px_rgba(255,255,255,0.2)]"
             :class="{'!w-12 h-32': useToggles.isMobile}">
             <img 
                 v-if="data.cover_image_url" 
@@ -12,14 +12,14 @@
             />
         </div>
         
-        <div v-if="!useToggles.isMobile" class="h-full w-full py-4 ml-3 flex flex-col justify-start items-start">
-            <div v-if="data.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white">
+        <div v-if="!useToggles.isMobile" class="h-full w-full py-4 ml-3 flex flex-col justify-start items-start ">
+            <div v-if="data.isAdult"  class="absolute top-0 right-0 p-1 pl-2 rounded-bl rounded-tr bg-black text-white dark:bg-white dark:text-black">
                 <!-- <span v-if="!data.isAdult" class="font-extrabold small-title">PG 13</span> -->
                 <span v-if="data.isAdult" class="font-extrabold small-title">18+</span>
             </div>
 
             <!-- Title -->
-            <div class="text-black font-bold text-md mb-2 line-clamp-1 w-72">
+            <div class="text-black font-bold text-md mb-2 line-clamp-1 w-72 dark:text-white">
                 <div v-if="data.title?.english" :title="data.title?.english" >{{ data.title?.english }}</div>
                 <div v-else-if="data.title?.romaji" :title="data.title?.romaji">{{ data.title?.romaji }}</div>
                 <div v-else>No title found</div>
@@ -29,7 +29,7 @@
                 <span class="font-extrabold"><span class="text-lg font-normal">{{data.type}}</span> - {{ data.status }}</span>
             </div>
 
-            <div class="w-72 flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-4">
+            <div class="w-72 flex justify-around text-xs text-white bg-black p-3 rounded-md font-bold mt-4 dark:shadow-[0_0_6px_2px_rgba(255,255,255,0.2)]">
                 <span v-if="data.average_score"><span class="font-extralight">Score </span>{{ data.average_score }}</span>
                 <span v-else="data.average_score" class="font-extralight">No Score</span>
 

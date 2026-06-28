@@ -20,5 +20,9 @@ export default defineNuxtConfig({
   // components: [
   //   { path: '~/components/search', pathPrefix: false },
   // ],
-  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt']
+  modules: ['@nuxtjs/tailwindcss', '@pinia/nuxt'],
+  ssr: true,
+  nitro: {
+    preset: 'node-server'
+  }
 })

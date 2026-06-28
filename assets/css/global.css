@@ -5,9 +5,15 @@
 @layer base {
   body {
     @apply bg-white text-black transition-colors duration-300;
+
   }
 
   .dark body {
     @apply bg-black text-white;
   }
 }
+
+#__nuxt {
+  @apply !min-h-screen flex flex-col justify-between;
+}
+

@@ -32,7 +32,7 @@
       <!-- Results -->
       <div
         v-if="contentData?.length > 0 && !searching && !userIsTyping"
-        class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto max-h-[560px] overflow-y-scroll"
+        class="mt-10 flex flex-col gap-3 p-2 bg-white border-4 border-black rounded-xl mx-auto max-h-[560px] overflow-y-scroll dark:bg-black dark:border-white"
         :class="useToggles.isMobile ? 'w-[310px] !max-h-[470px]' : 'w-[460px]'"
       >
         <SearchCard

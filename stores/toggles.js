@@ -5,6 +5,7 @@ export const useTogglesStore = defineStore('toggles', {
   state: () => {
     return {
       isMobile: false,
+      quickInfo: false,
       notification: {
         isVisible: false,
         text: "",
@@ -90,6 +91,10 @@ export const useTogglesStore = defineStore('toggles', {
 
     toggleEditShow() {
       this.editContent = !this.editContent;
+    },
+
+    toggleQuickInfo() {
+      this.quickInfo = !this.quickInfo;
     },
 
     toggleContentDiscover() {

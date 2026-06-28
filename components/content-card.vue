@@ -1,5 +1,5 @@
 <template>
-    <div  class="w-52 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
+    <div v-if="!data?.isAdult" class="w-52 relative" @mouseenter="toggleInfo" @mouseleave="toggleInfo">
         <!-- Manga cover card -->
         <div class="border-4 border-black rounded-xl relative hover:shadow-lg transition-transform duration-200 ease-in-out dark:border-white dark:shadow-[0_0_7px_1px_rgba(255,255,255,0.8)]" 
             :class="{'h-80' : !data?.cover_image_url}"
@@ -80,11 +80,14 @@
                 <span v-if="data?.isAdult" class="font-extrabold small-title">18+</span>
             </div>
 
-            <div class="p-2 flex justify-center gap-2 border border-black rounded mb-2 dark:border-white">
+            <div class="p-2 flex justify-start gap-2 border border-black rounded mb-2 dark:border-white">
                 <!-- <span class="font-extrabold"><span class="text-lg font-normal">{{data?.type}}</span> - {{ data?.status }}</span> -->
                 <div class="flex flex-col justify-center items-start">
                     <div class="text-xs font-light ">Content</div>
-                    <div class="text-xs font-extrabold">{{ data?.type }}</div>
+                    <!-- <div class="text-xs font-extrabold">{{ data?.type }}</div> -->
+                    <div v-if="data?.type === 'ANIME'" class="text-xs font-extrabold">{{ replaceUnderscores(data?.media_format) }}</div>
+                    <div v-else class="text-xs font-extrabold">{{ replaceUnderscores(data?.type) }}</div>
+
                 </div>
 
                 <div class="h-full py-5 border border-black dark:border-white"></div>
@@ -155,6 +158,11 @@ const props = defineProps({
 
 function toggleInfo() {
     showInfo.value = !showInfo.value;
+}
+
+function replaceUnderscores(input) {
+    if (!input) return input;
+    return input.replace(/_/g, ' ');
 }
 
 

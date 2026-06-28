@@ -107,13 +107,13 @@
                     class=""
                 />
                 <border-button 
-                    text="Planning to read" 
+                    text="Planning" 
                     :onClick="useToggles.toggleContentPlanningToRead" 
                     :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.planningToRead}"
                     class=""
                 />
                 <border-button 
-                    text="Busy Reading" 
+                    text="Busy"
                     :onClick="useToggles.toggleContentReading" 
                     :conditionalClass="{'bg-black text-white bounce-down dark:bg-white dark:text-black': useToggles.content.reading}"
                     class=""
@@ -165,6 +165,7 @@
         </div>
 
         <ContentEditor :data="useExtraData.editableContent"/>
+        <mobile-quick-info/>
 
     </div>
 

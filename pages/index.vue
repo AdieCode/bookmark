@@ -8,7 +8,7 @@
         </div>
         <!-- <solid-button text="hello"/> -->
     </div>
-  </template>
+</template>
   
 
 <script setup>
